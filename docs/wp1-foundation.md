@@ -15,7 +15,7 @@ src/engine/
   states.js              the five states, rungs, evidence rules, review/decay schedule (§6.2)
   log.js                 the attempt log — the single source of truth (§6.9)
   derive.js              folds the log → mastery state, review schedule, queues (nothing written directly)
-  store.js               persistence in a SEPARATE key namespace (pt_v4_*); never touches v3 keys
+  store.js               persistence in a distinctive namespace (papertrail:v4:*); never touches v3 keys
   migrate.js             v3 → v4 migration: history only, dry-run + rollback (§7)
   allocation.js          allocation matrices, floors, 8% cap, loud-failure report (§6.4)
   node-loader.js         Node-only file reads (browser fetches instead)

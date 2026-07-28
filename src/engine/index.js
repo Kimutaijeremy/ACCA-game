@@ -14,7 +14,7 @@ export {
 } from './log.js';
 export { deriveConcept, deriveAll } from './derive.js';
 export {
-  MemoryStore, KEYS, STATE_SCHEMA, emptyState, loadState, saveState,
+  MemoryStore, KEYS, KEY_PREFIX, STATE_SCHEMA, emptyState, loadState, saveState,
   defaultStore, readV3FromStore,
 } from './store.js';
 export {

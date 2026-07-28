@@ -1,16 +1,23 @@
 // store.js — persistence for learner state.
 //
-// The new engine keeps its state under its OWN key namespace ('pt_v4_*'), completely separate
-// from the v3 app's keys ('pt_stats', 'pt_nodes', ...). This is deliberate (Brief §3, §7):
-// the migration reads the v3 keys but never overwrites them, so Jeremy's original learning
-// history stays intact on his phone and rollback is trivial.
+// The new engine keeps its state under a DISTINCTIVE, app-specific, versioned namespace
+// ('papertrail:v4:*'). This matters because browser storage on GitHub Pages is keyed to the
+// ORIGIN (kimutaijeremy.github.io), not the path — every project served from that account
+// shares one localStorage. A generic prefix could collide with a future project; the fully
+// spelled-out 'papertrail:v4:' cannot.
+//
+// It is also completely separate from the v3 app's keys ('pt_stats', 'pt_nodes', ...), so the
+// migration (Brief §3, §7) reads the v3 keys but never overwrites them: Jeremy's original
+// learning history stays intact on his phone and rollback is trivial.
 //
 // A KV store is any object with getItem(k)/setItem(k,v)/removeItem(k) returning/accepting
 // strings — browser localStorage satisfies this directly; MemoryStore covers Node and tests.
 
+export const KEY_PREFIX = 'papertrail:v4:';
+
 export const KEYS = Object.freeze({
-  STATE: 'pt_v4_state',
-  BACKUP: 'pt_v4_state_backup',
+  STATE: KEY_PREFIX + 'state',
+  BACKUP: KEY_PREFIX + 'state_backup',
 });
 
 export const STATE_SCHEMA = 'paper-trail/v4';
