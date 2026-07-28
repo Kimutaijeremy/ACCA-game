@@ -44,10 +44,12 @@ function freshAcc() {
     std: [], // last up-to-5 unscaffolded standard attempts {correct, withinBudget}
     mastery: [], // stretch/integrated qualifying attempts
     reviewDueAt: null,
+    currentIntervalMs: null, // length of the review interval currently in effect
     passIndex: 0, // successful reviews completed at the current state
     remediation: [], // queued remediation entries
     reviewsPassed: 0,
     reviewsFailed: 0,
+    reviewsMissed: 0, // states lost purely to neglect (time-based decay)
     itemAttempts: 0,
     firstExposureAt: null,
     lastActivityAt: null,
@@ -110,16 +112,25 @@ function meetsRank(acc, targetRank) {
   }
 }
 
+// Set (or clear) the review schedule for a concept's current state, recording the interval
+// length in effect so neglect-decay can measure "one full interval" precisely.
+function schedule(acc, state, from, passIndex) {
+  if (hasReviews(state)) {
+    const interval = reviewIntervalMs(state, passIndex);
+    acc.reviewDueAt = from + interval;
+    acc.currentIntervalMs = interval;
+  } else {
+    acc.reviewDueAt = null;
+    acc.currentIntervalMs = null;
+  }
+}
+
 function enterState(acc, newRank, at) {
   acc.rankVal = newRank;
   const name = stateAtRank(newRank);
   acc.enteredStateAt[name] = at;
-  if (hasReviews(name)) {
-    acc.passIndex = 0;
-    acc.reviewDueAt = at + reviewIntervalMs(name, 0);
-  } else {
-    acc.reviewDueAt = null;
-  }
+  acc.passIndex = 0;
+  schedule(acc, name, at, 0);
 }
 
 // Climb as many rungs as the current evidence supports, scheduling reviews on the way.
@@ -184,7 +195,46 @@ function applyDecay(acc, rec) {
   const newName = stateAtRank(newRank);
   acc.enteredStateAt[newName] = rec.timestamp;
   acc.passIndex = 0;
-  acc.reviewDueAt = hasReviews(newName) ? rec.timestamp + reviewIntervalMs(newName, 0) : null;
+  schedule(acc, newName, rec.timestamp, 0);
+}
+
+// Time-based decay through NEGLECT (Brief §6.2). A review left overdue by more than one full
+// interval drops the concept one state, and one further state for each subsequent interval that
+// passes with no evidence, wiping the evidence for each lost state, stopping at Exposed. This is
+// what makes avoiding study unable to protect the dashboard. It advances the concept to time
+// `upto` — which is an event timestamp during the fold, and `now` at presentation — so derived
+// state is a pure function of (log, date): same log + same date reproduces every level.
+function applyNeglectDecay(acc, upto) {
+  while (acc.rankVal >= R.UNDERSTOOD && acc.reviewDueAt != null && acc.currentIntervalMs != null) {
+    const dropAt = acc.reviewDueAt + acc.currentIntervalMs; // one full interval past due
+    if (upto <= dropAt) break; // not yet overdue by MORE than one full interval
+
+    const fromRank = acc.rankVal;
+    const newRank = fromRank - 1;
+    acc.rankVal = newRank;
+    clearWindowsAbove(acc, newRank);
+    acc.reviewsMissed += 1;
+    const newName = stateAtRank(newRank);
+    acc.remediation.push({
+      reason: 'neglect_decay',
+      cause: null,
+      confidence: null,
+      fromState: stateAtRank(fromRank),
+      toState: newName,
+      at: dropAt,
+    });
+    acc.enteredStateAt[newName] = dropAt;
+    acc.passIndex = 0;
+    if (hasReviews(newName)) {
+      // Overdue at the lower state from the drop point; the NEXT drop is one further interval
+      // of the new state's cadence — no extra grace after the first.
+      acc.reviewDueAt = dropAt;
+      acc.currentIntervalMs = reviewIntervalMs(newName, 0);
+    } else {
+      acc.reviewDueAt = null;
+      acc.currentIntervalMs = null;
+    }
+  }
 }
 
 /**
@@ -202,6 +252,10 @@ function foldLog(log) {
       if (!acc) { acc = freshAcc(); accs.set(cid, acc); }
 
       if (acc.firstExposureAt == null) acc.firstExposureAt = rec.timestamp;
+
+      // Catch up any decay owed to neglect since the last event, so this attempt acts on the
+      // state the concept has actually decayed to — not the level it held before the gap.
+      applyNeglectDecay(acc, rec.timestamp);
       acc.lastActivityAt = rec.timestamp;
 
       // Is this item attempt a DUE review? Only items, only in a reviewable state, only once
@@ -246,11 +300,15 @@ function present(cid, acc, now) {
       remediation: [],
       reviewsPassed: 0,
       reviewsFailed: 0,
+      reviewsMissed: 0,
       itemAttempts: 0,
       firstExposureAt: null,
       lastActivityAt: null,
     };
   }
+  // Bring the concept up to the present moment: apply any decay owed to neglect between its last
+  // logged activity and `now`. This is why derived state depends on (log, date), not the log alone.
+  applyNeglectDecay(acc, now);
   const state = stateAtRank(acc.rankVal);
   const due = acc.reviewDueAt != null && hasReviews(state) && now >= acc.reviewDueAt;
   return {
@@ -262,6 +320,7 @@ function present(cid, acc, now) {
     remediation: acc.remediation,
     reviewsPassed: acc.reviewsPassed,
     reviewsFailed: acc.reviewsFailed,
+    reviewsMissed: acc.reviewsMissed,
     itemAttempts: acc.itemAttempts,
     firstExposureAt: acc.firstExposureAt,
     lastActivityAt: acc.lastActivityAt,
@@ -280,7 +339,8 @@ function present(cid, acc, now) {
  * Derive one concept's current state from the log.
  * @param {AttemptLog|Array} log
  * @param {string} conceptId
- * @param {number} now - evaluation time (ms epoch); affects only "is a review due" reads
+ * @param {number} now - evaluation date (ms epoch). Derived state is a function of (log, now):
+ *   it drives both "is a review due" and how much decay through neglect has accrued.
  */
 export function deriveConcept(log, conceptId, now = Date.now()) {
   const accs = foldLog(log);

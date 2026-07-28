@@ -168,16 +168,27 @@ next session's warm-up. **A failed due review drops the concept one state and qu
 remediation.** This is what keeps the dashboard honest over time: knowledge that fades is shown
 fading.
 
-**Evidence-wipe rule (on decay).** When a failed review drops a concept, the accumulated evidence
-for every state *above* the new one is wiped, so the lost level must be genuinely re-earned — not
-restored from stale attempts. This is required because the promotion rules read rolling windows
-(e.g. "last 5 unscaffolded Standard items at 80%+"). Without the wipe, a concept dropped from
-Competent to Practised would still hold five passing Standard items in its window and would spring
-straight back to Competent on the very next read — oscillating between states instead of decaying.
-The wipe is not a stored value: state is never written; it is recomputed by replaying the attempt
-log, and the wipe is a deterministic consequence of the failed-review event *in that log*. Given
-the same log, replay reproduces the same wipe at the same point, so the dashboard stays fully
-auditable.
+**Decay through neglect (not only through failure).** Missed reviews must decay, not only failed
+ones — otherwise never attempting a review would preserve Mastered indefinitely, and avoiding study
+would protect the dashboard. Rule: **a concept whose review is overdue by more than one full
+interval drops one state, and drops one further state at each subsequent interval that passes
+without evidence.** Evidence for the lost state is wiped, exactly as on a failed review. Decay
+stops at Exposed. No attempt need be logged for this to happen — the passage of time alone drives
+it.
+
+**Evidence-wipe rule (on any decay).** When a concept drops — by failed review or by neglect — the
+accumulated evidence for every state *above* the new one is wiped, so the lost level must be
+genuinely re-earned, not restored from stale attempts. This is required because the promotion
+rules read rolling windows (e.g. "last 5 unscaffolded Standard items at 80%+"). Without the wipe, a
+concept dropped from Competent to Practised would still hold five passing Standard items in its
+window and would spring straight back to Competent on the very next read — oscillating between
+states instead of decaying.
+
+**Audit guarantee (restated).** Because decay now depends on elapsed time as well as attempts,
+derived state is a function of **(log, current date)**, not the log alone. Nothing is ever written
+directly: every level, review date and wipe is recomputed by replaying the attempt log against a
+date. The guarantee is therefore: **the same log evaluated at the same date reproduces every level
+identically.**
 
 ### 6.3 The topic node — teach, then drill
 

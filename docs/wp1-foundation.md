@@ -57,9 +57,15 @@ chronological order. Two forces act on each concept:
 - **Promotion** — the §6.2 evidence rules raise state one rung at a time
   (lesson → concept-check set → guided ×3 → 5 standard @80% in-budget → stretch/integrated
   across two sessions 72h apart).
-- **Decay** — a *due review* that is failed drops the state one rung, clears the evidence
-  windows for the levels above the new state (so the lost level must be genuinely re-earned),
-  and queues remediation. "Due" is derived purely from the schedule, so decay is auditable.
+- **Decay** — two ways down, both wiping the evidence for the levels above the new state so the
+  lost level must be genuinely re-earned:
+  - a *due review that is failed* drops the state one rung and queues remediation;
+  - *neglect* — a review left overdue by more than one full interval drops one rung, and one
+    further rung for each subsequent interval that passes with no evidence, stopping at Exposed.
+    No attempt need be logged; time alone drives it, so avoiding study cannot protect the dashboard.
+
+Because neglect decay depends on elapsed time, derived state is a function of **(log, date)**:
+the same log evaluated at the same date reproduces every level identically.
 
 Review intervals: Understood 3d, Practised 7d, Competent 14d, Mastered 30d then 90d.
 

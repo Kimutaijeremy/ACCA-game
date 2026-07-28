@@ -109,6 +109,65 @@ test('a failed due review drops the concept one state and queues remediation', (
   assert.equal(dEnd.remediation.length, 4);
 });
 
+test('a concept decays through pure neglect — no attempt logged, only time passing', () => {
+  resetSeq();
+  const t0 = Date.UTC(2026, 6, 1, 9, 0, 0);
+  const recs = [];
+  // Climb to Mastered, then log NOTHING further.
+  recs.push(lesson(C, { t: t0 }));
+  recs.push(item(C, 'concept-check', true, { t: t0 + 60000 }));
+  recs.push(item(C, 'concept-check', true, { t: t0 + 2 * 60000 }));
+  recs.push(item(C, 'concept-check', true, { t: t0 + 3 * 60000 }));
+  recs.push(item(C, 'guided', true, { scaffold: true, t: t0 + 4 * 60000 }));
+  recs.push(item(C, 'guided', true, { scaffold: true, t: t0 + 5 * 60000 }));
+  recs.push(item(C, 'guided', true, { scaffold: true, t: t0 + 6 * 60000 }));
+  for (let i = 0; i < 5; i++) recs.push(item(C, 'standard', true, { withinBudget: true, t: t0 + (10 + i) * 60000 }));
+  recs.push(item(C, 'stretch', true, { timed: true, session: 'sA', t: t0 + 20 * 60000 }));
+  recs.push(item([C, 'FA-27'], 'integrated', true, { session: 'sA', t: t0 + 21 * 60000 }));
+  const tM = t0 + 4 * DAY; // second session, >72h later → Mastered here
+  recs.push(item(C, 'stretch', true, { timed: true, session: 'sB', t: tM }));
+  recs.push(item([C, 'FA-27'], 'integrated', true, { session: 'sB', t: tM + 60000 }));
+  const log = new AttemptLog(recs);
+
+  const masteredAt = tM + 60000;
+  const dueAt = masteredAt + 30 * DAY; // Mastered review interval
+
+  // Still Mastered while merely due but not yet overdue by a full further interval.
+  assert.equal(deriveConcept(log, C, dueAt + 10 * DAY).state, STATE.MASTERED);
+  assert.equal(deriveConcept(log, C, dueAt + 10 * DAY).due, true, 'due, but not yet decayed');
+
+  // One full interval (30d) past due → drop to Competent (no attempt ever logged).
+  const d1 = deriveConcept(log, C, dueAt + 31 * DAY);
+  assert.equal(d1.state, STATE.COMPETENT);
+  assert.equal(d1.reviewsMissed, 1);
+  assert.equal(d1.remediation.at(-1).reason, 'neglect_decay');
+  assert.equal(d1.evidence.masteryAttempts, 0, 'evidence for the lost state is wiped');
+
+  // Far in the future with no study at all → all the way down to Exposed, never below.
+  const dEnd = deriveConcept(log, C, dueAt + 400 * DAY);
+  assert.equal(dEnd.state, STATE.EXPOSED);
+  assert.equal(dEnd.due, false);
+  assert.equal(dEnd.reviewDueAt, null, 'Exposed schedules no reviews, so decay halts there');
+  assert.equal(dEnd.reviewsMissed, 4, 'Mastered → Competent → Practised → Understood → Exposed');
+});
+
+test('neglect decay is a function of (log, date): later date, lower state', () => {
+  resetSeq();
+  const t0 = Date.UTC(2026, 6, 1);
+  const recs = [
+    lesson(C, { t: t0 }),
+    item(C, 'concept-check', true, { t: t0 + 60000 }),
+    item(C, 'concept-check', true, { t: t0 + 2 * 60000 }),
+    item(C, 'concept-check', true, { t: t0 + 3 * 60000 }),
+  ]; // Understood; review due 3 days out, interval 3 days
+  const log = new AttemptLog(recs);
+  const dueAt = t0 + 3 * 60000 + 3 * DAY;
+  // within one further interval of grace: still Understood
+  assert.equal(deriveConcept(log, C, dueAt + 2 * DAY).state, STATE.UNDERSTOOD);
+  // more than one interval overdue → straight to Exposed (Understood has only Exposed below)
+  assert.equal(deriveConcept(log, C, dueAt + 4 * DAY).state, STATE.EXPOSED);
+});
+
 test('a passed due review renews the interval without changing state', () => {
   resetSeq();
   const t0 = Date.UTC(2026, 6, 1, 9, 0, 0);
