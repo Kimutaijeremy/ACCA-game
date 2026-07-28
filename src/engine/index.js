@@ -15,7 +15,7 @@ export {
 export { deriveConcept, deriveAll } from './derive.js';
 export {
   MemoryStore, KEYS, KEY_PREFIX, STATE_SCHEMA, emptyState, loadState, saveState,
-  defaultStore, readV3FromStore,
+  trySaveState, isQuotaError, defaultStore, readV3FromStore,
 } from './store.js';
 export {
   planMigration, applyMigration, rollbackMigration,

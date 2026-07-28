@@ -168,6 +168,17 @@ next session's warm-up. **A failed due review drops the concept one state and qu
 remediation.** This is what keeps the dashboard honest over time: knowledge that fades is shown
 fading.
 
+**Evidence-wipe rule (on decay).** When a failed review drops a concept, the accumulated evidence
+for every state *above* the new one is wiped, so the lost level must be genuinely re-earned — not
+restored from stale attempts. This is required because the promotion rules read rolling windows
+(e.g. "last 5 unscaffolded Standard items at 80%+"). Without the wipe, a concept dropped from
+Competent to Practised would still hold five passing Standard items in its window and would spring
+straight back to Competent on the very next read — oscillating between states instead of decaying.
+The wipe is not a stored value: state is never written; it is recomputed by replaying the attempt
+log, and the wipe is a deterministic consequence of the failed-review event *in that log*. Given
+the same log, replay reproduces the same wipe at the same point, so the dashboard stays fully
+auditable.
+
 ### 6.3 The topic node — teach, then drill
 
 Every concept node contains, in order:

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8" /><title>Paper Trail — engine harness</title></head>
+<body>
+<div id="queue"></div>
+<script type="module">
+  // Load the SAME engine modules the PWA and the Node tests use. Attach them to window so the
+  // Playwright driver can exercise them against the page's real window.localStorage.
+  import * as concepts from '../../src/engine/concepts.js';
+  import * as log from '../../src/engine/log.js';
+  import * as derive from '../../src/engine/derive.js';
+  import * as states from '../../src/engine/states.js';
+  import * as migrate from '../../src/engine/migrate.js';
+  import * as store from '../../src/engine/store.js';
+  import { synthLog } from './synth.js';
+
+  async function loadGraph() {
+    const json = await (await fetch('../../spec/concepts.json')).json();
+    return concepts.loadGraph(json);
+  }
+  async function loadV3() {
+    return (await fetch('../../spec/paper-trail-progress.json')).json();
+  }
+
+  window.PT = { concepts, log, derive, states, migrate, store, loadGraph, loadV3, synthLog };
+  window.__READY__ = true;
+</script>
+</body>
+</html>

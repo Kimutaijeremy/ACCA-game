@@ -21,8 +21,30 @@ src/engine/
   node-loader.js         Node-only file reads (browser fetches instead)
   index.js               public API surface
 test/                    node:test suites (run: npm test)
+test/browser/            headless-Chromium harness (run: npm run verify:browser)
 tools/wp1-report.mjs     the WP1 report (run: npm run report)
+tools/browser-verify.mjs Q3/Q4 in real Chrome: persistence, in-browser migration,
+                         export/import round-trip, namespace, quota, year-scale benchmark
+tools/verify.mjs         Node-side idempotency + derivation-cost evidence
 ```
+
+## Persistence, quota and eviction
+
+Learner state is written with `trySaveState`, which **reports** a failed write instead of
+throwing or swallowing it — a full quota returns `{ ok:false, quota:true }` so the UI can warn and
+prompt an export. Storage can still be *evicted by the OS later* (nothing can catch that at write
+time); the guard for that is the one-tap export + off-device backup (Brief §6.9). Clearing storage
+makes state read as absent (a clean fresh start), never as stale/partial data.
+
+## Performance (measured, real Chrome, 4× CPU throttle ≈ mid-range phone)
+
+State is recomputed by replaying the log; there is **no memoization yet** and none is needed at
+projected scale. A synthesised year of use — 50,000 attempts across all 191 concepts — derives
+every concept state **and** the review queue in ~17 ms desktop / ~57 ms throttled; rendering the
+queue adds a few ms. If it ever matters, the append-only log makes an incremental checkpoint cheap:
+persist the fold accumulators up to timestamp *T*, then fold only records after *T*; a checkpoint
+stays valid unless an import inserts a record earlier than *T*, which invalidates checkpoints at or
+after the earliest inserted timestamp.
 
 No third-party dependencies. Engine core is pure ES modules — runs under Node tests today and
 directly in the browser PWA later, with no build step.

@@ -7,9 +7,13 @@
   "scripts": {
     "test": "node --test",
     "report": "node tools/wp1-report.mjs",
+    "verify:browser": "node tools/browser-verify.mjs",
     "graph": "python spec/build_graph.py"
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.0"
   }
 }

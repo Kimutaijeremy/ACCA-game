@@ -98,6 +98,24 @@ test('rollback restores the prior v4 state when one existed', () => {
   assert.deepEqual(loadState(store).streak, { cur: 9, best: 9 }, 'prior state restored exactly');
 });
 
+test('migration is idempotent — applying twice does not duplicate history or double the streak', () => {
+  const store = new MemoryStore();
+  applyMigration(V3, store, { now: 1000 });
+  const s1 = loadState(store);
+  applyMigration(V3, store, { now: 2000 });
+  const s2 = loadState(store);
+
+  // streak is copied, never accumulated
+  assert.deepEqual(s2.streak, s1.streak);
+  assert.deepEqual(s2.streak, { cur: 3, best: 10 });
+  // history panel is rebuilt from v3.stats each time — same three topics, not six
+  assert.equal(s2.v1History.topics.length, 3);
+  assert.deepEqual(s2.v1History.topics, s1.v1History.topics);
+  assert.deepEqual(s2.v1History.totals, { seen: 34, correct: 30 });
+  // still zero derived states
+  assert.equal(s2.attemptLog.length, 0);
+});
+
 test('tolerates a v3 file with keys missing or empty', () => {
   const p1 = planMigration({});
   assert.equal(p1.ok, true);

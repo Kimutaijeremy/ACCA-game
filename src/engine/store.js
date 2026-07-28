@@ -70,6 +70,34 @@ export function saveState(state, store = defaultStore()) {
 }
 
 /**
+ * True if an error looks like a browser storage-quota failure. localStorage throws
+ * QuotaExceededError (name, or legacy code 22 / Firefox code 1014) when a write won't fit.
+ */
+export function isQuotaError(err) {
+  if (!err) return false;
+  return err.name === 'QuotaExceededError'
+    || err.name === 'NS_ERROR_DOM_QUOTA_REACHED'
+    || err.code === 22 || err.code === 1014;
+}
+
+/**
+ * Persist state, reporting failure instead of throwing or swallowing it. A write can fail when
+ * the browser's storage quota is exceeded or storage is disabled. We NEVER fail silently: the
+ * caller gets { ok:false, ... } so the UI can warn the learner and prompt an export. (Eviction —
+ * the OS clearing storage later — cannot be caught at write time; the guard for that is the
+ * one-tap export + off-device backup, Brief §6.9.)
+ * @returns {{ ok: true } | { ok: false, quota: boolean, error: Error }}
+ */
+export function trySaveState(state, store = defaultStore()) {
+  try {
+    saveState(state, store);
+    return { ok: true };
+  } catch (error) {
+    return { ok: false, quota: isQuotaError(error), error };
+  }
+}
+
+/**
  * Read a v3 export straight from the live app's own localStorage keys, reconstructing the
  * same bundle the v3 exporter produces. Used at cutover to migrate in place without an
  * export/import round-trip. Returns null if no v3 data is present.

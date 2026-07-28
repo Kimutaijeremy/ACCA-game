@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paper Trail — browser smoke test</title>
+  <style>
+    body { font: 15px/1.5 system-ui, sans-serif; margin: 2rem; color: #111; }
+    h1 { font-size: 1.1rem; }
+    table { border-collapse: collapse; margin-top: 1rem; }
+    td, th { border: 1px solid #ccc; padding: 4px 10px; text-align: left; }
+    .ok { color: #0a7d33; font-weight: 600; }
+    .fail { color: #c00; font-weight: 700; }
+    #verdict { font-size: 1.3rem; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Paper Trail engine — running in the browser, on real localStorage</h1>
+  <div id="verdict">running…</div>
+  <table id="results"><thead><tr><th>check</th><th>result</th></tr></thead><tbody></tbody></table>
+
+  <script type="module">
+    // Import the SAME engine modules the Node tests use — no build step, no bundler.
+    import { loadGraph } from '../../src/engine/concepts.js';
+    import { AttemptLog } from '../../src/engine/log.js';
+    import { deriveConcept, deriveAll } from '../../src/engine/derive.js';
+    import { STATE } from '../../src/engine/states.js';
+    import { applyMigration, rollbackMigration } from '../../src/engine/migrate.js';
+    import { loadState, KEYS, defaultStore } from '../../src/engine/store.js';
+
+    const rows = [];
+    const check = (name, pass, detail = '') => {
+      rows.push({ name, pass: !!pass, detail });
+      console.log(`${pass ? 'PASS' : 'FAIL'} — ${name}${detail ? ' :: ' + detail : ''}`);
+    };
+    const DAY = 24 * 60 * 60 * 1000;
+
+    try {
+      // 1. Load the frozen graph over HTTP (fetch, like the PWA will).
+      const graph = loadGraph(await (await fetch('../../spec/concepts.json')).json());
+      const c = graph.counts();
+      check('graph loads (191 live / 38 stub / 273 edges)',
+        c.live === 191 && c.stubs === 38 && c.edges === 273, JSON.stringify(c));
+
+      // 2. Climb a concept to Mastered, then decay it two levels — in the browser's JS engine.
+      const C = 'FA-26';
+      let seq = 0;
+      const t0 = Date.UTC(2026, 6, 1, 9, 0, 0);
+      const item = (rung, correct, o = {}) => ({
+        id: 'i' + seq++, kind: 'item', conceptIds: [C], rung, correct,
+        scaffold: o.scaffold ?? false, withinBudget: o.withinBudget ?? true, timed: o.timed ?? false,
+        sessionId: o.session ?? 's1', timestamp: o.t,
+      });
+      const recs = [{ id: 'l0', kind: 'lesson', conceptIds: [C], sessionId: 's1', timestamp: t0 }];
+      recs.push(item('concept-check', true, { t: t0 + 6e4 }), item('concept-check', true, { t: t0 + 12e4 }), item('concept-check', true, { t: t0 + 18e4 }));
+      recs.push(item('guided', true, { scaffold: true, t: t0 + 24e4 }), item('guided', true, { scaffold: true, t: t0 + 30e4 }), item('guided', true, { scaffold: true, t: t0 + 36e4 }));
+      for (let i = 0; i < 5; i++) recs.push(item('standard', true, { t: t0 + (10 + i) * 6e4 }));
+      recs.push(item('stretch', true, { timed: true, session: 'sA', t: t0 + 20 * 6e4 }));
+      recs.push(item('integrated', true, { session: 'sA', t: t0 + 21 * 6e4 }));
+      const tM = t0 + 4 * DAY;
+      recs.push(item('stretch', true, { timed: true, session: 'sB', t: tM }));
+      recs.push(item('integrated', true, { session: 'sB', t: tM + 6e4 }));
+      check('concept climbs to Mastered', deriveConcept(new AttemptLog(recs), C, tM + 12e4).state === STATE.MASTERED);
+
+      recs.push(item('standard', false, { t: tM + 31 * DAY })); // fail the 30-day review
+      check('failed review decays Mastered → Competent',
+        deriveConcept(new AttemptLog(recs), C, tM + 31 * DAY + 1).state === STATE.COMPETENT);
+
+      // 3. Migration onto REAL browser localStorage, then read back.
+      const store = defaultStore(); // this is window.localStorage in the browser
+      store.removeItem(KEYS.STATE); store.removeItem(KEYS.BACKUP);
+      const v3 = await (await fetch('../../spec/paper-trail-progress.json')).json();
+      applyMigration(v3, store, { now: Date.now() });
+      const saved = loadState(store);
+      check('migration writes to window.localStorage and reads back',
+        !!saved && saved.schema === 'paper-trail/v4');
+      check('streak preserved (3 / 10)', saved.streak.cur === 3 && saved.streak.best === 10);
+      check('three topic records by display name', saved.v1History.topics.length === 3,
+        saved.v1History.topics.map(t => t.name).join(' | '));
+      check('zero concept states created', saved.attemptLog.length === 0);
+
+      // Prove the namespaced key is physically in localStorage.
+      const raw = window.localStorage.getItem('papertrail:v4:state');
+      check("key 'papertrail:v4:state' present in localStorage", raw !== null);
+
+      // 4. deriveAll on the migrated (empty) log → every concept Unvisited.
+      const { states } = deriveAll(new AttemptLog(saved.attemptLog), { now: Date.now(), conceptIds: graph.liveIds() });
+      const nonUnvisited = [...states.values()].filter(s => s.state !== 'Unvisited').length;
+      check('all 191 concepts start Unvisited after migration', nonUnvisited === 0, `non-unvisited=${nonUnvisited}`);
+
+      // 5. Rollback removes the migrated state (leaves the app as before).
+      rollbackMigration(store);
+      check('rollback clears migrated state', loadState(store) === null);
+    } catch (e) {
+      check('EXCEPTION during run', false, String(e && e.stack || e));
+    }
+
+    // Render.
+    const tbody = document.querySelector('#results tbody');
+    for (const r of rows) {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${r.name}${r.detail ? ` <small>(${r.detail})</small>` : ''}</td>`
+        + `<td class="${r.pass ? 'ok' : 'fail'}">${r.pass ? 'PASS' : 'FAIL'}</td>`;
+      tbody.appendChild(tr);
+    }
+    const allPass = rows.every(r => r.pass);
+    const v = document.querySelector('#verdict');
+    v.textContent = allPass ? `ALL ${rows.length} BROWSER CHECKS PASS` : 'BROWSER CHECKS FAILED';
+    v.className = allPass ? 'ok' : 'fail';
+    window.__SMOKE__ = { allPass, total: rows.length, rows };
+    console.log(`SMOKE RESULT: ${allPass ? 'PASS' : 'FAIL'} (${rows.filter(r => r.pass).length}/${rows.length})`);
+  </script>
+</body>
+</html>
