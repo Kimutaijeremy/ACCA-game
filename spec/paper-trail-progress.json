@@ -1,0 +1,172 @@
+{
+ "v": 3,
+ "stats": {
+  "Double entry & the equation": {
+   "s": 14,
+   "c": 12
+  },
+  "Adjustments & period end": {
+   "s": 10,
+   "c": 9
+  },
+  "Trial balance to statements": {
+   "s": 10,
+   "c": 9
+  }
+ },
+ "streak": {
+  "cur": 3,
+  "best": 10
+ },
+ "nodes": {
+  "FA1": {
+   "recent": [
+    1,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1
+   ],
+   "mastered": true,
+   "last": 1785189715880
+  },
+  "FA2": {
+   "recent": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    1,
+    1
+   ],
+   "mastered": true,
+   "last": 1785190160507
+  },
+  "FA3": {
+   "recent": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    0,
+    1,
+    1,
+    1
+   ],
+   "mastered": true,
+   "last": 1785190744176
+  },
+  "FR1": {
+   "recent": [],
+   "mastered": false
+  },
+  "FR2": {
+   "recent": [],
+   "mastered": false
+  },
+  "FR7": {
+   "recent": [],
+   "mastered": false
+  },
+  "FR3": {
+   "recent": [],
+   "mastered": false
+  },
+  "FR4": {
+   "recent": [],
+   "mastered": false
+  },
+  "FR5": {
+   "recent": [],
+   "mastered": false
+  },
+  "FR6": {
+   "recent": [],
+   "mastered": false
+  },
+  "AA1": {
+   "recent": [],
+   "mastered": false
+  },
+  "AA2": {
+   "recent": [],
+   "mastered": false
+  },
+  "AA3": {
+   "recent": [],
+   "mastered": false
+  },
+  "AA4": {
+   "recent": [],
+   "mastered": false
+  },
+  "AA5": {
+   "recent": [],
+   "mastered": false
+  }
+ },
+ "custom": [],
+ "papers": {
+  "BT": {
+   "passed": false
+  },
+  "MA": {
+   "passed": false
+  },
+  "FA": {
+   "passed": false
+  },
+  "LW": {
+   "passed": false
+  },
+  "PM": {
+   "passed": false
+  },
+  "TX": {
+   "passed": false
+  },
+  "FR": {
+   "passed": false
+  },
+  "AA": {
+   "passed": false
+  },
+  "FM": {
+   "passed": false
+  },
+  "SBL": {
+   "passed": false
+  },
+  "SBR": {
+   "passed": false
+  },
+  "AFM": {
+   "passed": false
+  },
+  "APM": {
+   "passed": false
+  },
+  "ATX": {
+   "passed": false
+  },
+  "AAA": {
+   "passed": false
+  }
+ },
+ "cr": {},
+ "packs": [],
+ "ethics": false
+}

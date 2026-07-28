@@ -1,0 +1,3566 @@
+{
+  "schema_version": "1.0",
+  "spec": "Paper Trail Learning System Specification v1.0, Section 3",
+  "built": "2026-07-28",
+  "counts": {
+    "live": 191,
+    "stubs": 38,
+    "edges": 273
+  },
+  "concepts": [
+    {
+      "id": "FR-S01",
+      "name": "Revaluation model for PPE",
+      "paper": "FR",
+      "outcome": "FR B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S02",
+      "name": "Impairment of assets",
+      "paper": "FR",
+      "outcome": "FR B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S03",
+      "name": "Leases (IFRS 16)",
+      "paper": "FR",
+      "outcome": "FR C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S04",
+      "name": "Revenue \u2014 the five-step model",
+      "paper": "FR",
+      "outcome": "FR C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S05",
+      "name": "Consolidation with fair value adjustments",
+      "paper": "FR",
+      "outcome": "FR D",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S06",
+      "name": "Associates \u2014 the equity method at FR depth",
+      "paper": "FR",
+      "outcome": "FR D",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S07",
+      "name": "Statement of cash flows at FR depth",
+      "paper": "FR",
+      "outcome": "FR D",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S08",
+      "name": "Interpretation and analysis at FR depth",
+      "paper": "FR",
+      "outcome": "FR E",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S09",
+      "name": "Provisions and contingencies (IAS 37)",
+      "paper": "FR",
+      "outcome": "FR C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S10",
+      "name": "Earnings per share (IAS 33)",
+      "paper": "FR",
+      "outcome": "FR C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S11",
+      "name": "The conceptual framework at FR depth",
+      "paper": "FR",
+      "outcome": "FR A",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S12",
+      "name": "Intangible assets (IAS 38)",
+      "paper": "FR",
+      "outcome": "FR B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S13",
+      "name": "Government grants and borrowing costs",
+      "paper": "FR",
+      "outcome": "FR B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S14",
+      "name": "Income taxes (IAS 12)",
+      "paper": "FR",
+      "outcome": "FR C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S15",
+      "name": "Inventories and biological assets",
+      "paper": "FR",
+      "outcome": "FR C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S16",
+      "name": "Financial instruments",
+      "paper": "FR",
+      "outcome": "FR C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FR-S17",
+      "name": "Single-entity statements from a trial balance",
+      "paper": "FR",
+      "outcome": "FR D",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S01",
+      "name": "Activity based costing at PM depth",
+      "paper": "PM",
+      "outcome": "PM A",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S02",
+      "name": "Target costing",
+      "paper": "PM",
+      "outcome": "PM A",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S03",
+      "name": "Life-cycle costing",
+      "paper": "PM",
+      "outcome": "PM A",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S04",
+      "name": "Throughput accounting",
+      "paper": "PM",
+      "outcome": "PM A",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S05",
+      "name": "Environmental accounting",
+      "paper": "PM",
+      "outcome": "PM A",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S06",
+      "name": "Relevant cost analysis",
+      "paper": "PM",
+      "outcome": "PM B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S07",
+      "name": "Cost-volume-profit analysis",
+      "paper": "PM",
+      "outcome": "PM B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S08",
+      "name": "Limiting factors and linear programming",
+      "paper": "PM",
+      "outcome": "PM B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S09",
+      "name": "Pricing decisions",
+      "paper": "PM",
+      "outcome": "PM B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S10",
+      "name": "Risk and uncertainty in decision making",
+      "paper": "PM",
+      "outcome": "PM B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S11",
+      "name": "Budgetary systems and types",
+      "paper": "PM",
+      "outcome": "PM C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S12",
+      "name": "Advanced variances \u2014 mix, yield, planning and operational",
+      "paper": "PM",
+      "outcome": "PM C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S13",
+      "name": "Divisional performance and transfer pricing",
+      "paper": "PM",
+      "outcome": "PM D",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "PM-S14",
+      "name": "Performance measurement frameworks",
+      "paper": "PM",
+      "outcome": "PM D",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FM-S01",
+      "name": "Investment appraisal at FM depth",
+      "paper": "FM",
+      "outcome": "FM D",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FM-S02",
+      "name": "Working capital management",
+      "paper": "FM",
+      "outcome": "FM C",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FM-S03",
+      "name": "Cost of capital and WACC",
+      "paper": "FM",
+      "outcome": "FM E",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FM-S04",
+      "name": "Sources of business finance",
+      "paper": "FM",
+      "outcome": "FM E",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FM-S05",
+      "name": "Business valuations",
+      "paper": "FM",
+      "outcome": "FM F",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FM-S06",
+      "name": "Risk management \u2014 currency and interest rate",
+      "paper": "FM",
+      "outcome": "FM G",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "FM-S07",
+      "name": "Financial analysis at FM depth",
+      "paper": "FM",
+      "outcome": "FM B",
+      "definition": "Skills-level landing node. Reserved target for growth edges; no Phase 1 content.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": true
+    },
+    {
+      "id": "BT-01",
+      "name": "Purpose and types of business organisation",
+      "paper": "BT",
+      "outcome": "BT A1",
+      "definition": "Why organisations exist, and how sole traders, partnerships, limited companies, not-for-profits and public sector bodies differ.",
+      "prerequisite_of": [
+        "BT-02",
+        "BT-03"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-02",
+      "name": "Profit orientation and not-for-profit objectives",
+      "paper": "BT",
+      "outcome": "BT A1",
+      "definition": "How the objective of the organisation changes what 'performance' means.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-01"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-03",
+      "name": "Stakeholders and stakeholder classification",
+      "paper": "BT",
+      "outcome": "BT A2",
+      "definition": "Internal, connected and external stakeholders, and the claim each holds on the organisation.",
+      "prerequisite_of": [
+        "BT-04",
+        "BT-22"
+      ],
+      "prerequisites": [
+        "BT-01"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-04",
+      "name": "Stakeholder power, interest and conflict",
+      "paper": "BT",
+      "outcome": "BT A2",
+      "definition": "Mendelow-style mapping of power against interest, and how competing claims are resolved.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-03"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-05",
+      "name": "Political and legal factors",
+      "paper": "BT",
+      "outcome": "BT A3",
+      "definition": "How government policy, law and regulation shape what an organisation may do.",
+      "prerequisite_of": [
+        "BT-06",
+        "BT-14"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-06",
+      "name": "Data protection, employment and health-and-safety regulation",
+      "paper": "BT",
+      "outcome": "BT A3",
+      "definition": "The specific legal duties an employer carries towards data, staff and workplace safety.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-05"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-07",
+      "name": "Macroeconomic policy and objectives",
+      "paper": "BT",
+      "outcome": "BT A4",
+      "definition": "Fiscal and monetary policy and the four standard objectives governments pursue.",
+      "prerequisite_of": [
+        "BT-08",
+        "BT-14"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-08",
+      "name": "The business cycle and macroeconomic indicators",
+      "paper": "BT",
+      "outcome": "BT A4",
+      "definition": "Growth, inflation, unemployment and balance of payments, and how the cycle moves them.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-07"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-09",
+      "name": "Demand, supply and elasticity",
+      "paper": "BT",
+      "outcome": "BT A5",
+      "definition": "How price, income and substitutes move quantity, and what elasticity tells a business.",
+      "prerequisite_of": [
+        "BT-13"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-10",
+      "name": "Social and demographic factors",
+      "paper": "BT",
+      "outcome": "BT A6",
+      "definition": "Population structure, workforce change and social attitudes as business drivers.",
+      "prerequisite_of": [
+        "BT-14"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-11",
+      "name": "Technological factors and the value chain",
+      "paper": "BT",
+      "outcome": "BT A7",
+      "definition": "How technology reshapes primary and support activities and the sources of value.",
+      "prerequisite_of": [
+        "BT-14"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-12",
+      "name": "Environmental factors and sustainability",
+      "paper": "BT",
+      "outcome": "BT A8",
+      "definition": "Environmental impact, sustainable practice and the reporting expectations that follow.",
+      "prerequisite_of": [
+        "BT-14"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-13",
+      "name": "Competitive forces and competitive advantage",
+      "paper": "BT",
+      "outcome": "BT A9",
+      "definition": "The five competitive forces and the generic strategies available in response.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-09"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-14",
+      "name": "PESTEL as an integrating framework",
+      "paper": "BT",
+      "outcome": "BT A3-A9",
+      "definition": "Assembling political, economic, social, technological, environmental and legal factors into one external analysis.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-05",
+        "BT-07",
+        "BT-10",
+        "BT-11",
+        "BT-12"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-13"
+      ],
+      "stub": false
+    },
+    {
+      "id": "BT-15",
+      "name": "Formal and informal organisation",
+      "paper": "BT",
+      "outcome": "BT B1",
+      "definition": "The official structure versus the real network of relationships that operates alongside it.",
+      "prerequisite_of": [
+        "BT-16"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-16",
+      "name": "Organisational structure and design",
+      "paper": "BT",
+      "outcome": "BT B2",
+      "definition": "Functional, divisional, geographic, matrix and boundaryless structures and when each fits.",
+      "prerequisite_of": [
+        "BT-17",
+        "BT-18"
+      ],
+      "prerequisites": [
+        "BT-15"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-17",
+      "name": "Mintzberg's building blocks and coordinating mechanisms",
+      "paper": "BT",
+      "outcome": "BT B2",
+      "definition": "The five parts of the organisation and how work is coordinated between them.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-16"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-18",
+      "name": "Centralisation, decentralisation and span of control",
+      "paper": "BT",
+      "outcome": "BT B2",
+      "definition": "Where decisions sit, how tall or flat the hierarchy runs, and the trade-offs of each.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-16"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-19",
+      "name": "Organisational culture",
+      "paper": "BT",
+      "outcome": "BT B3",
+      "definition": "Shared values and assumptions, and why culture constrains what structure can achieve.",
+      "prerequisite_of": [
+        "BT-20"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-20",
+      "name": "Culture models \u2014 Handy, Schein, Hofstede",
+      "paper": "BT",
+      "outcome": "BT B3",
+      "definition": "The named typologies used to describe and compare cultures.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-19"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-21",
+      "name": "Committees in business organisations",
+      "paper": "BT",
+      "outcome": "BT B4",
+      "definition": "Types of committee, their purpose, and the strengths and weaknesses of committee decision making.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-22",
+      "name": "Corporate governance principles",
+      "paper": "BT",
+      "outcome": "BT B5",
+      "definition": "The agency problem, the separation of ownership from control, and the principles that answer it.",
+      "prerequisite_of": [
+        "BT-23",
+        "BT-24"
+      ],
+      "prerequisites": [
+        "BT-03"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-23",
+      "name": "Board structure and non-executive directors",
+      "paper": "BT",
+      "outcome": "BT B5",
+      "definition": "Board composition, the role of NEDs, and the standing committees of the board.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-22"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-21"
+      ],
+      "stub": false
+    },
+    {
+      "id": "BT-24",
+      "name": "Corporate social responsibility",
+      "paper": "BT",
+      "outcome": "BT B5",
+      "definition": "Responsibility beyond shareholders, and how CSR positions are argued and criticised.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-22"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-12"
+      ],
+      "stub": false
+    },
+    {
+      "id": "BT-25",
+      "name": "Accounting's relationship with other business functions",
+      "paper": "BT",
+      "outcome": "BT C1",
+      "definition": "How finance interlocks with operations, marketing, HR and IT.",
+      "prerequisite_of": [
+        "BT-26"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-26",
+      "name": "The accounting and finance function",
+      "paper": "BT",
+      "outcome": "BT C2",
+      "definition": "Financial accounting, management accounting, treasury and internal audit as distinct roles.",
+      "prerequisite_of": [
+        "BT-27"
+      ],
+      "prerequisites": [
+        "BT-25"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-27",
+      "name": "Financial versus management accounting",
+      "paper": "BT",
+      "outcome": "BT C2",
+      "definition": "External reporting to fixed rules versus internal reporting shaped to the decision.",
+      "prerequisite_of": [
+        "BT-30",
+        "MA-01",
+        "FA-01"
+      ],
+      "prerequisites": [
+        "BT-26"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-28",
+      "name": "Law and regulation governing accounting and audit",
+      "paper": "BT",
+      "outcome": "BT C3",
+      "definition": "Company law, accounting standards and the audit requirement in outline.",
+      "prerequisite_of": [
+        "BT-29",
+        "BT-57"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-29",
+      "name": "Internal and external audit",
+      "paper": "BT",
+      "outcome": "BT C3",
+      "definition": "Who each auditor serves, what each examines, and how the two differ in independence and scope.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-28"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-30",
+      "name": "Sources and purpose of financial information",
+      "paper": "BT",
+      "outcome": "BT C4",
+      "definition": "What information the business produces, for whom, and to what end.",
+      "prerequisite_of": [
+        "BT-31"
+      ],
+      "prerequisites": [
+        "BT-27"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-31",
+      "name": "Financial systems, procedures and IT applications",
+      "paper": "BT",
+      "outcome": "BT C5",
+      "definition": "The transaction cycles and the systems that record them.",
+      "prerequisite_of": [
+        "BT-32",
+        "BT-36"
+      ],
+      "prerequisites": [
+        "BT-30"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-32",
+      "name": "Internal control systems and their limitations",
+      "paper": "BT",
+      "outcome": "BT C6",
+      "definition": "Control objectives, control types, and why no control system is absolute.",
+      "prerequisite_of": [
+        "BT-33",
+        "BT-34"
+      ],
+      "prerequisites": [
+        "BT-31"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-33",
+      "name": "Authorisation, data security and compliance",
+      "paper": "BT",
+      "outcome": "BT C6",
+      "definition": "Access control, segregation of duties, and safeguarding data.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-32"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-34",
+      "name": "Fraud, fraud risk and prevention",
+      "paper": "BT",
+      "outcome": "BT C7",
+      "definition": "The conditions that make fraud possible and the controls that reduce them.",
+      "prerequisite_of": [
+        "BT-35"
+      ],
+      "prerequisites": [
+        "BT-32"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-35",
+      "name": "Money laundering",
+      "paper": "BT",
+      "outcome": "BT C7",
+      "definition": "The stages of laundering, the offences, and the reporting duties placed on accountants.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-34"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-36",
+      "name": "Financial technology and its impact on accounting",
+      "paper": "BT",
+      "outcome": "BT C8",
+      "definition": "Automation, cloud systems, big data, AI and distributed ledgers as they touch the finance function.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-31"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-11"
+      ],
+      "stub": false
+    },
+    {
+      "id": "BT-37",
+      "name": "Leadership, management and supervision",
+      "paper": "BT",
+      "outcome": "BT D1",
+      "definition": "The distinction between leading, managing and supervising work.",
+      "prerequisite_of": [
+        "BT-38",
+        "BT-39"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-38",
+      "name": "Management theory \u2014 Fayol, Mintzberg, Drucker",
+      "paper": "BT",
+      "outcome": "BT D1",
+      "definition": "The classical functions, the observed managerial roles, and management by objectives.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-37"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-39",
+      "name": "Leadership styles and contingency approaches",
+      "paper": "BT",
+      "outcome": "BT D1",
+      "definition": "Blake and Mouton's grid, Bennis, Heifetz, and situational fit.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-37"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-40",
+      "name": "Recruitment and selection",
+      "paper": "BT",
+      "outcome": "BT D2",
+      "definition": "Job analysis through to selection method, and the validity of each method.",
+      "prerequisite_of": [
+        "BT-41"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-41",
+      "name": "Diversity and equal opportunities",
+      "paper": "BT",
+      "outcome": "BT D2",
+      "definition": "The difference between equal opportunity compliance and managing diversity.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-40"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-42",
+      "name": "Individual and group behaviour",
+      "paper": "BT",
+      "outcome": "BT D3",
+      "definition": "Personality, perception and role, and how behaviour changes inside a group.",
+      "prerequisite_of": [
+        "BT-43",
+        "BT-45",
+        "BT-53"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-43",
+      "name": "Team formation and Belbin roles",
+      "paper": "BT",
+      "outcome": "BT D4",
+      "definition": "What makes a team rather than a group, and the roles a balanced team needs.",
+      "prerequisite_of": [
+        "BT-44"
+      ],
+      "prerequisites": [
+        "BT-42"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-44",
+      "name": "Team development \u2014 Tuckman",
+      "paper": "BT",
+      "outcome": "BT D4",
+      "definition": "Forming, storming, norming, performing and dorming as a predictable sequence.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-43"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-45",
+      "name": "Motivation theories \u2014 Maslow, Herzberg, Vroom",
+      "paper": "BT",
+      "outcome": "BT D5",
+      "definition": "Content and process theories of what makes people work.",
+      "prerequisite_of": [
+        "BT-46"
+      ],
+      "prerequisites": [
+        "BT-42"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-46",
+      "name": "Reward and incentive systems",
+      "paper": "BT",
+      "outcome": "BT D5",
+      "definition": "Pay structures and incentives, and how they interact with motivation theory.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-45"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-47",
+      "name": "Learning and training at work",
+      "paper": "BT",
+      "outcome": "BT D6",
+      "definition": "Training needs analysis, methods of development, and evaluating training.",
+      "prerequisite_of": [
+        "BT-48",
+        "BT-49"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-48",
+      "name": "Learning styles \u2014 Kolb, Honey and Mumford",
+      "paper": "BT",
+      "outcome": "BT D6",
+      "definition": "The learning cycle and the four learner preferences.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-47"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-49",
+      "name": "Performance appraisal",
+      "paper": "BT",
+      "outcome": "BT D7",
+      "definition": "The purposes of appraisal, the process, and the barriers to it working.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-47"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-50",
+      "name": "Personal effectiveness and time management",
+      "paper": "BT",
+      "outcome": "BT E1",
+      "definition": "Planning, prioritising and organising one's own work.",
+      "prerequisite_of": [
+        "BT-51",
+        "BT-52"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-51",
+      "name": "Consequences of ineffectiveness at work",
+      "paper": "BT",
+      "outcome": "BT E2",
+      "definition": "How individual ineffectiveness propagates into team and organisational failure.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-50"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-52",
+      "name": "Competence frameworks and continuing development",
+      "paper": "BT",
+      "outcome": "BT E3",
+      "definition": "Defining competence, identifying gaps, and the CPD obligation.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-50"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-53",
+      "name": "Conflict sources and resolution",
+      "paper": "BT",
+      "outcome": "BT E4",
+      "definition": "Where workplace conflict originates and the techniques for resolving or referring it.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-42"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-54",
+      "name": "Communicating in business",
+      "paper": "BT",
+      "outcome": "BT E5",
+      "definition": "The communication process, channel choice, and the barriers that distort a message.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-55",
+      "name": "Fundamental principles of ethical behaviour",
+      "paper": "BT",
+      "outcome": "BT F1",
+      "definition": "Integrity, objectivity, professional competence and due care, confidentiality, professional behaviour.",
+      "prerequisite_of": [
+        "BT-56",
+        "BT-58",
+        "BT-59"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-56",
+      "name": "Rules-based and principles-based approaches",
+      "paper": "BT",
+      "outcome": "BT F1",
+      "definition": "Why the profession codifies principles rather than an exhaustive rulebook.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-55"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-57",
+      "name": "Regulatory and professional bodies",
+      "paper": "BT",
+      "outcome": "BT F2",
+      "definition": "Who sets and enforces professional standards, and the public interest duty behind them.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-28"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-58",
+      "name": "Corporate codes of ethics",
+      "paper": "BT",
+      "outcome": "BT F3",
+      "definition": "What an organisational code contains and how it differs from the professional code.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-55"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-59",
+      "name": "Ethical threats and safeguards",
+      "paper": "BT",
+      "outcome": "BT F4",
+      "definition": "Self-interest, self-review, advocacy, familiarity and intimidation, and the safeguards against each.",
+      "prerequisite_of": [
+        "BT-60"
+      ],
+      "prerequisites": [
+        "BT-55"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "BT-60",
+      "name": "Resolving ethical conflicts and dilemmas",
+      "paper": "BT",
+      "outcome": "BT F4",
+      "definition": "The escalation route when principles collide, up to and including withdrawal.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "BT-59"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-35"
+      ],
+      "stub": false
+    },
+    {
+      "id": "MA-01",
+      "name": "Purpose of management accounting information",
+      "paper": "MA",
+      "outcome": "MA A1",
+      "definition": "Information produced to plan, control and decide inside the business.",
+      "prerequisite_of": [
+        "MA-02",
+        "MA-03"
+      ],
+      "prerequisites": [
+        "BT-27"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-02",
+      "name": "Financial, management and cost accounting compared",
+      "paper": "MA",
+      "outcome": "MA A1",
+      "definition": "Three uses of the same underlying data, distinguished by audience and rules.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-01"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-03",
+      "name": "The planning, control and decision-making cycle",
+      "paper": "MA",
+      "outcome": "MA A1",
+      "definition": "Set objectives, plan, act, measure, compare, correct \u2014 the loop management accounting serves.",
+      "prerequisite_of": [
+        "MA-38",
+        "MA-60"
+      ],
+      "prerequisites": [
+        "MA-01"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-04",
+      "name": "Data, information and the qualities of good information",
+      "paper": "MA",
+      "outcome": "MA A2",
+      "definition": "What raises raw data into information a manager can act on.",
+      "prerequisite_of": [
+        "MA-05",
+        "MA-09"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-05",
+      "name": "Sources of data \u2014 internal and external",
+      "paper": "MA",
+      "outcome": "MA A2",
+      "definition": "Where management information comes from and the limits of each source.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-04"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-06",
+      "name": "Cost classification by nature, function and traceability",
+      "paper": "MA",
+      "outcome": "MA A3",
+      "definition": "Direct and indirect, product and period, materials, labour and overhead.",
+      "prerequisite_of": [
+        "MA-07",
+        "MA-08",
+        "MA-19",
+        "MA-21",
+        "MA-23"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-07",
+      "name": "Cost behaviour \u2014 fixed, variable, semi-variable, stepped",
+      "paper": "MA",
+      "outcome": "MA A3",
+      "definition": "How cost responds to changes in activity, and the relevant range assumption.",
+      "prerequisite_of": [
+        "MA-11",
+        "MA-27",
+        "MA-43"
+      ],
+      "prerequisites": [
+        "MA-06"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-08",
+      "name": "Cost units, cost centres, profit and investment centres",
+      "paper": "MA",
+      "outcome": "MA A3",
+      "definition": "The responsibility structure that costs and revenues are collected against.",
+      "prerequisite_of": [
+        "MA-63"
+      ],
+      "prerequisites": [
+        "MA-06"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-18"
+      ],
+      "stub": false
+    },
+    {
+      "id": "MA-09",
+      "name": "Presenting management information",
+      "paper": "MA",
+      "outcome": "MA A4",
+      "definition": "Tables, charts and report formats chosen to fit the decision and the reader.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-04"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-10",
+      "name": "Sampling methods",
+      "paper": "MA",
+      "outcome": "MA B1",
+      "definition": "Random, systematic, stratified, multistage, cluster and quota sampling and their biases.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-11",
+      "name": "The high-low method",
+      "paper": "MA",
+      "outcome": "MA B2",
+      "definition": "Splitting a semi-variable cost into its fixed and variable elements from two activity levels.",
+      "prerequisite_of": [
+        "MA-12"
+      ],
+      "prerequisites": [
+        "MA-07"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-12",
+      "name": "Correlation and linear regression",
+      "paper": "MA",
+      "outcome": "MA B2",
+      "definition": "Fitting and interpreting a cost or sales line, and what the correlation coefficient does and does not prove.",
+      "prerequisite_of": [
+        "MA-13"
+      ],
+      "prerequisites": [
+        "MA-11"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-13",
+      "name": "Time series analysis and seasonal variation",
+      "paper": "MA",
+      "outcome": "MA B2",
+      "definition": "Trend, seasonal, cyclical and random components, and additive versus multiplicative models.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-12"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-14",
+      "name": "Index numbers",
+      "paper": "MA",
+      "outcome": "MA B2",
+      "definition": "Restating money amounts to a common base to compare across time.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-15",
+      "name": "Expected values and probability",
+      "paper": "MA",
+      "outcome": "MA B2",
+      "definition": "Weighting outcomes by likelihood, and the limitations of a single expected figure.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [
+        "PM-S10"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-16",
+      "name": "Averages and measures of dispersion",
+      "paper": "MA",
+      "outcome": "MA B3",
+      "definition": "Mean, median, mode, range, standard deviation and what spread adds to an average.",
+      "prerequisite_of": [
+        "MA-17"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-17",
+      "name": "The normal distribution",
+      "paper": "MA",
+      "outcome": "MA B3",
+      "definition": "Using a standardised distribution to attach probability to a range of outcomes.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-16"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-18",
+      "name": "Spreadsheets in management accounting",
+      "paper": "MA",
+      "outcome": "MA B4",
+      "definition": "Structure, formulae, and the control weaknesses spreadsheets introduce.",
+      "prerequisite_of": [],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-36"
+      ],
+      "stub": false
+    },
+    {
+      "id": "MA-19",
+      "name": "Accounting for materials \u2014 ordering and holding",
+      "paper": "MA",
+      "outcome": "MA C1",
+      "definition": "Reorder levels, economic order quantity and economic batch quantity.",
+      "prerequisite_of": [
+        "MA-20"
+      ],
+      "prerequisites": [
+        "MA-06"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-20",
+      "name": "Inventory valuation \u2014 FIFO and AVCO",
+      "paper": "MA",
+      "outcome": "MA C1",
+      "definition": "Costing issues out of store, and the effect of method choice on profit.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-19"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "FA-21"
+      ],
+      "stub": false
+    },
+    {
+      "id": "MA-21",
+      "name": "Accounting for labour",
+      "paper": "MA",
+      "outcome": "MA C1",
+      "definition": "Remuneration methods, direct versus indirect labour, idle time and overtime.",
+      "prerequisite_of": [
+        "MA-22"
+      ],
+      "prerequisites": [
+        "MA-06"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-22",
+      "name": "Labour turnover and efficiency ratios",
+      "paper": "MA",
+      "outcome": "MA C1",
+      "definition": "Measuring the workforce: turnover, capacity, efficiency and production volume ratios.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-21"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-23",
+      "name": "Overhead allocation and apportionment",
+      "paper": "MA",
+      "outcome": "MA C1",
+      "definition": "Assigning indirect cost to cost centres, including reciprocal service departments.",
+      "prerequisite_of": [
+        "MA-24"
+      ],
+      "prerequisites": [
+        "MA-06"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-24",
+      "name": "Overhead absorption rates",
+      "paper": "MA",
+      "outcome": "MA C1",
+      "definition": "Building a predetermined rate and charging overhead to units.",
+      "prerequisite_of": [
+        "MA-25",
+        "MA-26",
+        "MA-34"
+      ],
+      "prerequisites": [
+        "MA-23"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-25",
+      "name": "Over- and under-absorption of overhead",
+      "paper": "MA",
+      "outcome": "MA C1",
+      "definition": "Why absorbed overhead differs from actual, and how the difference is treated.",
+      "prerequisite_of": [
+        "MA-56"
+      ],
+      "prerequisites": [
+        "MA-24"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-26",
+      "name": "Absorption costing",
+      "paper": "MA",
+      "outcome": "MA C2",
+      "definition": "Full product cost including a share of fixed production overhead.",
+      "prerequisite_of": [
+        "MA-28",
+        "MA-29",
+        "MA-30",
+        "MA-33",
+        "MA-35",
+        "MA-36",
+        "MA-37",
+        "MA-52"
+      ],
+      "prerequisites": [
+        "MA-24"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-27",
+      "name": "Marginal costing and contribution",
+      "paper": "MA",
+      "outcome": "MA C2",
+      "definition": "Variable cost as the decision cost, and contribution as the measure that follows.",
+      "prerequisite_of": [
+        "MA-28"
+      ],
+      "prerequisites": [
+        "MA-07"
+      ],
+      "grows_into": [
+        "PM-S06",
+        "PM-S07"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-28",
+      "name": "Reconciling absorption and marginal costing profit",
+      "paper": "MA",
+      "outcome": "MA C2",
+      "definition": "Why the two methods report different profit, and how inventory movement explains the gap.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-26",
+        "MA-27"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-29",
+      "name": "Job and batch costing",
+      "paper": "MA",
+      "outcome": "MA C3",
+      "definition": "Costing discrete, identifiable units of work.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-26"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-30",
+      "name": "Process costing \u2014 normal and abnormal losses",
+      "paper": "MA",
+      "outcome": "MA C3",
+      "definition": "Continuous production, expected loss, scrap value, and abnormal loss or gain.",
+      "prerequisite_of": [
+        "MA-31",
+        "MA-32"
+      ],
+      "prerequisites": [
+        "MA-26"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-31",
+      "name": "Process costing \u2014 equivalent units and work in progress",
+      "paper": "MA",
+      "outcome": "MA C3",
+      "definition": "Valuing partly complete output under weighted average and FIFO.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-30"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-32",
+      "name": "Joint products and by-products",
+      "paper": "MA",
+      "outcome": "MA C3",
+      "definition": "Splitting common cost at the separation point and treating incidental output.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-30"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-33",
+      "name": "Service costing",
+      "paper": "MA",
+      "outcome": "MA C3",
+      "definition": "Costing where there is no physical product, using composite cost units.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-26"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-34",
+      "name": "Activity based costing",
+      "paper": "MA",
+      "outcome": "MA C4",
+      "definition": "Driving overhead by activity rather than volume.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-24"
+      ],
+      "grows_into": [
+        "PM-S01"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-35",
+      "name": "Target costing",
+      "paper": "MA",
+      "outcome": "MA C4",
+      "definition": "Working backwards from market price and required margin to an allowable cost.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-26"
+      ],
+      "grows_into": [
+        "PM-S02"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-36",
+      "name": "Life-cycle costing",
+      "paper": "MA",
+      "outcome": "MA C4",
+      "definition": "Costing a product across its whole life rather than one period.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-26"
+      ],
+      "grows_into": [
+        "PM-S03"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-37",
+      "name": "Total quality management and cost of quality",
+      "paper": "MA",
+      "outcome": "MA C4",
+      "definition": "Prevention, appraisal, internal and external failure cost.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-26"
+      ],
+      "grows_into": [
+        "PM-S04"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-38",
+      "name": "Purpose and stages of budgeting",
+      "paper": "MA",
+      "outcome": "MA D1",
+      "definition": "Planning, coordinating, communicating, motivating, controlling and evaluating.",
+      "prerequisite_of": [
+        "MA-39",
+        "MA-40"
+      ],
+      "prerequisites": [
+        "MA-03"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-39",
+      "name": "Budget committee, budget manual and responsibility",
+      "paper": "MA",
+      "outcome": "MA D1",
+      "definition": "Who owns which budget and how the process is administered.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-38"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "MA-08"
+      ],
+      "stub": false
+    },
+    {
+      "id": "MA-40",
+      "name": "Functional budgets and the master budget",
+      "paper": "MA",
+      "outcome": "MA D2",
+      "definition": "Sales, production, materials, labour and overhead budgets assembling into the master budget.",
+      "prerequisite_of": [
+        "MA-41",
+        "MA-42",
+        "MA-43"
+      ],
+      "prerequisites": [
+        "MA-38"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-41",
+      "name": "Cash budgets",
+      "paper": "MA",
+      "outcome": "MA D2",
+      "definition": "Timing receipts and payments, and reading the resulting cash position.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-40"
+      ],
+      "grows_into": [
+        "FM-S02"
+      ],
+      "integrates_with": [
+        "FA-51"
+      ],
+      "stub": false
+    },
+    {
+      "id": "MA-42",
+      "name": "The principal budget factor",
+      "paper": "MA",
+      "outcome": "MA D2",
+      "definition": "Identifying the constraint that the whole budget must be built around.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-40"
+      ],
+      "grows_into": [
+        "PM-S08"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-43",
+      "name": "Flexible budgets",
+      "paper": "MA",
+      "outcome": "MA D3",
+      "definition": "Restating the budget at actual activity so the comparison is fair.",
+      "prerequisite_of": [
+        "MA-44"
+      ],
+      "prerequisites": [
+        "MA-07",
+        "MA-40"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-44",
+      "name": "Fixed, flexed and actual comparison",
+      "paper": "MA",
+      "outcome": "MA D3",
+      "definition": "The three-column control report and what each variance column means.",
+      "prerequisite_of": [
+        "MA-50"
+      ],
+      "prerequisites": [
+        "MA-43"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-45",
+      "name": "Time value of money and discounting",
+      "paper": "MA",
+      "outcome": "MA D4",
+      "definition": "Why a shilling today outranks a shilling next year, and how discount factors express it.",
+      "prerequisite_of": [
+        "MA-46",
+        "MA-48",
+        "MA-49"
+      ],
+      "prerequisites": [],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-46",
+      "name": "Net present value",
+      "paper": "MA",
+      "outcome": "MA D4",
+      "definition": "Discounting a project's cash flows to a single accept-or-reject figure.",
+      "prerequisite_of": [
+        "MA-47"
+      ],
+      "prerequisites": [
+        "MA-45"
+      ],
+      "grows_into": [
+        "FM-S01"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-47",
+      "name": "Internal rate of return",
+      "paper": "MA",
+      "outcome": "MA D4",
+      "definition": "The discount rate at which a project breaks even, and interpolation to find it.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-46"
+      ],
+      "grows_into": [
+        "FM-S01"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-48",
+      "name": "Payback period",
+      "paper": "MA",
+      "outcome": "MA D4",
+      "definition": "How fast the outlay returns, and why speed alone is an incomplete test.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-45"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-49",
+      "name": "Annuities and perpetuities",
+      "paper": "MA",
+      "outcome": "MA D4",
+      "definition": "Shortcuts for level cash flow streams, including delayed starts.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-45"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-50",
+      "name": "Budgetary control and variance reporting",
+      "paper": "MA",
+      "outcome": "MA D5",
+      "definition": "Comparing outcome to plan and reporting the difference to the responsible manager.",
+      "prerequisite_of": [
+        "MA-51"
+      ],
+      "prerequisites": [
+        "MA-44"
+      ],
+      "grows_into": [
+        "PM-S11"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-51",
+      "name": "Behavioural aspects of budgeting",
+      "paper": "MA",
+      "outcome": "MA D6",
+      "definition": "Participation, budget slack, targets and the dysfunctional behaviour budgets can cause.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-50"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-45"
+      ],
+      "stub": false
+    },
+    {
+      "id": "MA-52",
+      "name": "Standard costing systems and setting standards",
+      "paper": "MA",
+      "outcome": "MA E1",
+      "definition": "Building the standard cost card, and ideal, attainable, current and basic standards.",
+      "prerequisite_of": [
+        "MA-53",
+        "MA-54",
+        "MA-55",
+        "MA-56",
+        "MA-57"
+      ],
+      "prerequisites": [
+        "MA-26"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-53",
+      "name": "Material variances",
+      "paper": "MA",
+      "outcome": "MA E2",
+      "definition": "Price and usage variances, and the causes behind each.",
+      "prerequisite_of": [
+        "MA-58"
+      ],
+      "prerequisites": [
+        "MA-52"
+      ],
+      "grows_into": [
+        "PM-S12"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-54",
+      "name": "Labour variances",
+      "paper": "MA",
+      "outcome": "MA E2",
+      "definition": "Rate, efficiency and idle time variances.",
+      "prerequisite_of": [
+        "MA-58"
+      ],
+      "prerequisites": [
+        "MA-52"
+      ],
+      "grows_into": [
+        "PM-S12"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-55",
+      "name": "Variable overhead variances",
+      "paper": "MA",
+      "outcome": "MA E2",
+      "definition": "Expenditure and efficiency variances on variable overhead.",
+      "prerequisite_of": [
+        "MA-58"
+      ],
+      "prerequisites": [
+        "MA-52"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-56",
+      "name": "Fixed overhead variances",
+      "paper": "MA",
+      "outcome": "MA E2",
+      "definition": "Expenditure, and under absorption costing, volume, capacity and efficiency variances.",
+      "prerequisite_of": [
+        "MA-58"
+      ],
+      "prerequisites": [
+        "MA-52",
+        "MA-25"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-57",
+      "name": "Sales variances",
+      "paper": "MA",
+      "outcome": "MA E2",
+      "definition": "Sales price and sales volume variances under both costing methods.",
+      "prerequisite_of": [
+        "MA-58"
+      ],
+      "prerequisites": [
+        "MA-52"
+      ],
+      "grows_into": [
+        "PM-S12"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-58",
+      "name": "Operating statements and profit reconciliation",
+      "paper": "MA",
+      "outcome": "MA E3",
+      "definition": "Reconciling budgeted to actual profit through the variance line.",
+      "prerequisite_of": [
+        "MA-59"
+      ],
+      "prerequisites": [
+        "MA-53",
+        "MA-54",
+        "MA-55",
+        "MA-56",
+        "MA-57"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-59",
+      "name": "Interpreting and interrelating variances",
+      "paper": "MA",
+      "outcome": "MA E3",
+      "definition": "Reading variances as evidence about decisions, including where one variance causes another.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-58"
+      ],
+      "grows_into": [
+        "PM-S12"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-60",
+      "name": "Purpose of performance measurement",
+      "paper": "MA",
+      "outcome": "MA F1",
+      "definition": "What measurement is for, and the mission-to-measure chain.",
+      "prerequisite_of": [
+        "MA-61",
+        "MA-62",
+        "MA-64",
+        "MA-65",
+        "MA-66"
+      ],
+      "prerequisites": [
+        "MA-03"
+      ],
+      "grows_into": [
+        "PM-S14"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-61",
+      "name": "Financial performance indicators",
+      "paper": "MA",
+      "outcome": "MA F2",
+      "definition": "Profitability, liquidity, activity and gearing measures.",
+      "prerequisite_of": [
+        "MA-63"
+      ],
+      "prerequisites": [
+        "MA-60"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "FA-62",
+        "FA-63"
+      ],
+      "stub": false
+    },
+    {
+      "id": "MA-62",
+      "name": "Non-financial indicators and the balanced scorecard",
+      "paper": "MA",
+      "outcome": "MA F2",
+      "definition": "Measuring what money does not capture, across four perspectives.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-60"
+      ],
+      "grows_into": [
+        "PM-S14"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-63",
+      "name": "Divisional performance \u2014 ROI and residual income",
+      "paper": "MA",
+      "outcome": "MA F2",
+      "definition": "Measuring a division as an investment centre, and the distortions each measure creates.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-61",
+        "MA-08"
+      ],
+      "grows_into": [
+        "PM-S13"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-64",
+      "name": "Performance in manufacturing and service contexts",
+      "paper": "MA",
+      "outcome": "MA F2",
+      "definition": "Productivity, quality, and the extra difficulty of measuring intangible service output.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-60"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-65",
+      "name": "Cost reduction and value enhancement",
+      "paper": "MA",
+      "outcome": "MA F3",
+      "definition": "Value analysis and cost reduction distinguished from indiscriminate cost cutting.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-60"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "MA-66",
+      "name": "Monitoring, reporting and benchmarking",
+      "paper": "MA",
+      "outcome": "MA F4",
+      "definition": "Reporting performance onward, and comparing against internal and external benchmarks.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "MA-60"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "MA-09"
+      ],
+      "stub": false
+    },
+    {
+      "id": "FA-01",
+      "name": "Purpose and scope of financial statements",
+      "paper": "FA",
+      "outcome": "FA A1",
+      "definition": "What the financial statements are for, and the stewardship and decision-usefulness objectives.",
+      "prerequisite_of": [
+        "FA-02",
+        "FA-03",
+        "FA-04",
+        "FA-06"
+      ],
+      "prerequisites": [
+        "BT-27"
+      ],
+      "grows_into": [
+        "FR-S11"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-02",
+      "name": "Types of business entity for reporting",
+      "paper": "FA",
+      "outcome": "FA A1",
+      "definition": "Sole trader, partnership and limited company in outline, and the reporting consequence of each. (Detailed partnership accounting is outside the FA syllabus.)",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-01"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-01"
+      ],
+      "stub": false
+    },
+    {
+      "id": "FA-03",
+      "name": "Users and their information needs",
+      "paper": "FA",
+      "outcome": "FA A2",
+      "definition": "Who reads the statements and what each reader is trying to decide.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-01"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-03"
+      ],
+      "stub": false
+    },
+    {
+      "id": "FA-04",
+      "name": "The elements \u2014 assets, liabilities, equity, income, expenses",
+      "paper": "FA",
+      "outcome": "FA A3",
+      "definition": "The five definitions everything else in the syllabus is built from.",
+      "prerequisite_of": [
+        "FA-05",
+        "FA-08",
+        "FA-24",
+        "FA-35"
+      ],
+      "prerequisites": [
+        "FA-01"
+      ],
+      "grows_into": [
+        "FR-S11"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-05",
+      "name": "The accounting equation",
+      "paper": "FA",
+      "outcome": "FA A3",
+      "definition": "Assets equal liabilities plus equity, and why it never breaks.",
+      "prerequisite_of": [
+        "FA-11",
+        "FA-36",
+        "FA-54"
+      ],
+      "prerequisites": [
+        "FA-04"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-06",
+      "name": "The regulatory framework and standard setting",
+      "paper": "FA",
+      "outcome": "FA A4",
+      "definition": "IFRS Foundation, the Board, the standard-setting process and the role of the framework.",
+      "prerequisite_of": [
+        "FA-07"
+      ],
+      "prerequisites": [
+        "FA-01"
+      ],
+      "grows_into": [
+        "FR-S11"
+      ],
+      "integrates_with": [
+        "BT-28"
+      ],
+      "stub": false
+    },
+    {
+      "id": "FA-07",
+      "name": "Duties of those charged with governance",
+      "paper": "FA",
+      "outcome": "FA A5",
+      "definition": "Directors' responsibility for the financial statements and for the systems behind them.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-06"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-22"
+      ],
+      "stub": false
+    },
+    {
+      "id": "FA-08",
+      "name": "Fundamental qualitative characteristics",
+      "paper": "FA",
+      "outcome": "FA B1",
+      "definition": "Relevance and faithful representation, and why only these two are fundamental.",
+      "prerequisite_of": [
+        "FA-09",
+        "FA-10"
+      ],
+      "prerequisites": [
+        "FA-04"
+      ],
+      "grows_into": [
+        "FR-S11"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-09",
+      "name": "Enhancing qualitative characteristics",
+      "paper": "FA",
+      "outcome": "FA B1",
+      "definition": "Comparability, verifiability, timeliness and understandability as improvers, not qualifiers.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-08"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-10",
+      "name": "Underlying assumptions \u2014 accruals and going concern",
+      "paper": "FA",
+      "outcome": "FA B1",
+      "definition": "The two assumptions the statements are prepared under, distinct from the characteristics.",
+      "prerequisite_of": [
+        "FA-26",
+        "FA-32"
+      ],
+      "prerequisites": [
+        "FA-08"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-11",
+      "name": "Duality and the double-entry principle",
+      "paper": "FA",
+      "outcome": "FA C1",
+      "definition": "Every transaction has two effects, and debits equal credits as a consequence of the equation.",
+      "prerequisite_of": [
+        "FA-12"
+      ],
+      "prerequisites": [
+        "FA-05"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-12",
+      "name": "Source documents and the audit trail",
+      "paper": "FA",
+      "outcome": "FA C1",
+      "definition": "Invoices, credit notes, remittances and the evidence chain behind every entry.",
+      "prerequisite_of": [
+        "FA-13"
+      ],
+      "prerequisites": [
+        "FA-11"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-31"
+      ],
+      "stub": false
+    },
+    {
+      "id": "FA-13",
+      "name": "Books of prime entry",
+      "paper": "FA",
+      "outcome": "FA C2",
+      "definition": "Day books, cash book and petty cash book as the first record before the ledger.",
+      "prerequisite_of": [
+        "FA-14",
+        "FA-19"
+      ],
+      "prerequisites": [
+        "FA-12"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-14",
+      "name": "Ledger accounts and the nominal ledger",
+      "paper": "FA",
+      "outcome": "FA C2",
+      "definition": "T-accounts, posting, balancing off, and the ledger's place in the system.",
+      "prerequisite_of": [
+        "FA-15",
+        "FA-16",
+        "FA-32",
+        "FA-39"
+      ],
+      "prerequisites": [
+        "FA-13"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-15",
+      "name": "Journals and their use",
+      "paper": "FA",
+      "outcome": "FA C2",
+      "definition": "The journal as the entry route for anything not passing through a day book.",
+      "prerequisite_of": [
+        "FA-41"
+      ],
+      "prerequisites": [
+        "FA-14"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-16",
+      "name": "Recording sales and purchases",
+      "paper": "FA",
+      "outcome": "FA D1",
+      "definition": "Credit and cash sales and purchases through prime entry to the ledger.",
+      "prerequisite_of": [
+        "FA-17",
+        "FA-18",
+        "FA-21",
+        "FA-33",
+        "FA-34"
+      ],
+      "prerequisites": [
+        "FA-14"
+      ],
+      "grows_into": [
+        "FR-S04"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-17",
+      "name": "Sales tax",
+      "paper": "FA",
+      "outcome": "FA D1",
+      "definition": "Input and output tax, the sales tax control account, and irrecoverable tax.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-16"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-18",
+      "name": "Discounts \u2014 trade and settlement",
+      "paper": "FA",
+      "outcome": "FA D1",
+      "definition": "How each discount type is recorded and why the treatment differs.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-16"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-19",
+      "name": "Cash and bank transactions",
+      "paper": "FA",
+      "outcome": "FA D2",
+      "definition": "Recording receipts and payments through the cash book.",
+      "prerequisite_of": [
+        "FA-20",
+        "FA-45"
+      ],
+      "prerequisites": [
+        "FA-13"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-20",
+      "name": "Petty cash and the imprest system",
+      "paper": "FA",
+      "outcome": "FA D2",
+      "definition": "Running and restoring a petty cash float.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-19"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-21",
+      "name": "Inventory recognition and valuation",
+      "paper": "FA",
+      "outcome": "FA D3",
+      "definition": "What inventory is, and FIFO and average cost as valuation methods.",
+      "prerequisite_of": [
+        "FA-22",
+        "FA-58"
+      ],
+      "prerequisites": [
+        "FA-16"
+      ],
+      "grows_into": [
+        "FR-S15"
+      ],
+      "integrates_with": [
+        "MA-20"
+      ],
+      "stub": false
+    },
+    {
+      "id": "FA-22",
+      "name": "Cost and net realisable value",
+      "paper": "FA",
+      "outcome": "FA D3",
+      "definition": "The lower-of rule, applied item by item.",
+      "prerequisite_of": [
+        "FA-23"
+      ],
+      "prerequisites": [
+        "FA-21"
+      ],
+      "grows_into": [
+        "FR-S15"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-23",
+      "name": "Inventory, cost of sales and the closing adjustment",
+      "paper": "FA",
+      "outcome": "FA D3",
+      "definition": "How opening and closing inventory build cost of sales in the ledger.",
+      "prerequisite_of": [
+        "FA-47",
+        "FA-53"
+      ],
+      "prerequisites": [
+        "FA-22"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-24",
+      "name": "Tangible non-current assets \u2014 recognition and cost",
+      "paper": "FA",
+      "outcome": "FA D4",
+      "definition": "What qualifies as PPE and which costs enter its carrying amount.",
+      "prerequisite_of": [
+        "FA-25",
+        "FA-30"
+      ],
+      "prerequisites": [
+        "FA-04"
+      ],
+      "grows_into": [
+        "FR-S01",
+        "FR-S13"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-25",
+      "name": "Capital and revenue expenditure",
+      "paper": "FA",
+      "outcome": "FA D4",
+      "definition": "The classification decision that determines whether a cost hits the asset or the profit.",
+      "prerequisite_of": [
+        "FA-26"
+      ],
+      "prerequisites": [
+        "FA-24"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-26",
+      "name": "Depreciation methods and the annual charge",
+      "paper": "FA",
+      "outcome": "FA D5",
+      "definition": "Straight line, reducing balance, useful life, residual value, and the accruals logic behind depreciation.",
+      "prerequisite_of": [
+        "FA-27",
+        "FA-28",
+        "FA-29",
+        "FA-46"
+      ],
+      "prerequisites": [
+        "FA-25",
+        "FA-10"
+      ],
+      "grows_into": [
+        "FR-S01",
+        "FR-S02"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-27",
+      "name": "Disposals and part-exchange",
+      "paper": "FA",
+      "outcome": "FA D5",
+      "definition": "Removing an asset and computing the profit or loss on disposal.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-26"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-28",
+      "name": "Revaluation of non-current assets",
+      "paper": "FA",
+      "outcome": "FA D5",
+      "definition": "Revaluing upward, the revaluation surplus, and the effect on subsequent depreciation.",
+      "prerequisite_of": [
+        "FA-48"
+      ],
+      "prerequisites": [
+        "FA-26"
+      ],
+      "grows_into": [
+        "FR-S01"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-29",
+      "name": "The non-current asset register",
+      "paper": "FA",
+      "outcome": "FA D4",
+      "definition": "The subsidiary record of assets and its reconciliation to the ledger.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-26"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-30",
+      "name": "Intangible assets and amortisation",
+      "paper": "FA",
+      "outcome": "FA D6",
+      "definition": "Recognition criteria for intangibles and the amortisation charge.",
+      "prerequisite_of": [
+        "FA-31"
+      ],
+      "prerequisites": [
+        "FA-24"
+      ],
+      "grows_into": [
+        "FR-S12"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-31",
+      "name": "Research and development expenditure",
+      "paper": "FA",
+      "outcome": "FA D6",
+      "definition": "Why research is expensed and development may be capitalised.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-30"
+      ],
+      "grows_into": [
+        "FR-S12"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-32",
+      "name": "Accruals and prepayments",
+      "paper": "FA",
+      "outcome": "FA D7",
+      "definition": "Matching expense and income to period rather than to cash movement.",
+      "prerequisite_of": [
+        "FA-38",
+        "FA-46",
+        "FA-47"
+      ],
+      "prerequisites": [
+        "FA-10",
+        "FA-14"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-33",
+      "name": "Receivables, irrecoverable debts and allowances",
+      "paper": "FA",
+      "outcome": "FA D8",
+      "definition": "Writing off, allowing for doubt, and the movement in the allowance.",
+      "prerequisite_of": [
+        "FA-43",
+        "FA-46"
+      ],
+      "prerequisites": [
+        "FA-16"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-34",
+      "name": "Payables and accrued liabilities",
+      "paper": "FA",
+      "outcome": "FA D8",
+      "definition": "Recording amounts owed to suppliers and other short-term creditors.",
+      "prerequisite_of": [
+        "FA-44"
+      ],
+      "prerequisites": [
+        "FA-16"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-35",
+      "name": "Provisions and contingencies",
+      "paper": "FA",
+      "outcome": "FA D9",
+      "definition": "When an obligation is recognised, disclosed, or ignored.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-04"
+      ],
+      "grows_into": [
+        "FR-S09"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-36",
+      "name": "Share capital, share premium and reserves",
+      "paper": "FA",
+      "outcome": "FA D10",
+      "definition": "Ordinary and preference shares, issues at a premium, bonus and rights issues.",
+      "prerequisite_of": [
+        "FA-37",
+        "FA-48"
+      ],
+      "prerequisites": [
+        "FA-05"
+      ],
+      "grows_into": [
+        "FR-S10",
+        "FM-S04"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-37",
+      "name": "Dividends",
+      "paper": "FA",
+      "outcome": "FA D10",
+      "definition": "When a dividend is recognised, and why proposed dividends are not liabilities.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-36"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-38",
+      "name": "Loans, debentures and finance costs",
+      "paper": "FA",
+      "outcome": "FA D10",
+      "definition": "Long-term borrowing, accrued interest, and the current/non-current split.",
+      "prerequisite_of": [
+        "FA-64"
+      ],
+      "prerequisites": [
+        "FA-32"
+      ],
+      "grows_into": [
+        "FR-S16",
+        "FM-S04"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-39",
+      "name": "The trial balance",
+      "paper": "FA",
+      "outcome": "FA E1",
+      "definition": "Extracting balances and proving that debits equal credits.",
+      "prerequisite_of": [
+        "FA-40",
+        "FA-46",
+        "FA-47"
+      ],
+      "prerequisites": [
+        "FA-14"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-40",
+      "name": "Errors not revealed by the trial balance",
+      "paper": "FA",
+      "outcome": "FA E2",
+      "definition": "Omission, commission, principle, original entry, reversal and compensating errors.",
+      "prerequisite_of": [
+        "FA-41"
+      ],
+      "prerequisites": [
+        "FA-39"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-41",
+      "name": "Correction of errors",
+      "paper": "FA",
+      "outcome": "FA E2",
+      "definition": "Journalising corrections and tracing their effect on profit.",
+      "prerequisite_of": [
+        "FA-42"
+      ],
+      "prerequisites": [
+        "FA-40",
+        "FA-15"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-42",
+      "name": "Suspense accounts",
+      "paper": "FA",
+      "outcome": "FA E5",
+      "definition": "Holding a difference, then clearing it as errors are found.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-41"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-43",
+      "name": "Receivables ledger control account reconciliation",
+      "paper": "FA",
+      "outcome": "FA E3",
+      "definition": "Reconciling the control account to the sum of individual customer balances.",
+      "prerequisite_of": [
+        "FA-54"
+      ],
+      "prerequisites": [
+        "FA-33"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-44",
+      "name": "Payables ledger control account reconciliation",
+      "paper": "FA",
+      "outcome": "FA E3",
+      "definition": "Reconciling the control account to the supplier statements and individual balances.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-34"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-45",
+      "name": "Bank reconciliation",
+      "paper": "FA",
+      "outcome": "FA E4",
+      "definition": "Reconciling the cash book to the bank statement through timing differences and errors.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-19"
+      ],
+      "grows_into": [],
+      "integrates_with": [
+        "BT-32"
+      ],
+      "stub": false
+    },
+    {
+      "id": "FA-46",
+      "name": "Statement of financial position preparation",
+      "paper": "FA",
+      "outcome": "FA F1",
+      "definition": "Assembling assets, liabilities and equity into the statement, correctly classified.",
+      "prerequisite_of": [
+        "FA-49",
+        "FA-50",
+        "FA-51",
+        "FA-55",
+        "FA-61"
+      ],
+      "prerequisites": [
+        "FA-39",
+        "FA-26",
+        "FA-32",
+        "FA-33"
+      ],
+      "grows_into": [
+        "FR-S17"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-47",
+      "name": "Statement of profit or loss and other comprehensive income",
+      "paper": "FA",
+      "outcome": "FA F2",
+      "definition": "Building the performance statement from the trial balance and adjustments.",
+      "prerequisite_of": [
+        "FA-48",
+        "FA-51",
+        "FA-61"
+      ],
+      "prerequisites": [
+        "FA-39",
+        "FA-23",
+        "FA-32"
+      ],
+      "grows_into": [
+        "FR-S17"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-48",
+      "name": "Statement of changes in equity",
+      "paper": "FA",
+      "outcome": "FA F2",
+      "definition": "Reconciling opening to closing equity through profit, dividends, issues and revaluation.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-47",
+        "FA-36",
+        "FA-28"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-49",
+      "name": "Disclosure notes",
+      "paper": "FA",
+      "outcome": "FA F3",
+      "definition": "The supporting notes, and the non-current asset movements note in particular.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-46"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-50",
+      "name": "Events after the reporting period",
+      "paper": "FA",
+      "outcome": "FA F4",
+      "definition": "Adjusting and non-adjusting events, and the treatment each demands.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-46"
+      ],
+      "grows_into": [
+        "FR-S09"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-51",
+      "name": "Statement of cash flows \u2014 operating activities",
+      "paper": "FA",
+      "outcome": "FA F5",
+      "definition": "Reconciling profit to operating cash flow under the indirect method.",
+      "prerequisite_of": [
+        "FA-52"
+      ],
+      "prerequisites": [
+        "FA-46",
+        "FA-47"
+      ],
+      "grows_into": [
+        "FR-S07"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-52",
+      "name": "Statement of cash flows \u2014 investing and financing",
+      "paper": "FA",
+      "outcome": "FA F5",
+      "definition": "Cash movements on assets, borrowings and equity, and the net change in cash.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-51"
+      ],
+      "grows_into": [
+        "FR-S07"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-53",
+      "name": "Incomplete records \u2014 margins and mark-ups",
+      "paper": "FA",
+      "outcome": "FA F6",
+      "definition": "Reconstructing missing figures from a known profit percentage.",
+      "prerequisite_of": [
+        "FA-54"
+      ],
+      "prerequisites": [
+        "FA-23"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-54",
+      "name": "Incomplete records \u2014 control account and equation techniques",
+      "paper": "FA",
+      "outcome": "FA F6",
+      "definition": "Deriving missing sales, purchases or drawings from the accounting equation and control accounts.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-53",
+        "FA-43",
+        "FA-05"
+      ],
+      "grows_into": [],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-55",
+      "name": "Group concepts \u2014 control, parent and subsidiary",
+      "paper": "FA",
+      "outcome": "FA G1",
+      "definition": "What control means and when consolidation is required.",
+      "prerequisite_of": [
+        "FA-56"
+      ],
+      "prerequisites": [
+        "FA-46"
+      ],
+      "grows_into": [
+        "FR-S05"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-56",
+      "name": "Goodwill on acquisition and non-controlling interest",
+      "paper": "FA",
+      "outcome": "FA G1",
+      "definition": "Computing goodwill and measuring the interest the parent does not own.",
+      "prerequisite_of": [
+        "FA-57"
+      ],
+      "prerequisites": [
+        "FA-55"
+      ],
+      "grows_into": [
+        "FR-S05"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-57",
+      "name": "Consolidated statement of financial position",
+      "paper": "FA",
+      "outcome": "FA G1",
+      "definition": "Adding across, cancelling the investment, and presenting group equity.",
+      "prerequisite_of": [
+        "FA-58"
+      ],
+      "prerequisites": [
+        "FA-56"
+      ],
+      "grows_into": [
+        "FR-S05"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-58",
+      "name": "Intra-group balances and unrealised profit",
+      "paper": "FA",
+      "outcome": "FA G1",
+      "definition": "Eliminating trading between group members and profit still sitting in inventory.",
+      "prerequisite_of": [
+        "FA-59"
+      ],
+      "prerequisites": [
+        "FA-57",
+        "FA-21"
+      ],
+      "grows_into": [
+        "FR-S05"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-59",
+      "name": "Consolidated statement of profit or loss",
+      "paper": "FA",
+      "outcome": "FA G1",
+      "definition": "Consolidating performance and splitting profit between owners and the non-controlling interest.",
+      "prerequisite_of": [
+        "FA-60"
+      ],
+      "prerequisites": [
+        "FA-58"
+      ],
+      "grows_into": [
+        "FR-S05"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-60",
+      "name": "Associates and significant influence",
+      "paper": "FA",
+      "outcome": "FA G2",
+      "definition": "Identifying an associate and applying the equity method in outline.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-59"
+      ],
+      "grows_into": [
+        "FR-S06"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-61",
+      "name": "Purpose and limitations of analysis",
+      "paper": "FA",
+      "outcome": "FA H1",
+      "definition": "What ratio analysis can and cannot tell a user.",
+      "prerequisite_of": [
+        "FA-62",
+        "FA-63",
+        "FA-64"
+      ],
+      "prerequisites": [
+        "FA-46",
+        "FA-47"
+      ],
+      "grows_into": [
+        "FR-S08"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-62",
+      "name": "Profitability ratios",
+      "paper": "FA",
+      "outcome": "FA H2",
+      "definition": "Margins, return on capital employed, and what drives each.",
+      "prerequisite_of": [
+        "FA-65"
+      ],
+      "prerequisites": [
+        "FA-61"
+      ],
+      "grows_into": [
+        "FR-S08",
+        "FM-S07"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-63",
+      "name": "Liquidity and efficiency ratios",
+      "paper": "FA",
+      "outcome": "FA H2",
+      "definition": "Current and quick ratios, and the working capital cycle in days.",
+      "prerequisite_of": [
+        "FA-65"
+      ],
+      "prerequisites": [
+        "FA-61"
+      ],
+      "grows_into": [
+        "FR-S08",
+        "FM-S02"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-64",
+      "name": "Gearing and investor ratios",
+      "paper": "FA",
+      "outcome": "FA H2",
+      "definition": "Capital structure, interest cover, and the ratios that speak to shareholders.",
+      "prerequisite_of": [
+        "FA-65"
+      ],
+      "prerequisites": [
+        "FA-61",
+        "FA-38"
+      ],
+      "grows_into": [
+        "FR-S08",
+        "FM-S03"
+      ],
+      "integrates_with": [],
+      "stub": false
+    },
+    {
+      "id": "FA-65",
+      "name": "Interpreting ratios and drawing conclusions",
+      "paper": "FA",
+      "outcome": "FA H3",
+      "definition": "Turning computed ratios into a reasoned statement about the business.",
+      "prerequisite_of": [],
+      "prerequisites": [
+        "FA-62",
+        "FA-63",
+        "FA-64"
+      ],
+      "grows_into": [
+        "FR-S08"
+      ],
+      "integrates_with": [
+        "MA-61"
+      ],
+      "stub": false
+    }
+  ]
+}

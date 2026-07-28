@@ -1,0 +1,15 @@
+{
+  "name": "paper-trail",
+  "version": "1.0.0-wp1",
+  "description": "Paper Trail — a complete primary learning system for ACCA Knowledge level (BT, MA, FA). WP1: engine foundation.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "report": "node tools/wp1-report.mjs",
+    "graph": "python spec/build_graph.py"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
