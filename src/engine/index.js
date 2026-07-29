@@ -25,3 +25,9 @@ export {
 export {
   buildPaperMatrix, buildReport, formatReport, FLOORS, CONCENTRATION_CAP, FA_DISTRIBUTION_TARGET,
 } from './allocation.js';
+export {
+  diagnose, resolveProbe, inferFromPattern, REMEDIATION, CONFIDENCE,
+} from './diagnose.js';
+export {
+  validateLesson, indexLessons, lessonSectionCounts, LESSON_SHAPES,
+} from './lessons.js';
