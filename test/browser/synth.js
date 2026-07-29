@@ -8,10 +8,15 @@
 
 const HOUR = 3600000;
 
-export function synthLog(liveIds, n) {
+// `endAt` anchors the log so its most recent activity sits just before "now" — otherwise a log
+// authored in the past would, with neglect decay, have fully decayed to Exposed by today and the
+// review queue would be empty. Anchoring near now models a learner who has been studying up to
+// today, giving a realistic, populated review queue for the benchmark.
+export function synthLog(liveIds, n, endAt = Date.now()) {
   const recs = [];
-  const base = Date.UTC(2026, 0, 1);
   const perConcept = Math.max(13, Math.floor(n / liveIds.length));
+  const span = liveIds.length * HOUR + perConcept * 6 * HOUR;
+  const base = endAt - span;
   const seq = [
     'concept-check', 'concept-check', 'concept-check',
     'guided', 'guided', 'guided',

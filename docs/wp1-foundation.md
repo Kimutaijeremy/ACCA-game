@@ -15,7 +15,8 @@ src/engine/
   states.js              the five states, rungs, evidence rules, review/decay schedule (§6.2)
   log.js                 the attempt log — the single source of truth (§6.9)
   derive.js              folds the log → mastery state, review schedule, queues (nothing written directly)
-  store.js               persistence in a distinctive namespace (papertrail:v4:*); never touches v3 keys
+  store.js               LearnerStore: attempt log in IndexedDB (append-only), meta in
+                         localStorage; distinctive namespace (papertrail:v4:*); never touches v3 keys
   migrate.js             v3 → v4 migration: history only, dry-run + rollback (§7)
   allocation.js          allocation matrices, floors, 8% cap, loud-failure report (§6.4)
   node-loader.js         Node-only file reads (browser fetches instead)
@@ -30,9 +31,10 @@ tools/verify.mjs         Node-side idempotency + derivation-cost evidence
 
 ## Persistence, quota and eviction
 
-Learner state is written with `trySaveState`, which **reports** a failed write instead of
-throwing or swallowing it — a full quota returns `{ ok:false, quota:true }` so the UI can warn and
-prompt an export. Storage can still be *evicted by the OS later* (nothing can catch that at write
+Meta is written with `trySaveMeta`, which **reports** a failed write instead of throwing or
+swallowing it — a full quota returns `{ ok:false, quota:true }` so the UI can warn and prompt an
+export. (The attempt log's IndexedDB budget is far larger, but the same reporting discipline
+applies.) Storage can still be *evicted by the OS later* (nothing can catch that at write
 time); the guard for that is the one-tap export + off-device backup (Brief §6.9). Clearing storage
 makes state read as absent (a clean fresh start), never as stale/partial data.
 

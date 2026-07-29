@@ -1,78 +1,50 @@
-// store.js — persistence for learner state.
+// store.js — persistence for learner state, split by size and growth pattern.
 //
-// The new engine keeps its state under a DISTINCTIVE, app-specific, versioned namespace
-// ('papertrail:v4:*'). This matters because browser storage on GitHub Pages is keyed to the
-// ORIGIN (kimutaijeremy.github.io), not the path — every project served from that account
-// shares one localStorage. A generic prefix could collide with a future project; the fully
-// spelled-out 'papertrail:v4:' cannot.
+// Measured: a full attempt record is ~276 bytes, and Chrome's localStorage caps this origin at
+// ~5 MB (writes fail past ~15–20k attempts). The attempt log is the single source of truth and
+// only grows, so it CANNOT live in localStorage for a multi-year, retention-forever system.
 //
-// It is also completely separate from the v3 app's keys ('pt_stats', 'pt_nodes', ...), so the
-// migration (Brief §3, §7) reads the v3 keys but never overwrites them: Jeremy's original
-// learning history stays intact on his phone and rollback is trivial.
+// Therefore:
+//   - the ATTEMPT LOG lives in IndexedDB (large budget, and appended one record at a time rather
+//     than rewriting a growing blob on every save);
+//   - the small META (schema, createdAt, streak, v1 history) lives in localStorage, cheap to
+//     rewrite.
 //
-// A KV store is any object with getItem(k)/setItem(k,v)/removeItem(k) returning/accepting
-// strings — browser localStorage satisfies this directly; MemoryStore covers Node and tests.
+// Everything uses the DISTINCTIVE, versioned namespace 'papertrail:v4:' / DB 'papertrail-v4'.
+// This matters because GitHub Pages storage is keyed to the ORIGIN (kimutaijeremy.github.io),
+// shared across every project there — a generic prefix could collide with a future project.
+//
+// The engine core never imports this file; derivation runs on an in-memory AttemptLog. Storage
+// is a thin adapter, so the same engine runs under Node (MemoryLogAdapter) and in the browser
+// PWA (IdbLogAdapter). Async is confined to the log adapter; meta reads/writes stay synchronous.
+
+import { normaliseRecord } from './log.js';
 
 export const KEY_PREFIX = 'papertrail:v4:';
-
 export const KEYS = Object.freeze({
-  STATE: KEY_PREFIX + 'state',
-  BACKUP: KEY_PREFIX + 'state_backup',
+  META: KEY_PREFIX + 'meta',
+  META_BACKUP: KEY_PREFIX + 'meta_backup',
 });
-
 export const STATE_SCHEMA = 'paper-trail/v4';
+export const DB_NAME = 'papertrail-v4';
+export const LOG_STORE = 'attempts';
+
+// ── KV (localStorage) for META ──────────────────────────────────────────────
 
 export class MemoryStore {
-  constructor(initial = {}) {
-    this.map = new Map(Object.entries(initial));
-  }
+  constructor(initial = {}) { this.map = new Map(Object.entries(initial)); }
   getItem(k) { return this.map.has(k) ? this.map.get(k) : null; }
   setItem(k, v) { this.map.set(k, String(v)); }
   removeItem(k) { this.map.delete(k); }
 }
 
-/** Return the browser localStorage, or a MemoryStore fallback when unavailable. */
-export function defaultStore() {
+/** The browser localStorage, or a MemoryStore fallback (Node/tests). */
+export function defaultKV() {
   if (typeof globalThis !== 'undefined' && globalThis.localStorage) return globalThis.localStorage;
   return new MemoryStore();
 }
 
-/** A blank learner-state object. The attempt log is the single source of truth; everything
- *  else here is either raw history (streak, v1History) or metadata. */
-export function emptyState() {
-  return {
-    schema: STATE_SCHEMA,
-    createdAt: null,
-    streak: { cur: 0, best: 0 },
-    v1History: null, // populated by migration; read-only "v1 history" panel
-    attemptLog: [], // canonical event list (see log.js)
-  };
-}
-
-export function loadState(store = defaultStore()) {
-  const raw = store.getItem(KEYS.STATE);
-  if (raw == null) return null;
-  try {
-    const s = JSON.parse(raw);
-    if (s && s.schema === STATE_SCHEMA) return s;
-    return null;
-  } catch {
-    return null;
-  }
-}
-
-export function saveState(state, store = defaultStore()) {
-  if (!state || state.schema !== STATE_SCHEMA) {
-    throw new Error('refusing to save a state that is not ' + STATE_SCHEMA);
-  }
-  store.setItem(KEYS.STATE, JSON.stringify(state));
-  return state;
-}
-
-/**
- * True if an error looks like a browser storage-quota failure. localStorage throws
- * QuotaExceededError (name, or legacy code 22 / Firefox code 1014) when a write won't fit.
- */
+/** True if an error is a browser storage-quota failure. */
 export function isQuotaError(err) {
   if (!err) return false;
   return err.name === 'QuotaExceededError'
@@ -80,35 +52,171 @@ export function isQuotaError(err) {
     || err.code === 22 || err.code === 1014;
 }
 
+/** A blank full-state blob — the shape of the one-tap export (meta + log together). */
+export function emptyState() {
+  return {
+    schema: STATE_SCHEMA,
+    createdAt: null,
+    streak: { cur: 0, best: 0 },
+    v1History: null,
+    attemptLog: [],
+  };
+}
+
+/** The small meta half of a state (everything except the attempt log). */
+export function metaOf(state) {
+  return {
+    schema: state.schema, createdAt: state.createdAt,
+    streak: state.streak, v1History: state.v1History,
+  };
+}
+
+export function loadMeta(kv = defaultKV()) {
+  const raw = kv.getItem(KEYS.META);
+  if (raw == null) return null;
+  try {
+    const m = JSON.parse(raw);
+    return m && m.schema === STATE_SCHEMA ? m : null;
+  } catch { return null; }
+}
+
+export function saveMeta(meta, kv = defaultKV()) {
+  if (!meta || meta.schema !== STATE_SCHEMA) {
+    throw new Error('refusing to save meta that is not ' + STATE_SCHEMA);
+  }
+  kv.setItem(KEYS.META, JSON.stringify(metaOf(meta)));
+  return meta;
+}
+
 /**
- * Persist state, reporting failure instead of throwing or swallowing it. A write can fail when
- * the browser's storage quota is exceeded or storage is disabled. We NEVER fail silently: the
- * caller gets { ok:false, ... } so the UI can warn the learner and prompt an export. (Eviction —
- * the OS clearing storage later — cannot be caught at write time; the guard for that is the
- * one-tap export + off-device backup, Brief §6.9.)
+ * Persist meta, reporting failure instead of swallowing it. Meta is tiny, so quota failure here
+ * is unlikely — but we still never fail silently, so the UI can warn + prompt an export.
  * @returns {{ ok: true } | { ok: false, quota: boolean, error: Error }}
  */
-export function trySaveState(state, store = defaultStore()) {
-  try {
-    saveState(state, store);
-    return { ok: true };
-  } catch (error) {
-    return { ok: false, quota: isQuotaError(error), error };
+export function trySaveMeta(meta, kv = defaultKV()) {
+  try { saveMeta(meta, kv); return { ok: true }; }
+  catch (error) { return { ok: false, quota: isQuotaError(error), error }; }
+}
+
+// ── Log adapters (async) ────────────────────────────────────────────────────
+// Interface: appendMany(records) → Promise, readAll() → Promise<records[]>, clear() → Promise.
+
+/** In-memory adapter for Node and tests. */
+export class MemoryLogAdapter {
+  constructor(records = []) { this.records = records.slice(); }
+  async appendMany(records) { for (const r of records) this.records.push(r); }
+  async readAll() { return this.records.slice(); }
+  async clear() { this.records = []; }
+}
+
+/** IndexedDB adapter — the real browser store. Appends one keyed record at a time. */
+export class IdbLogAdapter {
+  constructor(dbName = DB_NAME, storeName = LOG_STORE) {
+    this.dbName = dbName; this.storeName = storeName; this._db = null;
+  }
+  async _open() {
+    if (this._db) return this._db;
+    this._db = await new Promise((resolve, reject) => {
+      const req = indexedDB.open(this.dbName, 1);
+      req.onupgradeneeded = () => {
+        const db = req.result;
+        if (!db.objectStoreNames.contains(this.storeName)) {
+          db.createObjectStore(this.storeName, { keyPath: 'id' });
+        }
+      };
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    });
+    return this._db;
+  }
+  async _tx(mode, fn) {
+    const db = await this._open();
+    return new Promise((resolve, reject) => {
+      const tx = db.transaction(this.storeName, mode);
+      const store = tx.objectStore(this.storeName);
+      let result;
+      Promise.resolve(fn(store)).then((r) => { result = r; }).catch(reject);
+      tx.oncomplete = () => resolve(result);
+      tx.onerror = () => reject(tx.error);
+      tx.onabort = () => reject(tx.error);
+    });
+  }
+  async appendMany(records) {
+    return this._tx('readwrite', (store) => { for (const r of records) store.put(r); });
+  }
+  async readAll() {
+    return this._tx('readonly', (store) => new Promise((resolve, reject) => {
+      const req = store.getAll();
+      req.onsuccess = () => resolve(req.result);
+      req.onerror = () => reject(req.error);
+    }));
+  }
+  async clear() {
+    return this._tx('readwrite', (store) => store.clear());
+  }
+}
+
+/** IndexedDB adapter in the browser, MemoryLogAdapter otherwise. */
+export function defaultLogAdapter() {
+  if (typeof globalThis !== 'undefined' && globalThis.indexedDB) return new IdbLogAdapter();
+  return new MemoryLogAdapter();
+}
+
+// ── LearnerStore: the one object the app talks to ───────────────────────────
+
+/**
+ * Ties the meta half (localStorage) and the log half (IndexedDB) together. The attempt log stays
+ * the single source of truth; meta is only streak + read-only v1 history + schema/date.
+ */
+export class LearnerStore {
+  constructor(logAdapter = defaultLogAdapter(), kv = defaultKV()) {
+    this.log = logAdapter;
+    this.kv = kv;
+  }
+
+  loadMeta() { return loadMeta(this.kv); }
+  saveMeta(meta) { return trySaveMeta(meta, this.kv); }
+
+  /** Append attempt/lesson records (normalised + validated) to the log. */
+  async appendRecords(rawRecords) {
+    const recs = rawRecords.map(normaliseRecord);
+    await this.log.appendMany(recs);
+    return recs;
+  }
+
+  /** All log records, chronologically-sortable array (feed straight into new AttemptLog(...)). */
+  async readLogRecords() { return this.log.readAll(); }
+
+  async clearLog() { return this.log.clear(); }
+
+  /** The one-tap export blob: meta + the full attempt log in one JSON object. */
+  async exportAll() {
+    const meta = this.loadMeta() ?? emptyState();
+    const attemptLog = await this.readLogRecords();
+    return { ...metaOf(meta), attemptLog };
+  }
+
+  /** Import a blob (from exportAll): replace meta and the whole log. */
+  async importAll(blob) {
+    if (!blob || blob.schema !== STATE_SCHEMA) throw new Error('not a ' + STATE_SCHEMA + ' export');
+    this.saveMeta(blob);
+    await this.clearLog();
+    await this.appendRecords(blob.attemptLog ?? []);
+    return blob;
   }
 }
 
 /**
- * Read a v3 export straight from the live app's own localStorage keys, reconstructing the
- * same bundle the v3 exporter produces. Used at cutover to migrate in place without an
- * export/import round-trip. Returns null if no v3 data is present.
+ * Read a v3 export straight from the live app's own localStorage keys, reconstructing the same
+ * bundle the v3 exporter produces. Used at cutover to migrate in place. Returns null if absent.
  */
-export function readV3FromStore(store = defaultStore()) {
+export function readV3FromStore(kv = defaultKV()) {
   const get = (k, f) => {
-    const raw = store.getItem(k);
+    const raw = kv.getItem(k);
     if (raw == null) return f;
     try { return JSON.parse(raw); } catch { return f; }
   };
-  if (store.getItem('pt_stats') == null && store.getItem('pt_nodes') == null) return null;
+  if (kv.getItem('pt_stats') == null && kv.getItem('pt_nodes') == null) return null;
   return {
     v: 3,
     stats: get('pt_stats', {}),

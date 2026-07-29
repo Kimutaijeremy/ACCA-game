@@ -8,6 +8,7 @@
     "test": "node --test",
     "report": "node tools/wp1-report.mjs",
     "verify:browser": "node tools/browser-verify.mjs",
+    "measure:storage": "node tools/storage-measure.mjs",
     "graph": "python spec/build_graph.py"
   },
   "engines": {

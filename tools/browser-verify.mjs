@@ -66,73 +66,97 @@ try {
   await goHarness();
 
   // ── Q3 ────────────────────────────────────────────────────────────────────
-  out('\nQ3 — REAL BROWSER STORAGE (headless Chrome, window.localStorage)');
+  out('\nQ3 — REAL BROWSER STORAGE (headless Chrome: IndexedDB log + localStorage meta)');
 
-  // migrate the real export in-browser, onto the page's own localStorage
+  // Start clean, migrate the real export, and append some attempts — meta → localStorage,
+  // attempt log → IndexedDB.
   const mig = await page.evaluate(async () => {
     const { store, migrate, loadV3 } = window.PT;
-    const s = store.defaultStore();
-    s.removeItem(store.KEYS.STATE); s.removeItem(store.KEYS.BACKUP);
+    // fresh: clear meta + delete the IndexedDB
+    window.localStorage.clear();
+    await new Promise((r) => { const req = indexedDB.deleteDatabase(store.DB_NAME); req.onsuccess = req.onerror = () => r(); });
+    const ls = new store.LearnerStore(); // defaults: IdbLogAdapter + window.localStorage
     const v3 = await loadV3();
-    migrate.applyMigration(v3, s, { now: 1770000000000 });
-    const saved = store.loadState(s);
+    await migrate.applyMigration(v3, ls, { now: 1770000000000 });
+    // then a few real attempts land in IndexedDB
+    await ls.appendRecords([
+      { id: 'b1', kind: 'lesson', conceptIds: ['FA-26'], sessionId: 's', timestamp: 1 },
+      { id: 'b2', kind: 'item', conceptIds: ['FA-26'], rung: 'concept-check', correct: true, sessionId: 's', timestamp: 2 },
+    ]);
+    const meta = ls.loadMeta();
+    const recs = await ls.readLogRecords();
     return {
-      isLocalStorage: s === window.localStorage,
-      schema: saved.schema, streak: saved.streak,
-      topics: saved.v1History.topics.map((t) => t.name), logLen: saved.attemptLog.length,
-      keyPresent: window.localStorage.getItem('papertrail:v4:state') !== null,
-      allKeys: Object.keys(window.localStorage),
+      usesLocalStorage: ls.kv === window.localStorage,
+      usesIndexedDB: ls.log.constructor.name === 'IdbLogAdapter',
+      schema: meta.schema, streak: meta.streak,
+      topics: meta.v1History.topics.map((t) => t.name),
+      logCount: recs.length,
+      metaKeyPresent: window.localStorage.getItem('papertrail:v4:meta') !== null,
+      metaHasNoLog: !window.localStorage.getItem('papertrail:v4:meta').includes('attemptLog'),
+      lsKeys: Object.keys(window.localStorage),
     };
   });
-  check('store.defaultStore() IS window.localStorage in the browser', mig.isLocalStorage);
+  check('LearnerStore uses window.localStorage for meta and IndexedDB for the log',
+    mig.usesLocalStorage && mig.usesIndexedDB);
   check('migration runs in-browser against the real export', mig.schema === 'paper-trail/v4');
   check('streak preserved (3 / 10)', mig.streak.cur === 3 && mig.streak.best === 10);
   check('three topic records by display name', mig.topics.length === 3, mig.topics.join(' | '));
-  check('zero concept states created', mig.logLen === 0);
-  check("papertrail:v4: namespace actually lands in storage", mig.keyPresent,
-    'keys = ' + JSON.stringify(mig.allKeys));
+  check('attempts stored in IndexedDB, not in localStorage meta',
+    mig.logCount === 2 && mig.metaHasNoLog);
+  check("papertrail:v4: namespace lands in localStorage (meta only)",
+    mig.metaKeyPresent, 'keys = ' + JSON.stringify(mig.lsKeys));
 
-  // compare the in-browser migration to the Node migration of the same file
   const nodePlan = planMigration(loadV3Fixture());
   check('browser migration == Node migration (topics + streak)',
     JSON.stringify(mig.topics) === JSON.stringify(nodePlan.newState.v1History.topics.map((t) => t.name))
-    && mig.streak.cur === nodePlan.newState.streak.cur && mig.streak.best === nodePlan.newState.streak.best);
+    && mig.streak.cur === nodePlan.newState.streak.cur);
 
-  // persistence across a full page reload
+  // persistence across a FULL page reload — both halves survive
   await page.reload();
   await page.waitForFunction('window.__READY__ === true');
-  const afterReload = await page.evaluate(() => {
+  const afterReload = await page.evaluate(async () => {
     const { store } = window.PT;
-    const s = store.loadState(store.defaultStore());
-    return s ? { streak: s.streak, topics: s.v1History.topics.length } : null;
+    const ls = new store.LearnerStore();
+    const meta = ls.loadMeta();
+    const recs = await ls.readLogRecords();
+    return { streak: meta ? meta.streak : null, topics: meta ? meta.v1History.topics.length : 0, logCount: recs.length };
   });
-  check('state persists across a page reload', !!afterReload && afterReload.streak.cur === 3 && afterReload.topics === 3);
+  check('meta + IndexedDB log both persist across a page reload',
+    afterReload.streak && afterReload.streak.cur === 3 && afterReload.topics === 3 && afterReload.logCount === 2);
 
-  // export → wipe → import → reload → identical
+  // export → wipe everything → import → reload → identical
   const roundTrip = await page.evaluate(async () => {
-    const { store } = window.PT; const s = store.defaultStore();
-    const exported = JSON.stringify(store.loadState(s)); // one-tap export payload
+    const { store } = window.PT;
+    const ls = new store.LearnerStore();
+    const exported = JSON.stringify(await ls.exportAll()); // one-tap export payload (meta + log)
     window.localStorage.clear();
-    const clearedIsNull = store.loadState(s) === null;
-    store.saveState(JSON.parse(exported), s); // import
-    return { clearedIsNull, exported };
+    await ls.clearLog();
+    const clearedMetaNull = ls.loadMeta() === null;
+    const clearedLogEmpty = (await ls.readLogRecords()).length === 0;
+    await ls.importAll(JSON.parse(exported));
+    return { clearedMetaNull, clearedLogEmpty, exported };
   });
   await page.reload();
   await page.waitForFunction('window.__READY__ === true');
-  const afterImport = await page.evaluate(() => JSON.stringify(window.PT.store.loadState(window.PT.store.defaultStore())));
-  check('clearing storage makes state read as absent (not stale)', roundTrip.clearedIsNull);
+  const afterImport = await page.evaluate(async () => {
+    const ls = new window.PT.store.LearnerStore();
+    return JSON.stringify(await ls.exportAll());
+  });
+  check('clearing storage makes state read as absent (not stale)',
+    roundTrip.clearedMetaNull && roundTrip.clearedLogEmpty);
   check('export → import round-trips identically across reload', afterImport === roundTrip.exported);
 
-  // non-silent quota failure, in the browser
+  // non-silent quota failure on the meta write, in the browser
   const quota = await page.evaluate(() => {
-    const { store } = window.PT; const s = store.defaultStore();
+    const { store } = window.PT;
+    const ls = new store.LearnerStore();
     const orig = window.localStorage.setItem.bind(window.localStorage);
     window.localStorage.setItem = () => { const e = new Error('quota'); e.name = 'QuotaExceededError'; throw e; };
-    const res = store.trySaveState(store.emptyState(), s);
-    window.localStorage.setItem = orig; // restore
+    const res = ls.saveMeta(store.emptyState());
+    window.localStorage.setItem = orig;
     return res;
   });
-  check('a failed write is reported, not swallowed (quota)', quota.ok === false && quota.quota === true);
+  check('a failed meta write is reported, not swallowed (quota)', quota.ok === false && quota.quota === true);
 
   // ── Q4 ────────────────────────────────────────────────────────────────────
   out('\nQ4 — YEAR-SCALE REPLAY under phone-like CPU throttle');

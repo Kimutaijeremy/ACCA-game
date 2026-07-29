@@ -1,7 +1,7 @@
 // verify.mjs — executed evidence for the four WP1 verification questions.
 // Run: node tools/verify.mjs
 
-import { MemoryStore, loadState } from '../src/engine/store.js';
+import { MemoryStore, MemoryLogAdapter, LearnerStore, loadMeta } from '../src/engine/store.js';
 import { applyMigration } from '../src/engine/migrate.js';
 import { AttemptLog } from '../src/engine/log.js';
 import { deriveAll } from '../src/engine/derive.js';
@@ -13,18 +13,19 @@ const graph = loadGraphFromSpec();
 
 // ── Q2: idempotency — apply the migration twice against the real export ──────
 line('Q2 — MIGRATION IDEMPOTENCY (apply twice to the same store)');
-const store = new MemoryStore();
+const kv = new MemoryStore();
+const store = new LearnerStore(new MemoryLogAdapter(), kv);
 
-applyMigration(V3, store, { now: 1000 });
-const s1 = loadState(store);
-line(`  after run 1: topics=${s1.v1History.topics.length}  streak=${JSON.stringify(s1.streak)}  attemptLog=${s1.attemptLog.length}  totals=${JSON.stringify(s1.v1History.totals)}`);
+await applyMigration(V3, store, { now: 1000 });
+const s1 = loadMeta(kv); const log1 = await store.readLogRecords();
+line(`  after run 1: topics=${s1.v1History.topics.length}  streak=${JSON.stringify(s1.streak)}  attempts=${log1.length}  totals=${JSON.stringify(s1.v1History.totals)}`);
 
-applyMigration(V3, store, { now: 2000 });
-const s2 = loadState(store);
-line(`  after run 2: topics=${s2.v1History.topics.length}  streak=${JSON.stringify(s2.streak)}  attemptLog=${s2.attemptLog.length}  totals=${JSON.stringify(s2.v1History.totals)}`);
+await applyMigration(V3, store, { now: 2000 });
+const s2 = loadMeta(kv); const log2 = await store.readLogRecords();
+line(`  after run 2: topics=${s2.v1History.topics.length}  streak=${JSON.stringify(s2.streak)}  attempts=${log2.length}  totals=${JSON.stringify(s2.v1History.totals)}`);
 
 // Compare the meaningful content (ignore the createdAt/migratedAt timestamps).
-const strip = (s) => JSON.stringify({ streak: s.streak, topics: s.v1History.topics, totals: s.v1History.totals, log: s.attemptLog });
+const strip = (s) => JSON.stringify({ streak: s.streak, topics: s.v1History.topics, totals: s.v1History.totals });
 line(`  history/streak identical across runs: ${strip(s1) === strip(s2)}`);
 line(`  streak double-counted?  ${s2.streak.cur !== s1.streak.cur ? 'YES (BUG)' : 'no'}`);
 line(`  history duplicated?     ${s2.v1History.topics.length !== s1.v1History.topics.length ? 'YES (BUG)' : 'no'}`);

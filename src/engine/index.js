@@ -14,8 +14,10 @@ export {
 } from './log.js';
 export { deriveConcept, deriveAll } from './derive.js';
 export {
-  MemoryStore, KEYS, KEY_PREFIX, STATE_SCHEMA, emptyState, loadState, saveState,
-  trySaveState, isQuotaError, defaultStore, readV3FromStore,
+  MemoryStore, MemoryLogAdapter, IdbLogAdapter, LearnerStore,
+  KEYS, KEY_PREFIX, STATE_SCHEMA, DB_NAME, LOG_STORE,
+  emptyState, metaOf, loadMeta, saveMeta, trySaveMeta, isQuotaError,
+  defaultKV, defaultLogAdapter, readV3FromStore,
 } from './store.js';
 export {
   planMigration, applyMigration, rollbackMigration,

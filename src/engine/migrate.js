@@ -12,7 +12,7 @@
 // dry run (plan only, no writes) and a rollback path, and tolerates a v3 file whose keys are
 // missing or empty.
 
-import { emptyState, saveState, loadState, KEYS, STATE_SCHEMA } from './store.js';
+import { emptyState, saveMeta, loadMeta, metaOf, KEYS, STATE_SCHEMA } from './store.js';
 
 /** Natural sort for FA-style node keys: FA1, FA2, ... FA10. */
 function faOrder(a, b) {
@@ -98,51 +98,57 @@ export function planMigration(v3) {
  * Apply the migration: write the new state, backing up any prior new-engine state so the
  * migration is reversible. The v3 keys are NOT touched.
  *
+ * Migration writes only the small META (streak + v1 history). It creates ZERO attempts, so it
+ * does not touch the IndexedDB attempt log at all — nothing to migrate there, and never anything
+ * to discard. Rollback therefore only needs to restore the prior meta.
+ *
  * @param {object} v3
- * @param {object} store - KV store
+ * @param {LearnerStore} learnerStore
  * @param {object} [opts]
- * @param {number} [opts.now] - timestamp to stamp migratedAt with
- * @returns {{ plan: object, applied: boolean, backedUp: boolean }}
+ * @param {number} [opts.now] - timestamp to stamp createdAt / migratedAt with
+ * @returns {Promise<{ plan: object, applied: boolean, backedUp: boolean }>}
  */
-export function applyMigration(v3, store, opts = {}) {
+export async function applyMigration(v3, learnerStore, opts = {}) {
   const now = opts.now ?? Date.now();
   const plan = planMigration(v3);
+  const kv = learnerStore.kv;
 
-  // Back up any existing v4 state before overwriting, so rollback can restore it exactly.
-  const prior = store.getItem(KEYS.STATE);
+  // Back up any existing v4 meta before overwriting, so rollback can restore it exactly.
+  const prior = kv.getItem(KEYS.META);
   let backedUp = false;
   if (prior != null) {
-    store.setItem(KEYS.BACKUP, prior);
+    kv.setItem(KEYS.META_BACKUP, prior);
     backedUp = true;
   } else {
-    store.removeItem(KEYS.BACKUP); // no prior state → backup means "there was nothing"
+    kv.removeItem(KEYS.META_BACKUP); // no prior meta → backup means "there was nothing"
   }
 
   const state = plan.newState;
   state.createdAt = now;
   state.v1History.migratedAt = now;
-  saveState(state, store);
+  const res = learnerStore.saveMeta(metaOf(state));
+  if (!res.ok) return { plan, applied: false, backedUp, error: res.error, quota: res.quota };
 
   return { plan, applied: true, backedUp };
 }
 
 /**
- * Roll back the most recent migration: restore the backed-up prior state, or if there was no
- * prior state, remove the migrated state entirely. The v3 keys were never altered, so after
+ * Roll back the most recent migration: restore the backed-up prior meta, or if there was none,
+ * remove the migrated meta entirely. The v3 keys and the attempt log were never altered, so after
  * rollback the app is exactly as it was before the migration ran.
  *
- * @param {object} store
+ * @param {LearnerStore} learnerStore
  * @returns {{ restored: boolean, hadBackup: boolean }}
  */
-export function rollbackMigration(store) {
-  const backup = store.getItem(KEYS.BACKUP);
+export function rollbackMigration(learnerStore) {
+  const kv = learnerStore.kv;
+  const backup = kv.getItem(KEYS.META_BACKUP);
   if (backup != null) {
-    store.setItem(KEYS.STATE, backup);
-    store.removeItem(KEYS.BACKUP);
+    kv.setItem(KEYS.META, backup);
+    kv.removeItem(KEYS.META_BACKUP);
     return { restored: true, hadBackup: true };
   }
-  // No backup → the migration created state where there was none. Remove it.
-  store.removeItem(KEYS.STATE);
+  kv.removeItem(KEYS.META);
   return { restored: true, hadBackup: false };
 }
 
