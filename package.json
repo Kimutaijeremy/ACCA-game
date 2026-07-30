@@ -11,6 +11,7 @@
     "measure:storage": "node tools/storage-measure.mjs",
     "lessons:preview": "node tools/lessons-preview.mjs",
     "diagnosis:demo": "node tools/diagnosis-demo.mjs",
+    "ledger": "node tools/ledger.mjs",
     "graph": "python spec/build_graph.py"
   },
   "engines": {
