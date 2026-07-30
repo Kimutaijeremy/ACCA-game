@@ -63,10 +63,12 @@ performance at all.
 - **Pass:** 95% or more of sampled items fully traceable.
 - **Fail:** below 95% means the content does not meet the sole-resource standard. Content is
   reworked before any readiness claim is made.
-- **Runs:** after WP3 (paper-wide, stratified sample). **Also brought forward, per concept, to the
-  20-concept independent audit** (Execution Order §6, Amendment A5): because every concept now ships
-  its question set, the 20-concept audit answers each concept's items from its lesson alone at the
-  same 95% threshold. This catches sole-resource gaps at 20 concepts, not after WP3 across 191.
+- **Runs:** after WP3 (paper-wide, stratified sample). **Also brought forward to the 20-topic-page
+  independent audit** (Execution Order §6). *(Amendment A6, 31 July 2026: topic pages are thin by
+  design, so this splits into TWO numbers, reported separately — (1) items answerable from the topic
+  page alone, and (2) of the remainder, the fraction whose gap "Teach Me This" closes from the
+  authored material. There is no single 95% line; a topic that neither the page nor Teach Me This can
+  make answerable is a rewrite candidate. Supersedes A5's single per-concept 95% threshold.)*
 
 ### Test B — Structural fidelity of the sealed pool
 

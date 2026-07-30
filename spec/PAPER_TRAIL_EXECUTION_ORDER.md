@@ -26,30 +26,47 @@ is not a bottleneck to route around — he is a user waiting for something usabl
 
 ## 1. What "done" means
 
-Three papers — FA, MA, BT — each **live on his phone**, each with complete lessons, question banks
-meeting their allocation matrix, and a sealed simulation pool. Plus the dashboard and readiness
-layer from brief sections 6.7 and 6.8, and Gate G-PT1 passed.
+Three papers — FA, MA, BT — each **live on his phone**, each with a full set of **topic pages**
+(one per syllabus sub-area), **many mixed exam-format question sets of ten**, and a sealed
+simulation pool. Every topic complete under the 8/10 rule (§4A), so every paper complete and the
+next unlocked. Plus the dashboard and readiness layer, and Gate G-PT1 passed.
 
 Not "specified." Not "on a branch." Live, on the phone, usable.
 
-### 1A. The authoring unit is the concept, not the lesson  *(Amendment A5, 30 July 2026)*
+### 1A. The design — reminder-and-drill, not teach-from-scratch  *(Amendment A6, 31 July 2026)*
 
-**A concept is not done until it has BOTH its lesson and its question set.** Lessons are no longer
-authored in isolation. For each concept, write the lesson AND its questions together — spanning the
-four practice rungs to the per-concept floor (concept-check 3, guided 3, standard 3, stretch 1;
-brief §6.4) — then move to the next concept. Calculation-shaped concepts author at least one
-**parameterized generator** from the start (numbers regenerate per attempt), not retrofitted.
+Jeremy has studied BT, MA and FA. He needs **reminding and drilling, not teaching from zero.** For
+these three papers the teaching layer collapses and questions become the main event. *(Amendment A6
+supersedes A5's per-concept lesson unit for BT/MA/FA; the concept graph, item model, diagnosis,
+mastery states, review and decay all keep running underneath — see §1B. FR and AA keep full teaching
+lessons; see §1C.)*
 
-**Why this is the unit.** Without questions nothing progresses past Exposed: no mastery, no
-unlocking, no dashboard, no decay, and the diagnosis engine (brief §6.5) never runs. A pile of
-lessons with no questions is a reading app, not a learning system. So "concepts built" — the number
-on the paper map and the input to lineage unlocking — counts **done** concepts (lesson + question
-set), enforced mechanically by `conceptComplete` / `npm run items:check`. A concept with only a
-lesson is still *readable* (Exposed), but it is **not** built.
+**Topic pages replace per-concept lessons (BT, MA, FA).** One page per syllabus **sub-area**
+(~38 BT, ~25 MA, ~34 FA), each holding, and no more:
+- **the topic in a nutshell** — about one page, no story;
+- **what it takes to answer an exam question on it** — the traps, the format, what examiners look for;
+- **ONE worked example**, every step shown, nothing skipped.
+Keep the Wanjiku voice light. Drop the length. The topic page is deliberately thinner than the old
+lesson — the audit (§6) is amended to test exactly that.
 
-**Exception — the accounting-equation cap (brief §6.4).** FA-05 may hold at most two items in the
-whole FA bank; the four-rung floor does not apply to it. Its mastery is demonstrated through the
-concepts it feeds, not a bank of its own. This is the only capped concept.
+**Questions are the main event.** Mixed **sets of ten**, drawn across the *whole paper*, never
+blocked by topic. Many sets. Each set is scored **out of 10**, with a **rolling average per paper**
+shown, and the "where you slip" diagnosis (brief §6.5) kept. Parameterized generators wherever a
+question is calculational (numbers regenerate per attempt — anti-memorisation).
+
+### 1B. What is kept, running underneath  *(Amendment A6)*
+
+Throw nothing away. The **concept graph stays the tagging spine**: every question still tags to one
+or more concepts. Coverage/allocation matrices, the seven-cause **diagnosis engine**, the five
+**mastery states**, **review scheduling** and **decay** all keep running on the concept tags — they
+power reviews and diagnosis. The change is only the *teaching layer* and the *visible completion
+gate*; the engine beneath is untouched.
+
+### 1C. FR and AA keep full teaching lessons  *(Amendment A6)*
+
+This teaching-layer collapse is **BT/MA/FA only**. FR and AA — when their tracks begin — keep the
+full teaching lessons of the old rubric (§5, retained below as the "full-lesson rubric"). A
+one-page summary cannot teach consolidation from zero, which is exactly the destination.
 
 ---
 
@@ -72,6 +89,8 @@ concepts it feeds, not a bank of its own. This is the only capped concept.
 - Force-pushing to the Pages branch, or rewriting published history.
 - Any operation that could discard learner progress without a verified backup in hand.
 - Renaming or moving the deployed app. It stays at `kimutaijeremy.github.io/ACCA-game`.
+- Putting the Claude API key (or any secret) in the app bundle, in git, or anywhere the phone can
+  read it. It lives only in the Vercel server-side environment (§7A).
 
 ---
 
@@ -104,11 +123,12 @@ Publish **continuously — roughly every 15–20 lessons across all three papers
 to Section 8's pre-flight checklist each time.
 
 A paper track is **done** when: every one of its concepts (per `concepts.json` — FA 65, MA 66,
-BT 60) has a lesson meeting Section 5; its question banks meet the paper's allocation matrix with
-every floor green, the 8% concentration cap enforced, and (FA) the accounting-equation cap of two
-items and thickened areas G and H per brief §6.4; its sealed pool is sized for six simulations; the
-dashboard and both readiness numbers work for it; and it is published and verified from the phone
-home screen. When all three are done, **run Gate G-PT1** in full.
+BT 60) is covered by a **topic page** meeting Section 5; its question banks meet the paper's
+allocation matrix with every floor green, the 8% concentration cap enforced, and (FA) the
+accounting-equation cap of two items and thickened areas G and H per brief §6.4; **every topic is
+complete under the 8/10 rule** (§4A); its sealed pool is sized for six simulations; the dashboard
+and both readiness numbers work for it; and it is published and verified from the phone home screen.
+When all three are done, **run Gate G-PT1** in full.
 
 **Partial-content handling:** every paper, at every moment, displays honestly — built concepts
 against total (Section 4A), never broken, never an empty shell that looks like a failure.
@@ -120,17 +140,26 @@ amendment and a change of scope beyond Phase 1. Report readiness to start it; do
 
 ---
 
-## 4A. Unlocking, lineage and visibility  (Amendment A2, 30 July 2026)
+## 4A. Unlocking, lineage and visibility  (Amendment A2, 30 July 2026; completion rule replaced by A6)
 
 **Lineage-gated unlocking replaces "open everything."**
 
-- A paper is **COMPLETE** when **every concept in it is at Competent or above** — measured against
-  the paper's FULL concept count in `concepts.json` (FA 65, MA 66, BT 60), **never** against how
-  many lessons have been authored so far. 20 of 65 FA concepts at Competent is 31% of FA, not a
-  complete paper. **Partial content must never produce an unlock.**
-- Completing a paper opens **only its own descendants** (the lineage table below).
+**The visible completion gate is the 8/10 rule** *(Amendment A6, 31 July 2026 — supersedes the
+concept-Competent completion rule below for BT/MA/FA)*:
+
+- A **topic is COMPLETE** when the learner averages **8/10 or better across two different question
+  sets that each covered it** (a set "covers" a topic when it includes at least one item tagged to a
+  concept in that topic/sub-area). Measured against the paper's FULL sub-area list, never against how
+  many topics have been authored so far. **Partial content must never produce an unlock.**
+- A **paper is COMPLETE** when **every one of its topics is complete.** That is what unlocks the
+  paper's descendants (the lineage table below).
+- **Concept mastery states and decay keep running underneath** (§1B) — they drive reviews and
+  diagnosis — but they are **not** the visible gate. The gate the learner sees, and the unlock, is
+  the 8/10 topic rule.
 - **Exam readiness is separate and unlocks nothing.**
 - A locked paper always **states why**: "opens when you complete FA" — never a bare LOCKED.
+- *(FR/AA, when built, complete on the full-lesson design of §1C — their gate returns to concept
+  mastery, since they teach from scratch. Rewire only BT/MA/FA to the 8/10 rule.)*
 
 **Paper lineage** — an explicit config table, kept in one file (`src/content/lineage.js`) so it
 extends without touching engine code, and validated against `concepts.json`'s `grows_into` edges
@@ -146,47 +175,49 @@ graph, so edge-derivation cannot express their position.
 | LW, TX | open from the start, no parent |
 
 **Content-status, kept distinct from lock state:**
-- **Open + built** — has lessons/items; playable.
+- **Open + built** — has topic pages and question sets; playable.
 - **Open + "content not built yet"** — LW and TX now; FR, PM, FM, AA until their tracks are built.
   Visibly distinct from a locked paper and from a broken one.
 - **Locked** — gated by lineage, showing its unlock reason.
 
-**Build progress is visible.** Every paper shows concepts built against its total — e.g.
-"FA — 42 of 65 concepts available" — so the app is visibly growing, never ambiguous between
-finished and broken.
+**Build progress is visible.** Every paper shows **topics complete against its total** — e.g.
+"FA — 9 of 34 topics complete" — plus how many topic pages are authored so far, so the app is
+visibly growing, never ambiguous between finished and broken.
 
 **What's new.** Because publishing is continuous, the app shows what has been added since Jeremy's
 last visit — new lessons and question sets, by paper.
 
 ---
 
-## 5. Lesson quality rubric
+## 5. Quality rubric
 
-Every lesson must satisfy all of these. This is what the independent audit in Section 6 checks
-against.
+### 5A. Topic-page rubric — BT, MA, FA  *(Amendment A6, 31 July 2026)*
 
-1. **Structure complete:** story beat, keypoint boxes holding the load-bearing formula or rule, one
-   worked example showing every step with nothing skipped, the one-breath compression, and a forward
-   pointer naming where the concept matures.
-2. **Sole-resource sufficiency:** every fact needed to answer that concept's questions is present in
-   the lesson. No assumed prior knowledge beyond concepts marked as prerequisites in the graph.
-   *(Amendment A5: this is now a checkable claim, because the questions exist alongside the lesson —
-   the audit in §6 answers each of the concept's items using only its lesson and reports any item
-   that needs an outside fact.)*
+Every **topic page** (one per sub-area) must satisfy all of these. This is what the audit in
+Section 6 checks against for BT/MA/FA.
+
+1. **Structure complete, and only this:** (a) the topic **in a nutshell** — about one page, no story
+   beat; (b) **exam readiness** — the traps, the required format, and what examiners look for on this
+   topic; (c) **ONE worked example** showing every arithmetic and posting step, nothing skipped.
+2. **Reminder, not first-teaching:** pitched to refresh someone who has studied the paper, not to
+   teach it from zero. Concise. (First-teaching depth is FR/AA only — §5B.)
 3. **Phone-readable:** scannable on a narrow screen. Long unbroken prose blocks fail.
-4. **Voice consistent with Wanjiku Volume I** — the same characters and register, not a textbook in
-   costume. Where material is genuinely dry, name the dryness and make the stakes the hook rather
-   than manufacturing false drama.
-5. **Worked example fully shown:** every arithmetic and posting step visible. A jump from setup to
-   answer fails.
-6. **Kenyan context where natural**, never forced.
-7. **No list presented as complete is actually incomplete.** If a lesson enumerates the kinds,
-   methods, books, categories, etc. of something, every examinable member must be there. An
-   incomplete list stated as the whole (e.g. omitting the sales/purchases returns day books from
-   the books of prime entry) is a content failure, not a stylistic one.
-8. **Distinct opening.** No two lessons open on the same rhetorical device. Repeated framing across
-   191 lessons becomes wallpaper; the first sentence must not be interchangeable with another
-   lesson's. *(Amendment A4, 30 July 2026.)*
+4. **Voice: Wanjiku, kept light.** The register of Volume I, but brief — a knowing reminder, not a
+   story. Kenyan context only where it genuinely sharpens a point.
+5. **Worked example fully shown:** every step visible. A jump from setup to answer fails.
+6. **No list presented as complete is actually incomplete.** Every examinable member of any
+   enumerated set must be present (e.g. all seven books of prime entry). A content failure, not a
+   stylistic one. *(Rubric A4.)*
+7. **Sole-resource-plus-Teach-Me:** the topic page carries what its questions need; where it
+   deliberately cannot (it is thin by design), **Teach Me This** (§7A) must close the gap from the
+   authored material. The audit reports both numbers separately (§6).
+
+### 5B. Full-lesson rubric — FR, AA only (retained)  *(the pre-A6 rubric)*
+
+FR and AA teach from scratch (§1C) and keep the full-lesson rubric: story beat; keypoint boxes with
+the load-bearing formula/rule; one worked example, every step shown; the one-breath compression; a
+forward pointer; sole-resource sufficiency; phone-readable; consistent Wanjiku voice; Kenyan context
+where natural; no incomplete-complete list; distinct opening across lessons.
 
 ---
 
@@ -195,26 +226,26 @@ against.
 Self-review by the session that authored the content is not evidence. Run these as **fresh sessions
 with no authoring context**, given only the material and the criteria.
 
-- **After the first 20 concepts (across the parallel tracks):** audit against Section 5's rubric,
-  in a fresh session with no authoring context. **The audit assesses the lessons AS RENDERED IN THE
-  APP ON A PHONE VIEWPORT — not as a markdown preview file.** Phone-readability (Section 5.3) is a
-  rubric criterion and cannot be judged from raw markup; the reviewer must see what Jeremy sees on
-  his phone. If the format fails, fix the template, re-migrate the existing lessons, and re-audit
-  before writing more. This replaces the human format review — cheaper to fix at 20 than at 191.
-  *(Amendment A3, 30 July 2026.)* **The audit must explicitly check rubric 7 (no incomplete list
-  stated as complete) and rubric 8 (every lesson opens on a distinct device — collect the 20 first
-  sentences and confirm no two share a framing).**
-  - **The sole-resource test, now made real *(Amendment A5, 30 July 2026)*.** Because every audited
-    concept now ships its question set, the audit is also **Test A of the validation protocol
-    brought forward to the 20-concept gate, per concept.** The fresh reviewer is given, for each
-    concept, ONLY its lesson and its items (including one rendered instance of every parameterized
-    generator, seed recorded), and must answer each item using nothing but that lesson. For every
-    item they record: answerable from the lesson alone — yes/no; if no, the exact outside fact it
-    needs; and whether the keyed answer and the engineered distractor→cause tags are correct. **Pass
-    threshold: 95% of the concept's items answerable from its lesson alone** (mirrors protocol Test
-    A). A concept below threshold has its lesson thickened or its items retuned before the batch is
-    published — this is the actual sole-resource claim (rubric 5.2), and it could not be tested while
-    lessons existed without questions.
+- **After the first 20 topic pages (across the parallel tracks):** audit against Section 5A's
+  topic-page rubric, in a fresh session with no authoring context. **The audit assesses the pages AS
+  RENDERED IN THE APP ON A PHONE VIEWPORT — not as a markdown preview file.** Phone-readability
+  (5A.3) cannot be judged from raw markup; the reviewer must see what Jeremy sees. If the format
+  fails, fix the template, re-render the existing pages, and re-audit before writing more.
+  *(Amendment A3.)* **The audit must also check rubric 5A.6 (no incomplete list stated as complete).**
+  - **The sole-resource test — now two numbers, because topic pages are thin by design *(Amendment
+    A6, 31 July 2026 — supersedes A5)*.** Topic pages are deliberately thinner than the old lessons,
+    so Test A splits in two and **both numbers are reported separately in `BUILD_STATUS.md`:**
+    1. **Answerable from the topic page alone.** The fresh reviewer is given, per topic, ONLY its
+       topic page and the items tagged to its concepts (one rendered instance of every parameterized
+       generator, seed recorded), and answers each item using nothing but that page. Record, per
+       item: answerable from the page alone — yes/no; if no, the exact outside fact it needs; and
+       whether the keyed answer and distractor→cause tags are correct.
+    2. **Gap closed by Teach Me This.** For each item NOT answerable from the page alone, check
+       whether **Teach Me This** (§7A), grounded only in the authored material, supplies the missing
+       fact. Report the fraction of gaps it closes.
+    - There is **no single 95% pass line** now: a lower page-alone number is acceptable *by design*,
+      provided Teach Me This closes the remainder. A topic where neither the page nor Teach Me This
+      makes its questions answerable is a **rewrite candidate** — surface it in `BUILD_STATUS.md`.
 - **At each slice's completion:** run Test A and Test B from the validation protocol — content
   sufficiency on a stratified sample, and structural fidelity of the sealed pool.
 - **Record every audit result in `BUILD_STATUS.md`**, including failures and what changed.
@@ -226,14 +257,35 @@ with no authoring context**, given only the material and the criteria.
 Unreviewed content at this volume will contain errors. The most reliable way to find them is his
 actual use, so make that a mechanism rather than a hope.
 
-- **A flag control on every lesson and every question**, one tap, no dialogue: *this is wrong / this
-  is confusing / this contradicts something*.
+- **A flag control on every topic page and every question**, one tap, no dialogue: *this is wrong /
+  this is confusing / this contradicts something*.
 - Flags write to a review queue in learner state and **export with everything else**.
 - At the start of each session, read any flags present in the repo's review file and fix them
   before new authoring. Flagged content jumps the queue.
 - Flag counts appear in `BUILD_STATUS.md`.
 
 This is the closing of the loop he asked for: he uses it, and using it is the audit.
+
+---
+
+## 7A. "Teach Me This" — grounded expansion on demand  *(Amendment A6, 31 July 2026)*
+
+Because topic pages are thin, the learner needs a way to go deeper on the spot. **Build it alongside
+FA, not after.**
+
+- **Placement:** a "Teach Me This" control on **every topic page** and **after any failed question
+  set**.
+- **How it works:** the app calls the **Claude API through a Vercel serverless function**. Jeremy has
+  Vercel connected; **the API key lives server-side only, never in the app bundle** (never-list:
+  no secret in client code, in git, or shipped to the phone).
+- **Grounding is mandatory.** Every request is grounded in the **authored material**: the topic page,
+  its worked example, the specific question got wrong, the correct answer, and the diagnosed cause.
+  It **expands validated content; it does not invent curriculum.** The system prompt constrains it to
+  the supplied material and to the paper's syllabus scope.
+- **Conversational:** Jeremy can ask follow-ups in a thread.
+- **Log every use** (topic, question if any, timestamp) in learner state, exporting with everything
+  else. **Repeated use on one topic means that topic page is too thin** — surface such topics in
+  `BUILD_STATUS.md` as **rewrite candidates**.
 
 ---
 

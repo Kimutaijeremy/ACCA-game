@@ -190,51 +190,65 @@ directly: every level, review date and wipe is recomputed by replaying the attem
 date. The guarantee is therefore: **the same log evaluated at the same date reproduces every level
 identically.**
 
-### 6.3 The topic node — teach, then drill
+### 6.3 The teaching layer — topic pages (BT/MA/FA), then drill  *(rewritten by Amendment A6, 31 July 2026)*
 
-Every concept node contains, in order:
+**Amendment A6 collapses the teaching layer for BT, MA and FA** — Jeremy has studied all three and
+needs reminding and drilling, not first-teaching. (FR and AA keep full teaching lessons — §6.3B.)
 
-1. **Lesson** — full teaching content adapted from Wanjiku Volume I into the node itself: the
-   story beat, keypoint boxes (formulas and load-bearing rules), one worked example, the
-   one-breath compression. Knowledge lessons close with a **forward pointer** naming where the
-   concept matures ("depreciation returns in FR as the revaluation model").
-2. **Bridge segment** (Skills level, later phases) — the named Knowledge concept this grows out
-   of, restated, with two or three warm-up questions at Knowledge level.
-3. **Drills** — the rungs below.
+**Topic pages.** The teaching unit is the **syllabus sub-area (a "topic")**, not the concept: one
+page per sub-area (~38 BT, ~25 MA, ~34 FA). Each holds, and no more:
+1. **the topic in a nutshell** — about one page, no story beat;
+2. **exam readiness** — the traps, the required format, and what examiners look for;
+3. **ONE worked example**, every step shown, nothing skipped.
+Wanjiku voice, kept light. See Execution Order §5A for the rubric.
 
-**Difficulty rungs:** Concept-check → Guided (scaffolded) → Standard (exam level) → Stretch (top
-of syllabus, unfamiliar framing) → Integrated/Mixed (interleaved packs drawing four or more
-concepts) → Sealed simulation.
+**The concept graph stays the tagging spine.** Concepts are no longer the teaching unit but remain
+the **tags**: every question tags to one or more concepts, and a topic's concepts are those whose
+outcome falls in that sub-area. Coverage matrices (§6.4), the diagnosis engine (§6.5), mastery
+states, review and decay (§6.2) all keep running on those tags.
 
-**Anti-memorisation:** at least 40% of calculation items are **parameterized templates** — the
-skeleton authored once, numbers regenerating per attempt. Mixed packs interleave concepts so
-position and context never predict the answer.
+**Questions are the main event — mixed sets of ten.** The learner's primary loop is **sets of 10
+items drawn across the whole paper, never blocked by topic**. Many sets. Each set is scored out of
+10, with a **rolling average per paper** shown and the "where you slip" diagnosis kept.
+
+**Difficulty rungs (per item, still tagged):** Concept-check → Guided (scaffolded) → Standard (exam
+level) → Stretch → Integrated/Mixed → Sealed simulation. A set of ten is itself a mixed pack.
+
+**Anti-memorisation:** parameterized templates wherever a question is calculational — numbers
+regenerate per attempt; **option order is shuffled per serve** so position never predicts the answer.
 
 **Time budgets displayed on every item:** 1.2 minutes per mark at Knowledge level, 1.8 at Skills.
 
-**The authoring unit is the whole node — lesson AND drills together, never a lesson alone**
-*(Amendment A5, 30 July 2026; see Execution Order §1A).* A concept is authored as one unit: its
-lesson and its question set, written together and completed before moving on. A lesson with no
-questions cannot move a learner past Exposed or feed the diagnostic engine, so it does not count as
-built. Calculation-shaped concepts include at least one parameterized generator from the outset.
+### 6.3B FR and AA — full teaching lessons (retained)
+
+FR and AA teach from scratch, so when their tracks begin they use the **full-lesson** model of the
+pre-A6 rubric (Execution Order §5B): story beat, keypoint boxes, one worked example, one-breath
+compression, forward pointer — the concept as the teaching unit, authored with its question set.
 
 ### 6.4 Coverage and allocation — completeness is mechanical
 
 Per paper, produce and publish an **allocation matrix**: every study-guide outcome ×
-(concepts, lesson reference, item count per rung, sealed-pool count, share of bank).
+(concepts, topic-page reference, item count per rung, sealed-pool count, share of bank).
 
-**Per-outcome floors — breadth and depth both:**
-- at least one lesson section
+**Per-topic (sub-area) floors — breadth and depth both:**
+- a **topic page** covering the sub-area *(Amendment A6: one page per sub-area, not one lesson per concept)*
 - at least three practice items spanning at least two rungs
 - at least one sealed-pool item
 
-**Per-concept floor — the "done" gate** *(Amendment A5, 30 July 2026)*. The per-outcome floors above
-guarantee breadth across a sub-area; the per-concept floor guarantees each concept is individually
-finishable. A concept is **done** only with a lesson AND a question set of: **concept-check ≥ 3,
-guided ≥ 3, standard ≥ 3, stretch ≥ 1** (derived from the §6.2 evidence rules, so Understood,
-Practised and Competent are each reachable from the set). Calculation-shaped concepts must include
-**≥ 1 parameterized generator**. Integrated and sealed items are cross-concept and assembled
-separately — not part of a single concept's "done". Enforced mechanically (`npm run items:check`).
+**Per-concept item floor — the coverage guarantee** *(Amendment A5, retained under A6)*. Concepts
+are the tagging spine, and each authored concept still carries a question set of **concept-check ≥ 3,
+guided ≥ 3, standard ≥ 3, stretch ≥ 1** so every tag has enough items for the sets to draw on and for
+the underlying mastery states to be reachable. Calculation-shaped concepts include **≥ 1
+parameterized generator**. Enforced mechanically (`npm run items:check`).
+
+**Completion and unlocking — the 8/10 rule** *(Amendment A6; supersedes concept-Competent completion
+for BT/MA/FA; see Execution Order §4A)*. The **visible** gate is set-score based, not concept-mastery
+based:
+- A set of ten **covers** a topic when it includes ≥ 1 item tagged to a concept in that sub-area.
+- A **topic is complete** when the learner averages **≥ 8/10 across two different sets covering it**.
+- A **paper is complete** (and unlocks its descendants) when **every one of its topics is complete**.
+- Concept mastery states and decay keep running underneath for reviews and diagnosis, but they are
+  not the visible gate. (FR/AA revert to concept-mastery completion — they teach from scratch.)
 
 **Accounting-equation cap (overrides the per-concept floor for one concept).** The accounting
 equation may hold **at most two items in the entire FA bank** — deliberately under-weighted because
@@ -311,8 +325,9 @@ Ambiguous cases default to conceptual-plus-practice rather than a guess.**
 
 ### 6.7 Readiness — two numbers, never merged
 
-- **Learning readiness** (per paper): percentage of concepts at Competent or above, alongside a
-  green coverage matrix.
+- **Learning readiness** (per paper): **percentage of topics complete under the 8/10 rule** (§6.4,
+  Amendment A6), alongside a green coverage matrix. *(Was "percentage of concepts at Competent"; the
+  8/10 topic rule is now the visible gate for BT/MA/FA. FR/AA revert to concept-Competent.)*
 - **Exam readiness** (per paper): two consecutive simulations, each 90%+ unseen items, each scored
   65%+, completed within time. Until that rule is met, not exam-ready — regardless of coverage.
 
@@ -336,9 +351,29 @@ session id, timestamp.
 
 Every state and every dashboard number derives from it. **States are never written directly.**
 
-Learner state — concept states, attempt log, review schedule — persists across sessions and papers,
-and **exports on demand in one tap.** The learning history gets the same backup discipline as
-everything else Jeremy runs.
+Set results (score out of 10, the concepts/topics each set covered, timestamp) and **Teach Me This
+uses** are logged too, so topic completion (the 8/10 rule) and the rolling average are recomputable,
+and thin topics are detectable.
+
+Learner state — concept states, attempt log, set results, Teach Me uses, review schedule — persists
+across sessions and papers, and **exports on demand in one tap.** The learning history gets the same
+backup discipline as everything else Jeremy runs.
+
+### 6.10 "Teach Me This" — grounded expansion on demand  *(Amendment A6, 31 July 2026)*
+
+Topic pages are deliberately thin, so the learner can go deeper on the spot. Built alongside FA.
+
+- **Where:** on every topic page, and after any failed question set.
+- **Server-side only:** the app calls the **Claude API via a Vercel serverless function**; the API
+  **key lives in the Vercel environment, never in the app bundle or git** (never-list, Execution
+  Order §2/§7A).
+- **Grounded, not inventive:** every request is grounded in the authored material — the topic page,
+  its worked example, the missed question, the correct answer, the diagnosed cause. The system prompt
+  constrains it to that material and the paper's syllabus scope. It expands validated content; it does
+  not invent curriculum.
+- **Conversational:** follow-up questions in a thread.
+- **Logged:** every use is logged (topic, question, timestamp) and exports with everything else.
+  **Repeated use on one topic flags that page as too thin — a rewrite candidate in `BUILD_STATUS.md`.**
 
 ---
 
