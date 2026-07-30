@@ -77,32 +77,67 @@ Section 2's never-list being the only way forward.
 
 ---
 
-## 4. Slice order
+## 4. Build tracks and publishing cadence  (Amendment A2, 30 July 2026)
 
-Vertical slices, each published when complete. Nothing waits for everything.
+**Amendment A2 supersedes the FA-first ordering.** BT, MA and FA are authored **equally, in
+parallel, as three independent tracks with no priority between them.** Nothing waits for anything.
+Publish **continuously — roughly every 15–20 lessons across all three papers combined** — subject
+to Section 8's pre-flight checklist each time.
 
-### Slice 1 — FA (first, and highest priority)
-FA is the paper Jeremy found wanting and the on-ramp to FR, his actual wall.
+A paper track is **done** when: every one of its concepts (per `concepts.json` — FA 65, MA 66,
+BT 60) has a lesson meeting Section 5; its question banks meet the paper's allocation matrix with
+every floor green, the 8% concentration cap enforced, and (FA) the accounting-equation cap of two
+items and thickened areas G and H per brief §6.4; its sealed pool is sized for six simulations; the
+dashboard and both readiness numbers work for it; and it is published and verified from the phone
+home screen. When all three are done, **run Gate G-PT1** in full.
 
-**Done when:** all 65 FA concepts have lessons; question banks meet the FA allocation matrix with
-every floor green, the 8% concentration cap enforced, the accounting equation capped at two items
-total, and areas G and H thickened per brief section 6.4; sealed pool sized for six simulations;
-dashboard and both readiness numbers working for FA; migration run; published; verified from the
-phone home screen.
+**Partial-content handling:** every paper, at every moment, displays honestly — built concepts
+against total (Section 4A), never broken, never an empty shell that looks like a failure.
 
-**Partial-content handling:** MA and BT must display honestly as "in build" — never broken, never
-an empty shell that looks like a failure.
-
-### Slice 2 — MA
-Same pattern. 66 concepts. Published when done.
-
-### Slice 3 — BT
-Same pattern. 60 concepts. Published when done. **Then run Gate G-PT1** in full.
-
-### Slice 4 — FR (do not start without Jeremy's go-ahead)
+### Track 4 — FR (do not start without Jeremy's go-ahead)
 FR is his real destination, but it is **not in the graph as live concepts** — only 17 stub nodes.
 Slice 4 therefore requires extending `concepts.json` with full FR concepts first, which is a graph
 amendment and a change of scope beyond Phase 1. Report readiness to start it; do not begin it.
+
+---
+
+## 4A. Unlocking, lineage and visibility  (Amendment A2, 30 July 2026)
+
+**Lineage-gated unlocking replaces "open everything."**
+
+- A paper is **COMPLETE** when **every concept in it is at Competent or above** — measured against
+  the paper's FULL concept count in `concepts.json` (FA 65, MA 66, BT 60), **never** against how
+  many lessons have been authored so far. 20 of 65 FA concepts at Competent is 31% of FA, not a
+  complete paper. **Partial content must never produce an unlock.**
+- Completing a paper opens **only its own descendants** (the lineage table below).
+- **Exam readiness is separate and unlocks nothing.**
+- A locked paper always **states why**: "opens when you complete FA" — never a bare LOCKED.
+
+**Paper lineage** — an explicit config table, kept in one file (`src/content/lineage.js`) so it
+extends without touching engine code, and validated against `concepts.json`'s `grows_into` edges
+where those exist. It is **not** derived from edges alone: AA, LW and TX have no nodes in the
+graph, so edge-derivation cannot express their position.
+
+| Paper | Opens |
+|---|---|
+| FA | FR |
+| MA | PM, FM |
+| FR | AA — AA audits the statements FR teaches; BT contributes ethics, governance and internal control but is not the gate |
+| BT | nothing at Skills level |
+| LW, TX | open from the start, no parent |
+
+**Content-status, kept distinct from lock state:**
+- **Open + built** — has lessons/items; playable.
+- **Open + "content not built yet"** — LW and TX now; FR, PM, FM, AA until their tracks are built.
+  Visibly distinct from a locked paper and from a broken one.
+- **Locked** — gated by lineage, showing its unlock reason.
+
+**Build progress is visible.** Every paper shows concepts built against its total — e.g.
+"FA — 42 of 65 concepts available" — so the app is visibly growing, never ambiguous between
+finished and broken.
+
+**What's new.** Because publishing is continuous, the app shows what has been added since Jeremy's
+last visit — new lessons and question sets, by paper.
 
 ---
 
@@ -200,7 +235,9 @@ a request for permission. Batch questions; never block on them.
 
 ## 11. Carried policies
 
-Real syllabus names everywhere; no `FA1`-style labels in the interface. No LOCKED states below
-Strategic Professional — growth flags instead. No exam-date anchoring anywhere in the build. Annual
+Real syllabus names everywhere; no `FA1`-style labels in the interface. Unlocking is
+**lineage-gated** per Section 4A (Amendment A2 supersedes the earlier "open everything below
+Strategic Professional"): locked papers show their unlock reason, never a bare LOCKED. No
+exam-date anchoring anywhere in the build. Annual
 September syllabus refresh gate. Partnerships stay out of FA until the 2027 gate. Cutover means
 every entry point inventoried, redirected, retired and verified from his actual starting point.

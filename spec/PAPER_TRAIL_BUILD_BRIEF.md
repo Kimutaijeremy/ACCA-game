@@ -278,9 +278,11 @@ Ambiguous cases default to conceptual-plus-practice rather than a guess.**
 
 ### 6.6 The sealed simulation pool — a frozen holdout
 
-- Per paper, a sealed pool sized for **four full simulations**. FA: four sets of the real structure
-  (35 two-mark objective questions plus two 15-mark multi-task questions, two hours). BT and MA per
-  their real structures from Volume II.
+- Per paper, a sealed pool sized for **six full simulations** (amended from four — see
+  `PAPER_TRAIL_VALIDATION_PROTOCOL.md` §2: four supports only two qualifying readiness attempts, so
+  one failed pair exhausts the holdout and every later score is contaminated; six leaves a margin).
+  FA: six sets of the real structure (35 two-mark objective questions plus two 15-mark multi-task
+  questions, two hours). BT and MA per their real structures from Volume II.
 - **No sealed item is ever reachable from any practice path.** First exposure happens inside a
   simulation, on the real clock.
 - Once an item appears in a simulation it is marked exposed. Future simulations prefer unexposed
