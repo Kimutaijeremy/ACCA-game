@@ -3,7 +3,7 @@
    new app take over promptly; the page reloads once on controllerchange. Engine/content modules
    not precached here are runtime-cached (cache-first) on first online load, so offline works after
    one visit; the CACHE bump on each release discards the old ones. */
-const CACHE = "papertrail-v4.0.0";
+const CACHE = "papertrail-v4.1.0";
 const ASSETS = ["./","./index.html","./app.js","./manifest.webmanifest","./spec/concepts.json",
   "./icon-192.png","./icon-512.png","./icon-maskable-512.png"];
 self.addEventListener("install", e => {

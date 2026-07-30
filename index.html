@@ -95,6 +95,31 @@ nav.tabs button.on{color:var(--ledger);font-weight:700}
 .hist .hrow{display:flex;justify-content:space-between;border-top:1px dashed var(--rule);padding:6px 0;font-size:.9rem}
 .hist .hrow:first-of-type{border-top:none}
 .divider{font-family:var(--mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:18px 0 6px;border-bottom:1px solid var(--rule);padding-bottom:3px}
+/* drill runner */
+.qstem{font-size:1.08rem;font-weight:600;margin:6px 0 14px}
+.opts{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;font:inherit;color:inherit;
+  background:var(--paper);border:1.5px solid var(--rule);border-radius:10px;padding:12px 13px;cursor:pointer;width:100%}
+.opt:active{background:var(--tint)}
+.opt .ol{font-family:var(--mono);font-weight:700;color:var(--faint);flex:none;min-width:1.1em}
+.opt.chosen{border-color:var(--ledger);background:var(--tint)}
+.opt.chosen .ol{color:var(--ledger)}
+.opt.correct{border-color:var(--ledger);background:#E4EFE6}
+.opt.correct .ol{color:var(--ledger)}
+.opt.wrong{border-color:var(--pencil);background:#F6E2DE}
+.opt.wrong .ol{color:var(--pencil)}
+.opt.dim{opacity:.55}
+.opt:disabled{cursor:default}
+.hint{background:var(--tint);border-left:4px solid var(--amber);border-radius:0 8px 8px 0;padding:10px 13px;margin:0 0 12px}
+.hint ol{margin:4px 0 0 18px}.hint li{margin-bottom:4px}
+.btn.small{padding:8px 12px;font-size:.85rem;margin-bottom:12px}
+.verdict{font-weight:700;font-size:1.05rem;margin:4px 0 8px}
+.verdict.ok{color:var(--ledger)}.verdict.no{color:var(--pencil)}
+.rationale{border-top:1px dashed var(--rule);padding-top:10px;margin-bottom:8px}
+.diag{border:1.5px solid var(--rule);border-left:4px solid var(--pencil);border-radius:0 8px 8px 0;padding:12px 14px;margin:12px 0}
+.diag .cause{font-weight:700}
+.diag ul{margin:4px 0 10px 18px}.diag li{margin-bottom:4px}
+.promote{background:var(--ledger);color:var(--paper);border-radius:8px;padding:10px 13px;margin:12px 0;font-size:.95rem}
 </style>
 </head>
 <body>

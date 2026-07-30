@@ -2,12 +2,27 @@
 // No build step: this module imports the engine and content directly and is served static.
 
 import {
-  loadGraph, LearnerStore, deriveAll, readV3FromStore, applyMigration, paperStatuses,
+  loadGraph, LearnerStore, deriveAll, deriveConcept, readV3FromStore, applyMigration, paperStatuses,
+  instantiate, diagnose, REMEDIATION,
 } from './src/engine/index.js';
 import {
   LESSONS_BY_PAPER, lessonForConcept, hasLesson,
 } from './src/content/lessons/index.js';
-import { conceptComplete } from './src/content/items/index.js';
+import { conceptComplete, hasQuestionSet, itemsForConcept } from './src/content/items/index.js';
+
+// Human-readable names for the seven diagnostic causes (Brief §6.5) — shown when an answer is wrong.
+const CAUSE_LABEL = {
+  knowledge_gap: 'Knowledge gap',
+  conceptual_misunderstanding: 'Conceptual mix-up',
+  calculation_error: 'Calculation slip',
+  requirement_misread: 'Misread the requirement',
+  incorrect_treatment: 'Wrong accounting treatment',
+  careless_slip: 'Careless slip',
+  transfer_failure: 'Trouble transferring to a new context',
+};
+// Order a concept's set is served in: recognition first, then application, exam level, then stretch.
+const RUNG_ORDER = ['concept-check', 'guided', 'standard', 'stretch'];
+const RUNG_LABEL = { 'concept-check': 'Concept check', guided: 'Guided', standard: 'Standard', stretch: 'Stretch' };
 
 const PAPER_NAMES = {
   BT: 'Business and Technology', MA: 'Management Accounting', FA: 'Financial Accounting',
@@ -69,14 +84,27 @@ async function boot() {
     window.addEventListener('hashchange', route);
     route();
     // Test/introspection hook (harmless in production): used by tools/preflight.mjs.
-    window.__PT__ = { store, graph, refreshStates: async () => { await refreshStates(); route(); } };
+    window.__PT__ = {
+      store, graph, refreshStates: async () => { await refreshStates(); route(); },
+      curItem: () => (drill ? drill.instance : null), // test hook: current served question
+      stateOf,
+    };
   } catch (e) {
     app.innerHTML = `<div class="banner">The app failed to load: ${esc(e.message)}</div>`;
   }
 }
+let errorProfile = {}; // diagnosed-cause tally across wrong attempts (Brief §6.8 error-cause profile)
+let attemptTally = { attempts: 0, correct: 0 };
 async function refreshStates() {
   const log = await store.readLogRecords();
   states = deriveAll(log, { now: Date.now(), conceptIds: graph.liveIds() }).states;
+  errorProfile = {}; attemptTally = { attempts: 0, correct: 0 };
+  for (const r of log) {
+    if (r.kind !== 'item') continue;
+    attemptTally.attempts += 1;
+    if (r.correct) attemptTally.correct += 1;
+    else if (r.cause) errorProfile[r.cause] = (errorProfile[r.cause] || 0) + 1;
+  }
 }
 // A concept is "available" only when DONE — a lesson AND its question set (standing order §1).
 const statuses = () => paperStatuses(graph, states, conceptComplete);
@@ -117,7 +145,7 @@ function screenHome() {
   }).join('');
   app.innerHTML = headerHTML + bannerHTML()
     + '<div class="eyebrow">Your papers</div><h1>Learn the ACCA, one concept at a time.</h1>'
-    + '<p class="muted small">Papers open as you master what comes before them. Questions and simulated exams are being built — lessons are live now.</p>'
+    + '<p class="muted small">Papers open as you master what comes before them. Read a lesson, then practise its questions to move it up the mastery states. Simulated exams are still being built.</p>'
     + rows;
 }
 
@@ -165,10 +193,26 @@ function screenConcept(id) {
     + `<p class="breath">In one breath: ${inline(L.compression)}</p>`
     + `<p class="forward">${inline(L.forwardPointer)}</p>`
     + '<div class="divider">Practice</div>'
-    + '<p><span class="pill">Concept check — questions coming</span></p>'
-    + `<button class="btn block" data-act="read" data-id="${id}" ${read ? 'disabled' : ''}>${read ? 'Lesson read ✓' : 'Mark this lesson as read'}</button>`;
+    + `<button class="btn block" data-act="read" data-id="${id}" ${read ? 'disabled' : ''}>${read ? 'Lesson read ✓' : 'Mark this lesson as read'}</button>`
+    + (hasQuestionSet(id)
+      ? `<button class="btn ghost block" data-act="drill" data-id="${id}">Practise — ${itemsForConcept(id).length} questions</button>`
+        + (read ? '' : '<p class="muted small">Read the lesson first — your state moves up as you answer.</p>')
+      : '<p><span class="pill">Questions coming</span></p>');
 }
 
+function errorProfileHTML() {
+  const entries = Object.entries(errorProfile).sort((a, b) => b[1] - a[1]);
+  if (!attemptTally.attempts) return '';
+  const pct = Math.round((attemptTally.correct / attemptTally.attempts) * 100);
+  let html = `<h2>Your practice</h2><div class="hist"><div class="hrow"><span>Questions answered</span><b>${attemptTally.attempts}</b></div>`
+    + `<div class="hrow"><span>Correct</span><b>${attemptTally.correct} (${pct}%)</b></div></div>`;
+  if (entries.length) {
+    html += '<h2>Where you slip</h2><p class="muted small">Diagnosed causes of your wrong answers — what to work on.</p><div class="hist">'
+      + entries.map(([c, n]) => `<div class="hrow"><span>${esc(CAUSE_LABEL[c] || c)}</span><b>${n}</b></div>`).join('')
+      + '</div>';
+  }
+  return html;
+}
 function screenDashboard() {
   const ss = statuses();
   // build-progress bars (papers with a content track)
@@ -195,7 +239,8 @@ function screenDashboard() {
     + '<a class="back" data-act="home" href="#/">Papers</a><div class="eyebrow">Dashboard</div><h1>Where you stand</h1>'
     + '<h2>Build progress</h2>' + bars
     + '<h2>Concept states</h2><div class="hist">' + tallyHTML + '</div>'
-    + '<p class="muted small" style="margin-top:12px">Your error profile and exam-readiness numbers appear here once the question banks exist — no placeholder figures until then.</p>'
+    + errorProfileHTML()
+    + '<p class="muted small" style="margin-top:12px">Exam-readiness numbers appear here once the sealed simulation pools are built — no placeholder figures until then.</p>'
     + histHTML;
 }
 
@@ -208,6 +253,183 @@ function screenData() {
     + '<p id="dmsg" class="muted small"></p>';
   const inp = document.getElementById('imp');
   if (inp) inp.addEventListener('change', importFile);
+}
+
+// ---------- drill runner ----------
+// Serves a concept's questions one at a time, logs each attempt truthfully, diagnoses the wrong
+// ones and routes to the repair, and lets you watch the concept climb the mastery states. Every
+// number the engine derives comes from the attempt records this writes — nothing is set directly.
+let drill = null;
+
+function buildQueue(id) {
+  const items = itemsForConcept(id).filter((it) => RUNG_ORDER.includes(it.rung));
+  items.sort((a, b) => RUNG_ORDER.indexOf(a.rung) - RUNG_ORDER.indexOf(b.rung));
+  return items;
+}
+function serveCurrent() {
+  const item = drill.queue[drill.i];
+  const seed = (Math.floor(Math.random() * 0x7fffffff)) >>> 0; // fresh numbers for parameterized items
+  drill.instance = instantiate(item, seed);
+  drill.shownAt = Date.now();
+  drill.chosen = null;
+  drill.usedHint = false;
+  drill.phase = 'ask';
+  drill.result = null;
+}
+function startDrill(id) {
+  const queue = buildQueue(id);
+  if (!queue.length) { location.hash = '#/concept/' + id; return; }
+  drill = { id, queue, i: 0, correctCount: 0, answered: 0 };
+  serveCurrent();
+  route();
+}
+
+// A short, honest line about what the next mastery state needs — read from the derived evidence.
+function nextStepHint(id) {
+  const s = states.get(id);
+  if (!s) return '';
+  const e = s.evidence || {};
+  switch (s.state) {
+    case 'Unvisited': return 'Mark the lesson as read to start — then answers move you up.';
+    case 'Exposed': {
+      const answered = (e.conceptCheck || []).length; const right = (e.conceptCheck || []).filter(Boolean).length;
+      return `To reach Understood: get 2 of 3 concept-checks right (so far ${right} right of ${answered} in the window).`;
+    }
+    case 'Understood': return `To reach Practised: 3 guided answers correct (so far ${e.guidedCorrect || 0} of 3).`;
+    case 'Practised': {
+      const w = e.standardWindow || []; const right = w.filter((a) => a.correct).length;
+      return `To reach Competent: 4 of your last 5 Standard answers right, within the time budget (window ${right}/${w.length}).`;
+    }
+    case 'Competent': return 'To reach Mastered: stretch questions across two sessions at least 3 days apart.';
+    default: return 'Mastered — keep it fresh with reviews when they fall due.';
+  }
+}
+
+function screenDrill() {
+  if (!drill) { location.hash = '#/'; return; }
+  const id = drill.id; const c = graph.get(id); const inst = drill.instance;
+  const head = headerHTML + bannerHTML()
+    + `<a class="back" data-act="concept" data-id="${id}" href="#/concept/${id}">${esc(c.name)}</a>`
+    + `<div class="eyebrow">${esc(c.paper)} · ${RUNG_LABEL[inst.rung]} · ${drill.i + 1} of ${drill.queue.length}</div>`
+    + `<div class="rowbtns">${badge(stateOf(id))}<button class="flagbtn" data-act="flag" data-kind="item" data-id="${inst.itemId}">Flag</button></div>`;
+
+  const opts = inst.options.map((o, idx) => {
+    const label = String.fromCharCode(65 + idx); // A/B/C by POSITION, not by id (options are shuffled)
+    let cls = 'opt';
+    if (drill.phase === 'feedback') {
+      if (o.id === inst.answerId) cls += ' correct';
+      else if (o.id === drill.chosen) cls += ' wrong';
+      else cls += ' dim';
+    } else if (o.id === drill.chosen) cls += ' chosen';
+    const dis = drill.phase === 'feedback' ? 'disabled' : '';
+    return `<button class="${cls}" data-act="opt" data-opt="${o.id}" ${dis}><span class="ol">${label}</span>${inline(o.text)}</button>`;
+  }).join('');
+
+  let body = `<div class="qstem">${inline(inst.stem)}</div><div class="opts">${opts}</div>`;
+
+  if (drill.phase === 'ask') {
+    if (inst.scaffold && inst.scaffold.length) {
+      body += drill.usedHint
+        ? `<div class="hint"><div class="eyebrow">Hint</div><ol>${inst.scaffold.map((h) => `<li>${inline(h)}</li>`).join('')}</ol></div>`
+        : '<button class="btn ghost small" data-act="hint">Show a hint</button>';
+    }
+    body += `<button class="btn block" data-act="check" ${drill.chosen ? '' : 'disabled'}>Check my answer</button>`;
+  } else {
+    const r = drill.result;
+    const verdict = r.correct
+      ? '<div class="verdict ok">✓ Correct</div>'
+      : '<div class="verdict no">✗ Not quite</div>';
+    let fb = verdict + `<div class="rationale">${inline(inst.rationale || '')}</div>`;
+    if (!r.correct && r.diagnosis) {
+      const d = r.diagnosis; const rem = REMEDIATION[d.cause] || {};
+      const acts = (rem.actions || []).map((a) => `<li>${esc(a)}</li>`).join('');
+      fb += `<div class="diag"><div class="eyebrow">Likely cause</div>`
+        + `<div class="cause">${esc(CAUSE_LABEL[d.cause] || d.cause)}</div>`
+        + (d.needsProbe ? '<p class="small muted">Best guess for now — a couple more answers will sharpen it.</p>' : '')
+        + `<div class="eyebrow" style="margin-top:8px">The fix</div><ul>${acts}</ul>`
+        + (rem.route === 'reopen_lesson' ? `<button class="btn ghost small" data-act="concept" data-id="${id}">Reopen the lesson</button>` : '')
+        + '</div>';
+    }
+    if (r.promoted) {
+      fb += `<div class="promote">▲ You’ve reached <b>${esc(r.newState)}</b></div>`;
+    }
+    const last = drill.i >= drill.queue.length - 1;
+    fb += `<button class="btn block" data-act="next">${last ? 'Finish' : 'Next question'}</button>`;
+    body += fb;
+  }
+
+  body += `<p class="progress" style="margin-top:14px">${esc(nextStepHint(id))}</p>`;
+  app.innerHTML = head + body;
+}
+
+function chooseOption(oid) {
+  if (!drill || drill.phase !== 'ask') return;
+  drill.chosen = oid;
+  screenDrill();
+}
+async function submitAnswer() {
+  if (!drill || drill.phase !== 'ask' || !drill.chosen) return;
+  const id = drill.id; const inst = drill.instance;
+  const timeMs = Date.now() - drill.shownAt;
+  const withinBudget = timeMs <= inst.budgetMs;
+  const correct = drill.chosen === inst.answerId;
+
+  // Diagnose BEFORE writing the new record, using the concept's prior attempts for pattern inference.
+  let diagnosis = null;
+  if (!correct) {
+    const log = await store.readLogRecords();
+    const prior = log.filter((r) => r.kind === 'item' && r.conceptIds.includes(id));
+    diagnosis = diagnose({
+      attempt: {
+        correct: false, rung: inst.rung, distractor: drill.chosen,
+        timeMs, withinBudget, timed: false, itemId: inst.itemId, conceptIds: inst.conceptIds,
+      },
+      item: { distractors: inst.distractors },
+      prior,
+      context: { conceptState: stateOf(id), budgetMs: inst.budgetMs },
+    });
+  }
+
+  const prevRank = states.get(id)?.rank ?? 0;
+  await store.appendRecords([{
+    id: 'att-' + inst.itemId + '-' + Date.now(),
+    kind: 'item', itemId: inst.itemId, conceptIds: inst.conceptIds,
+    rung: inst.rung, scaffold: drill.usedHint === true,
+    timeMs, withinBudget, timed: false, correct,
+    distractor: correct ? null : drill.chosen,
+    cause: diagnosis ? diagnosis.cause : null,
+    confidence: diagnosis ? diagnosis.confidence : null,
+    sessionId: SESSION, timestamp: Date.now(),
+  }]);
+  await refreshStates();
+
+  const newRank = states.get(id)?.rank ?? 0;
+  drill.answered += 1;
+  if (correct) drill.correctCount += 1;
+  drill.result = { correct, diagnosis, promoted: newRank > prevRank, newState: stateOf(id) };
+  drill.phase = 'feedback';
+  screenDrill();
+}
+function nextQuestion() {
+  if (!drill) return;
+  if (drill.i >= drill.queue.length - 1) { finishDrill(); return; }
+  drill.i += 1;
+  serveCurrent();
+  screenDrill();
+}
+function finishDrill() {
+  const id = drill.id; const c = graph.get(id);
+  const { correctCount, answered } = drill;
+  app.innerHTML = headerHTML + bannerHTML()
+    + `<a class="back" data-act="paper" data-paper="${c.paper}" href="#/paper/${c.paper}">${esc(PAPER_NAMES[c.paper])}</a>`
+    + '<div class="eyebrow">Practice complete</div>'
+    + `<h1>${esc(c.name)}</h1>`
+    + `<div class="rowbtns">${badge(stateOf(id))}</div>`
+    + `<p>You got <b>${correctCount} of ${answered}</b> right this session.</p>`
+    + `<p class="progress">${esc(nextStepHint(id))}</p>`
+    + `<button class="btn block" data-act="drill" data-id="${id}">Practise again</button>`
+    + `<button class="btn ghost block" data-act="concept" data-id="${id}">Back to the lesson</button>`;
+  drill = null;
 }
 
 // ---------- actions ----------
@@ -260,7 +482,11 @@ function setNav(active) {
 }
 function route() {
   const h = location.hash;
-  if (h.startsWith('#/paper/')) { screenPaper(h.slice(8)); setNav('home'); }
+  if (h.startsWith('#/drill/')) {
+    const id = h.slice(8);
+    if (!drill || drill.id !== id) startDrill(id); else screenDrill();
+    setNav('home');
+  } else if (h.startsWith('#/paper/')) { screenPaper(h.slice(8)); setNav('home'); }
   else if (h.startsWith('#/concept/')) { screenConcept(h.slice(10)); setNav('home'); }
   else if (h === '#/dashboard') { screenDashboard(); setNav('dashboard'); }
   else if (h === '#/data') { screenData(); setNav('data'); }
@@ -280,6 +506,13 @@ document.addEventListener('click', (e) => {
   else if (act === 'read') { markRead(t.getAttribute('data-id')); }
   else if (act === 'flag') { openFlagSheet(t.getAttribute('data-kind'), t.getAttribute('data-id')); }
   else if (act === 'export') { exportState(); }
+  else if (act === 'drill') {
+    const id = t.getAttribute('data-id'); const target = '#/drill/' + id;
+    if (location.hash === target) startDrill(id); else location.hash = target; // same hash won't fire hashchange
+  } else if (act === 'opt') { chooseOption(t.getAttribute('data-opt')); }
+  else if (act === 'hint') { if (drill) { drill.usedHint = true; screenDrill(); } }
+  else if (act === 'check') { submitAnswer(); }
+  else if (act === 'next') { nextQuestion(); }
 });
 
 boot();

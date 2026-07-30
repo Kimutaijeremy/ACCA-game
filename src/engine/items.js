@@ -126,9 +126,18 @@ export function validateItem(it) {
  * audit). Always returns a concrete MCQ with an itemId, seed and time budget attached.
  */
 export function instantiate(item, seed = seedFromString(item.id)) {
+  const rng = makeRng(seed);
   const rendered = typeof item.generate === 'function'
-    ? item.generate(makeRng(seed))
+    ? item.generate(rng)
     : { stem: item.stem, options: item.options, answerId: item.answerId, distractors: item.distractors, rationale: item.rationale };
+  // Shuffle the options so POSITION never predicts the answer (anti-memorisation, Brief §6.3). The
+  // option ids are stable — they carry the distractor→cause mapping and are what gets logged — while
+  // the displayed order (and the A/B/C label the learner sees) changes every serve.
+  const options = rendered.options.slice();
+  for (let i = options.length - 1; i > 0; i -= 1) {
+    const j = rng.int(0, i);
+    [options[i], options[j]] = [options[j], options[i]];
+  }
   return {
     itemId: item.id,
     conceptIds: item.conceptIds,
@@ -139,7 +148,7 @@ export function instantiate(item, seed = seedFromString(item.id)) {
     scaffold: item.scaffold ?? null,
     budgetMs: timeBudgetMs(item),
     stem: rendered.stem,
-    options: rendered.options,
+    options,
     answerId: rendered.answerId,
     distractors: rendered.distractors ?? {},
     rationale: rendered.rationale ?? item.rationale ?? null,
