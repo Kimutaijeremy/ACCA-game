@@ -158,6 +158,13 @@ against.
 5. **Worked example fully shown:** every arithmetic and posting step visible. A jump from setup to
    answer fails.
 6. **Kenyan context where natural**, never forced.
+7. **No list presented as complete is actually incomplete.** If a lesson enumerates the kinds,
+   methods, books, categories, etc. of something, every examinable member must be there. An
+   incomplete list stated as the whole (e.g. omitting the sales/purchases returns day books from
+   the books of prime entry) is a content failure, not a stylistic one.
+8. **Distinct opening.** No two lessons open on the same rhetorical device. Repeated framing across
+   191 lessons becomes wallpaper; the first sentence must not be interchangeable with another
+   lesson's. *(Amendment A4, 30 July 2026.)*
 
 ---
 
@@ -172,7 +179,9 @@ with no authoring context**, given only the material and the criteria.
   rubric criterion and cannot be judged from raw markup; the reviewer must see what Jeremy sees on
   his phone. If the format fails, fix the template, re-migrate the existing lessons, and re-audit
   before writing more. This replaces the human format review — cheaper to fix at 20 than at 191.
-  *(Amendment A3, 30 July 2026.)*
+  *(Amendment A3, 30 July 2026.)* **The audit must explicitly check rubric 7 (no incomplete list
+  stated as complete) and rubric 8 (every lesson opens on a distinct device — collect the 20 first
+  sentences and confirm no two share a framing).**
 - **At each slice's completion:** run Test A and Test B from the validation protocol — content
   sufficiency on a stratified sample, and structural fidelity of the sealed pool.
 - **Record every audit result in `BUILD_STATUS.md`**, including failures and what changed.

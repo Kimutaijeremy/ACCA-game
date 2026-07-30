@@ -29,7 +29,7 @@ export const BT_LESSONS = [
       "answer": "Key player: KRA. Keep satisfied: the distributor. Keep informed: the customer. Minimal effort: the neighbour. The same four names would sit in different quadrants for a different decision — the matrix is read per decision, not once forever."
     },
     "compression": "Stakeholders affect or are affected by the business, want conflicting things, and are managed by mapping their power against their interest — key players managed closely, the powerful kept satisfied, the interested kept informed, the rest minimal effort.",
-    "forwardPointer": "This matrix grows up in SBL, where the same power/interest map governs board-level decisions and every stakeholder-conflict question in strategic governance.",
+    "forwardPointer": "Within this Knowledge build, stakeholder analysis peaks here. The same power/interest map returns far beyond this phase — at Strategic Professional level (SBL), which is not part of the current build — governing board-level decisions and strategic stakeholder conflict.",
     "rateFlags": []
   }
   ,
@@ -97,10 +97,11 @@ export const BT_LESSONS = [
     syllabusYear: '2026',
     shape: 'theory',
     story:
-      'Within a month, Wanjiku is surrounded by people with a claim on what she does. Some are inside '
-      + 'the business, some are tied to it by contract, some stand entirely outside it and still shape '
-      + 'it. Before she can manage them (that comes next, with Mendelow), she has to see them clearly — '
-      + 'and the exam wants them sorted into three groups.',
+      'One slow afternoon Wanjiku turns over a receipt and starts a list on the back of it: everyone '
+      + 'the stall has to answer to. It fills fast and comes out a jumble — Otieno, the distributor, '
+      + 'the county, the customers, the bank that lent her the fridge money. A jumble is useless; what '
+      + 'makes it workable is sorting it. Accounting sorts these people — stakeholders — by how close '
+      + 'they sit to the business, into exactly three groups, before anyone tries to manage them.',
     keypoints: [
       {
         title: 'A stakeholder, and the three groups',
@@ -137,8 +138,9 @@ export const BT_LESSONS = [
       + 'owner), connected (shareholders, customers, suppliers, lenders) and external (government, '
       + 'community), each holding a different and often conflicting claim.',
     forwardPointer:
-      'These groups are then mapped by power and interest and prioritised in BT-04 (Mendelow), and the '
-      + 'whole idea grows up to board scale in SBL.',
+      'These groups are mapped by power and interest and prioritised next in BT-04 (Mendelow). Far '
+      + 'beyond this Knowledge build — at Strategic Professional level (SBL), which this phase does not '
+      + 'cover — the same idea returns as board-level governance.',
     rateFlags: [],
   }
 ];

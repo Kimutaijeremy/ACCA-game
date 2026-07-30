@@ -46,6 +46,15 @@ export const MA_LESSONS = [
       + 'method later stands on getting this sort right.',
     keypoints: [
       {
+        title: 'Three ways to classify the same cost',
+        body:
+          '**By nature** — what the cost IS: **materials**, **labour**, or **expenses (overheads)**.\n'
+          + '**By function** — what part of the business it serves: **production** costs versus '
+          + '**non-production** costs (administration, selling & distribution, and finance costs).\n'
+          + '**By traceability** — **direct** or **indirect** (next box). Every shilling carries all '
+          + 'three labels at once — flour is materials, production, and direct.',
+      },
+      {
         title: 'Direct vs indirect (traceability), and prime cost',
         body:
           '**Direct costs** can be traced to one unit: **direct materials** (flour in the batch), '

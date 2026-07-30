@@ -72,8 +72,16 @@ Authored so far: BT-01, BT-03, BT-04; MA-06, MA-07, MA-11; FA-04, FA-05, FA-13, 
 
 ## 6. Independent audit log (Order §6)
 
-- Not yet run. Triggers after the **first 20 lessons of the FA track** — a fresh session with no
-  authoring context, against the Section 5 rubric; fix template before lesson 21 if it fails.
+- **2026-07-30 — Jeremy-flagged content review (12 lessons).** He caught FA-13 listing five books
+  of prime entry as complete when there are **seven** (omitting the sales returns and purchases
+  returns day books). Fixed. Audited the other 11 for the same class (incomplete list stated as
+  complete): found **MA-06** covered only traceability + timing while its title promises nature,
+  function AND traceability — added the "by nature / by function" classification. The remaining 9
+  lists are complete or honestly framed ("the main types"). Also: BT-03 opened on the same device
+  as BT-04 → re-opened on a distinct device (rubric 8, new); FA-05 shared BT-01's founding device →
+  re-opened. Two forward pointers named SBL (out of scope) → reworded to flag it plainly.
+- The full independent audit (fresh session, phone-rendered) still triggers at the **first 20
+  lessons**, and now explicitly checks rubric 7 (incomplete lists) and rubric 8 (distinct openings).
 
 ## 7. Flags (Order §7)
 

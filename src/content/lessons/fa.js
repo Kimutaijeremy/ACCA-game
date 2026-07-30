@@ -106,11 +106,11 @@ export const FA_LESSONS = [
     "title": "Books of prime entry",
     "syllabusYear": "2026",
     "shape": "process",
-    "story": "Not every part of accounting gets a hero. This one is about filing — and it is exactly the kind of unglamorous plumbing the whole system stands on. By her third month Wanjiku records dozens of transactions a day: credit sales, cash taken, sodas bought on account, the odd correction. If she tried to post each one straight into the ledger as it happened, she would drown, and errors would scatter everywhere. So accounting inserts a calm first step: an intake desk. Every transaction is first written into a **book of prime entry** — sorted by type — and only later posted, in tidy totals, into the ledger. There is no drama here. But get the intake wrong and every number downstream — the trial balance, the statements, the audit — inherits the mess.",
+    "story": "Not every part of accounting gets a hero. This one is about filing — and it is exactly the kind of unglamorous plumbing the whole system stands on. By her third month Wanjiku records dozens of transactions a day: credit sales, a crate a customer sends back, sodas bought on account, a batch returned to the distributor, cash taken, the odd correction. If she tried to post each one straight into the ledger as it happened, she would drown, and errors would scatter everywhere. So accounting inserts a calm first step: an intake desk. Every transaction is first written into a **book of prime entry** — sorted by type — and only later posted, in tidy totals, into the ledger. There is no drama here. But get the intake wrong and every number downstream — the trial balance, the statements, the audit — inherits the mess.",
     "keypoints": [
       {
-        "title": "The five books of prime entry (the intake, before the ledger)",
-        "body": "• **Sales day book** — credit sales (goods sold on account).\n• **Purchases day book** — credit purchases of goods for resale.\n• **Cash book** — all money in and out through bank/cash.\n• **Petty cash book** — small cash payments, run on the imprest system.\n• **The journal** — everything odd: corrections, year-end adjustments, opening entries, non-routine items.\nThey are books of **prime (first) entry** — a listing stage, NOT yet the double-entry ledger."
+        "title": "The seven books of prime entry (the intake, before the ledger)",
+        "body": "• **Sales day book** — credit sales (goods sold on account).\n• **Sales returns day book** — goods customers send back (credit notes you issue to them).\n• **Purchases day book** — credit purchases of goods for resale.\n• **Purchases returns day book** — goods you return to suppliers (credit notes you receive).\n• **Cash book** — all money in and out through bank/cash.\n• **Petty cash book** — small cash payments, run on the imprest system.\n• **The journal** — everything odd: corrections, year-end adjustments, opening entries, non-routine items.\nThey are books of **prime (first) entry** — a listing stage, NOT yet the double-entry ledger."
       },
       {
         "title": "The flow: document → prime entry → ledger",
@@ -118,17 +118,19 @@ export const FA_LESSONS = [
       }
     ],
     "worked": {
-      "prompt": "Into which book of prime entry does each go? (a) sold goods on credit to a neighbouring shop; (b) paid the electricity bill by M-Pesa; (c) bought a crate of sodas on credit from the distributor; (d) recorded the year-end depreciation charge; (e) bought postage stamps with a few shillings from the float.",
+      "prompt": "Into which book of prime entry does each go? (a) sold goods on credit to a neighbouring shop; (b) a customer returns goods bought on credit; (c) bought a crate of sodas on credit from the distributor; (d) returned a spoiled batch to the distributor; (e) paid the electricity bill by M-Pesa; (f) recorded the year-end depreciation charge; (g) bought postage stamps with a few shillings from the float.",
       "steps": [
         "(a) Credit sale of goods → sales day book.",
-        "(b) Payment of money out → cash book (payments side).",
+        "(b) Goods coming back from a credit customer → sales returns day book.",
         "(c) Credit purchase of goods for resale → purchases day book.",
-        "(d) A year-end adjustment, not a routine trade transaction → the journal.",
-        "(e) A small cash payment from the float → petty cash book."
+        "(d) Goods sent back to a credit supplier → purchases returns day book.",
+        "(e) Payment of money out → cash book (payments side).",
+        "(f) A year-end adjustment, not a routine trade transaction → the journal.",
+        "(g) A small cash payment from the float → petty cash book."
       ],
-      "answer": "Sales day book; cash book; purchases day book; the journal; petty cash book. Note that (d) goes to the journal precisely because it fits none of the routine day books — that is what the journal is for."
+      "answer": "Sales day book; sales returns day book; purchases day book; purchases returns day book; cash book; the journal; petty cash book — the seven in turn. Note that (f) goes to the journal precisely because it fits none of the routine day books; that is what the journal is for."
     },
-    "compression": "Every transaction lands first in a book of prime entry — sales and purchases day books for credit trade, the cash and petty cash books for money, the journal for everything odd — and is then posted in totals to the nominal ledger, with customer and supplier detail kept in memorandum ledgers.",
+    "compression": "Every transaction lands first in a book of prime entry — sales and purchases day books (and their returns day books) for credit trade, the cash and petty cash books for money, the journal for everything odd — and is then posted in totals to the nominal ledger, with customer and supplier detail kept in memorandum ledgers.",
     "forwardPointer": "These books post into the nominal ledger (FA-14) and, once summed, must prove themselves in the trial balance (FA-39); the orderly intake they impose is the beginning of the audit trail that AA later relies on.",
     "rateFlags": []
   }
@@ -191,11 +193,12 @@ export const FA_LESSONS = [
     syllabusYear: '2026',
     shape: 'double-entry',
     story:
-      'The moment Wanjiku’s KES 20,000 enters the stall, accounting performs its founding trick: it '
-      + 'treats the business as a **separate entity** from Wanjiku herself. The business now holds 20,000 '
-      + '— but it **owes that 20,000 back to her**. Her stake is **capital**, and here is the shock most '
-      + 'students never cleanly recover from: capital is a debt the business owes its owner. From that one '
-      + 'idea comes an equation that has held after every transaction ever recorded, anywhere, forever.',
+      'Ask Wanjiku whose money is in the till and she will say hers — obviously. Accounting flatly '
+      + 'disagrees, and the disagreement is the foundation of the entire subject. It treats the business '
+      + 'as a **separate entity** from Wanjiku herself: the stall holds the money, but it **owes that '
+      + 'money back to her**. Her stake is **capital** — and here is the shock most students never '
+      + 'cleanly recover from: capital is a debt the business owes its owner. From that one idea comes an '
+      + 'equation that has held after every transaction ever recorded, anywhere, forever.',
     keypoints: [
       {
         title: 'The accounting equation',
