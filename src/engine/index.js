@@ -31,3 +31,9 @@ export {
 export {
   validateLesson, indexLessons, lessonSectionCounts, LESSON_SHAPES,
 } from './lessons.js';
+export {
+  paperProgress, paperStatuses, progressLabel,
+} from './progress.js';
+export {
+  OPENS, LINEAGE_NOTES, KNOWN_PAPERS, CONTENT_TRACKS, parentsOf, rootPapers, validateLineage,
+} from '../content/lineage.js';

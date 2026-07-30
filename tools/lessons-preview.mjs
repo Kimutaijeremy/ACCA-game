@@ -1,15 +1,15 @@
 // lessons-preview.mjs — render the pilot lessons to Markdown for format review.
 // Run: node tools/lessons-preview.mjs > docs/pilot-lessons-preview.md
 
-import { PILOT_LESSONS } from '../src/content/pilot-lessons.js';
+import { ALL_LESSONS } from '../src/content/lessons/index.js';
 
+const PILOT_LESSONS = ALL_LESSONS;
 const out = (s = '') => process.stdout.write(s + '\n');
 
-out('# Pilot lessons — WP2a format review');
+out('# Lessons — readable preview');
 out('');
-out('Five full-quality pilot lessons, in the Wanjiku voice, each stressing a different shape. '
-  + 'This is the format to approve before the remaining 186 lessons (WP2b) are written against it. '
-  + 'Generated from `src/content/pilot-lessons.js` — the content is data, this is just a readable view.');
+out(`${PILOT_LESSONS.length} authored lessons, in the Wanjiku voice. Generated from `
+  + '`src/content/lessons/*.js` — the content is data, this is just a readable view.');
 out('');
 for (const L of PILOT_LESSONS) {
   out('---');

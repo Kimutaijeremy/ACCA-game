@@ -4,18 +4,19 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { validateLesson, indexLessons, lessonSectionCounts } from '../src/engine/lessons.js';
-import { PILOT_LESSONS } from '../src/content/pilot-lessons.js';
+import { ALL_LESSONS, LESSONS_BY_PAPER } from '../src/content/lessons/index.js';
 import { loadGraphFromSpec } from '../src/engine/node-loader.js';
 
 const graph = loadGraphFromSpec();
+const PILOT_LESSONS = ALL_LESSONS;
 
-test('all six pilot lessons validate (story, keypoints, worked example, compression, forward pointer)', () => {
-  assert.equal(PILOT_LESSONS.length, 6);
+test('every authored lesson validates (story, keypoints, worked example, compression, forward pointer)', () => {
+  assert.ok(PILOT_LESSONS.length >= 6);
   for (const L of PILOT_LESSONS) assert.doesNotThrow(() => validateLesson(L));
-  assert.doesNotThrow(() => indexLessons(PILOT_LESSONS));
+  assert.doesNotThrow(() => indexLessons(PILOT_LESSONS)); // also rejects duplicate concept ids
 });
 
-test('each pilot references a real, live concept in the frozen graph', () => {
+test('each lesson references a real, live concept in the frozen graph', () => {
   for (const L of PILOT_LESSONS) {
     const c = graph.get(L.conceptId);
     assert.ok(c, `${L.conceptId} not in graph`);
@@ -34,8 +35,10 @@ test('the pilots deliberately span the required shapes', () => {
   assert.equal(PILOT_LESSONS.find((L) => L.conceptId === 'BT-04').shape, 'theory');
   assert.equal(PILOT_LESSONS.find((L) => L.conceptId === 'MA-11').shape, 'calculation');
   assert.equal(PILOT_LESSONS.find((L) => L.conceptId === 'FA-26').shape, 'double-entry');
-  // six distinct shapes in all — incl. a deliberately dry 'process' concept (FA-13)
-  assert.equal(new Set(shapes).size, 6);
+  // at least the six seed shapes are represented — incl. a deliberately dry 'process' concept
+  for (const s of ['theory', 'calculation', 'double-entry', 'treatment', 'interpretation', 'process']) {
+    assert.ok(shapes.includes(s), `missing shape: ${s}`);
+  }
   assert.equal(PILOT_LESSONS.find((L) => L.conceptId === 'FA-13').shape, 'process');
 });
 
@@ -51,5 +54,5 @@ test('lessonSectionCounts feeds the allocation lesson floor', () => {
   assert.equal(counts['BT-04'], 1);
   assert.equal(counts['FA-63'], 1);
   assert.equal(counts['FA-13'], 1);
-  assert.equal(Object.keys(counts).length, 6);
+  assert.equal(Object.keys(counts).length, PILOT_LESSONS.length, 'one lesson section per concept, no dupes');
 });
