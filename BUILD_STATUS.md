@@ -3,14 +3,21 @@
 *Read at the start of every session, after `spec/PAPER_TRAIL_EXECUTION_ORDER.md`. Update after
 every unit of work. This is the handoff between sessions and the report to Jeremy.*
 
-Last updated: 2026-07-30 (AUTHORING UNIT CHANGED — concept = lesson + questions; Amendment A5) ·
-Working branch: `rebuild/wp1-foundation`; Pages `main` pinned at published commit. · Tests: 72 node
-(+12 item-model) + browser harness + Section 8 pre-flight green.
+Last updated: 2026-07-31 (DRILL RUNNER LIVE — questions answerable on the phone) ·
+Working branch: `rebuild/wp1-foundation`; Pages `main` at published commit `31e3fd8`. · Tests: 72
+node + drill smoke + browser harness + Section 8 pre-flight green.
 
 ---
 
 ## 0. Publishing log
 
+- **2026-07-31 — DRILL RUNNER PUBLISHED & VERIFIED LIVE.** commit `31e3fd8` on `main` (SW
+  `papertrail-v4.1.0`). Questions are now answerable on the phone: read a lesson → practise its
+  questions → the concept climbs the mastery states, with a diagnosed cause + repair on wrong
+  answers. Options are shuffled per serve (position never predicts the answer). Section 8 pre-flight
+  green, browser harness green, `npm run drill:smoke` green (real UI, phone viewport: read→Exposed,
+  3 concept-checks→Understood, wrong→diagnosis, attempts logged), `npm run live-smoke` green on the
+  deployed URL. URL unchanged; v1 history intact; only `papertrail:v4:` written.
 - **2026-07-30 — FIRST CUTOVER, PUBLISHED & VERIFIED LIVE.** commit `c164113` on `main`.
   Section 8 pre-flight all green (`npm run preflight`); browser harness + 60 node tests green;
   live smoke on a phone viewport with v3 data seeded passed (`npm run live-smoke`). The new app is
@@ -33,11 +40,13 @@ author on the working branch; run `npm run preflight`; ff-merge to `main` and pu
   allocation floor and the `conceptComplete` "done" predicate. Content in `src/content/items/{bt,ma,fa}.js`.
   Check with `npm run items:check`.
 - **Concepts DONE: 15 of 191** (lesson + question set to floor) — BT 4/60, MA 4/66, FA 7/65.
-  **142 practice items**, 4 parameterized generators (MA-11, FA-11, FA-26, FA-63). The 12
-  previously-live lessons are now backfilled with questions; all 15 sit on the branch (items not yet
-  published — see §8 note on the missing drill UI). Next: continue in parallel — lesson+questions
-  per concept — to **20 concepts**, then run the first **independent audit** (Order §6, now Test A
-  per concept: items answerable from their lesson alone at 95%), fix, then publish the batch.
+  **142 practice items**, 4 parameterized generators (MA-11, FA-11, FA-26, FA-63).
+- **Drill runner: LIVE (2026-07-31).** Questions are served, answered, logged, diagnosed, and drive
+  the mastery states on the phone (app.js drill screen; options shuffled per serve so position never
+  predicts the answer; dashboard shows a real diagnosed-cause error profile). `npm run drill:smoke`
+  covers it in a real browser. Next: **resume authoring concepts (lesson + questions together) toward
+  the 20-concept audit** (Order §6, now Test A per concept: items answerable from their lesson alone
+  at 95%), then run the first independent audit, then publish the batch.
 
 ## 2. Ledger (mechanically derived — run `npm run ledger` for the full per-concept table)
 
@@ -75,6 +84,10 @@ carry a parameterized generator.
   (brief §6.4 caps it at 2 in the whole FA bank). Encoded as `ITEM_CAPS` in `items.js`. (2026-07-30)
 - **`conceptComplete` (not `hasLesson`) is now the "built" predicate** for the paper-map count and
   lineage unlocking; `hasLesson` still gates whether a lesson is *readable*. (2026-07-30)
+- **Options are shuffled at instantiation (seeded), not stored in fixed order.** Authoring put the
+  correct option first everywhere; without a shuffle, position would predict the answer (violates
+  anti-memorisation, brief §6.3). Option ids stay stable (they carry the distractor→cause map and
+  are logged); only display order + the A/B/C label change per serve. (2026-07-31)
 - App shell is a module-based single `index.html` importing the engine directly; no bundler/build
   step, so GitHub Pages serves it static. SW cutover: bump `CACHE` each release + page reload on
   controllerchange. Working branch → ff-merge to `main` at each publish. (2026-07-30)
@@ -115,9 +128,6 @@ carry a parameterized generator.
 1. The whole build still lives on branch `rebuild/wp1-foundation`. That is fine until the first
    publish (which merges to `main`/Pages via the Section 8 checklist). Flagging so the branch name
    isn't a surprise at cutover; no action needed.
-2. **The app can't yet let you ANSWER a question.** The 142 items exist and are validated, but the
-   phone shell only renders lessons (read → Exposed) + Flag; there is no drill runner UI (serve item →
-   collect answer → log attempt → show diagnosis). Until that exists, the questions can't move you
-   past Exposed *in the app*, even though the data and engine are ready. Building the drill UI is the
-   next high-value slice and I'll take it on unless you'd rather I push authoring further first. No
-   action needed — flagging the sequencing.
+2. ~~The app can't yet let you ANSWER a question.~~ **RESOLVED 2026-07-31 — the drill runner is
+   live.** You can now answer questions on the phone, see whether you were right, get the diagnosed
+   cause + repair when wrong, and watch concepts climb the mastery states.
