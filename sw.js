@@ -1,6 +1,11 @@
-/* Paper Trail service worker — bump CACHE on every engine release */
-const CACHE = "papertrail-v3.1.0";
-const ASSETS = ["./","./index.html","./manifest.webmanifest","./icon-192.png","./icon-512.png","./icon-maskable-512.png"];
+/* Paper Trail service worker — bump CACHE on every engine release.
+   v4 cutover: new module-based shell. skipWaiting + clients.claim + old-cache purge below make the
+   new app take over promptly; the page reloads once on controllerchange. Engine/content modules
+   not precached here are runtime-cached (cache-first) on first online load, so offline works after
+   one visit; the CACHE bump on each release discards the old ones. */
+const CACHE = "papertrail-v4.0.0";
+const ASSETS = ["./","./index.html","./app.js","./manifest.webmanifest","./spec/concepts.json",
+  "./icon-192.png","./icon-512.png","./icon-maskable-512.png"];
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
 });

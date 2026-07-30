@@ -8,6 +8,7 @@
     "test": "node --test",
     "report": "node tools/wp1-report.mjs",
     "verify:browser": "node tools/browser-verify.mjs",
+    "preflight": "node tools/preflight.mjs",
     "measure:storage": "node tools/storage-measure.mjs",
     "lessons:preview": "node tools/lessons-preview.mjs",
     "diagnosis:demo": "node tools/diagnosis-demo.mjs",

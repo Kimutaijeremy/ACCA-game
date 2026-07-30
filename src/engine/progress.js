@@ -59,7 +59,9 @@ export function paperStatuses(graph, states, hasLesson = () => false) {
       if (unmet.length > 0) {
         locked = true;
         reason = `opens when you complete ${unmet.join(' and ')}`;
-        if (LINEAGE_NOTES[paper]) reason += ` — ${LINEAGE_NOTES[paper]}`;
+        // A note explaining an edge is keyed by the PARENT; show it on the locked child's reason.
+        const notes = ps.map((p) => LINEAGE_NOTES[p]).filter(Boolean);
+        if (notes.length) reason += ` — ${notes.join('; ')}`;
       }
     }
 

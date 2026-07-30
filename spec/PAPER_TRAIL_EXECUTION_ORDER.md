@@ -166,9 +166,13 @@ against.
 Self-review by the session that authored the content is not evidence. Run these as **fresh sessions
 with no authoring context**, given only the material and the criteria.
 
-- **After the first 20 lessons of Slice 1:** audit against Section 5's rubric. If the format fails,
-  fix the template and re-audit before writing lesson 21. This replaces the human format review —
-  cheaper to fix at 20 than at 65.
+- **After the first 20 lessons (across the parallel tracks):** audit against Section 5's rubric,
+  in a fresh session with no authoring context. **The audit assesses the lessons AS RENDERED IN THE
+  APP ON A PHONE VIEWPORT — not as a markdown preview file.** Phone-readability (Section 5.3) is a
+  rubric criterion and cannot be judged from raw markup; the reviewer must see what Jeremy sees on
+  his phone. If the format fails, fix the template, re-migrate the existing lessons, and re-audit
+  before writing more. This replaces the human format review — cheaper to fix at 20 than at 191.
+  *(Amendment A3, 30 July 2026.)*
 - **At each slice's completion:** run Test A and Test B from the validation protocol — content
   sufficiency on a stratified sample, and structural fidelity of the sealed pool.
 - **Record every audit result in `BUILD_STATUS.md`**, including failures and what changed.
