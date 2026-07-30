@@ -29,6 +29,9 @@ export {
   diagnose, resolveProbe, inferFromPattern, REMEDIATION, CONFIDENCE,
 } from './diagnose.js';
 export {
+  validateFlag, normaliseFlag, openFlags, flagCounts, FLAG_REASONS, FLAG_TARGET_KINDS,
+} from './flags.js';
+export {
   validateLesson, indexLessons, lessonSectionCounts, LESSON_SHAPES,
 } from './lessons.js';
 export {

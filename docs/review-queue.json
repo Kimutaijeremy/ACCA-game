@@ -1,0 +1,4 @@
+{
+  "_comment": "Jeremy's error-finder review queue (Execution Order §7). When he exports his learner state from the app, its `flags` array is dropped here and committed. At the start of each session this file is read and every OPEN flag's target (a lesson or a question) is fixed before any new authoring. Empty until he starts flagging.",
+  "flags": []
+}

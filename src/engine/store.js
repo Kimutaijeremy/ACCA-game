@@ -19,6 +19,7 @@
 // PWA (IdbLogAdapter). Async is confined to the log adapter; meta reads/writes stay synchronous.
 
 import { normaliseRecord } from './log.js';
+import { normaliseFlag } from './flags.js';
 
 export const KEY_PREFIX = 'papertrail:v4:';
 export const KEYS = Object.freeze({
@@ -59,6 +60,7 @@ export function emptyState() {
     createdAt: null,
     streak: { cur: 0, best: 0 },
     v1History: null,
+    flags: [], // Jeremy's error-finder review queue (Order §7) — small, rides in meta
     attemptLog: [],
   };
 }
@@ -68,6 +70,7 @@ export function metaOf(state) {
   return {
     schema: state.schema, createdAt: state.createdAt,
     streak: state.streak, v1History: state.v1History,
+    flags: state.flags ?? [],
   };
 }
 
@@ -192,6 +195,20 @@ export class LearnerStore {
   }
 
   loadMeta() { return loadMeta(this.kv); }
+
+  /** Append a one-tap content flag to the review queue (rides in meta, exports with everything). */
+  addFlag(rawFlag) {
+    const flag = normaliseFlag(rawFlag);
+    const meta = this.loadMeta() ?? emptyState();
+    meta.flags = [...(meta.flags ?? []), flag];
+    const res = this.saveMeta(meta);
+    return res.ok ? flag : null;
+  }
+
+  /** All flags in learner state (the review queue). */
+  flags() {
+    return this.loadMeta()?.flags ?? [];
+  }
 
   saveMeta(meta) {
     const res = trySaveMeta(meta, this.kv);
