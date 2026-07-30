@@ -25,20 +25,23 @@ author on the working branch; run `npm run preflight`; ff-merge to `main` and pu
 - Engine foundation: complete and live — attempt log (IndexedDB) as single source of truth, five
   mastery states by fold, neglect + failed-review decay, migration, allocation matrices, diagnosis
   engine, flag mechanism, lineage-gated unlocking, and the **phone-first app shell**.
-- Lessons: **12 of 191** authored (BT 3/60, MA 3/66, FA 6/65) — all live and readable on the phone.
-  Next: continue in parallel toward the first **20-lesson independent audit** (Order §6/A3 — audit
-  assesses lessons AS RENDERED IN THE APP ON A PHONE VIEWPORT).
+- Lessons: **15 of 191** authored (BT 4/60, MA 4/66, FA 7/65). **12 are live** (published & verified);
+  the latest 3 (BT-05, MA-01, FA-11) are on the branch, held for the next publish batch. Next:
+  continue in parallel to **20 lessons**, then run the first **independent audit** (Order §6/A3 —
+  fresh session, lessons AS RENDERED IN THE APP ON A PHONE VIEWPORT, now checking rubric 7 & 8),
+  fix, then publish the batch.
 
 ## 2. Ledger (mechanically derived — run `npm run ledger` for the full per-concept table)
 
 | Paper | Lessons | Items | Sealed | Track |
 |---|---|---|---|---|
-| BT | 3 / 60 | 0 | 0 / 6 sims | in build |
-| MA | 3 / 66 | 0 | 0 / 6 sims | in build |
-| FA | 6 / 65 | 0 | 0 / 6 sims | in build |
-| **Total** | **12 / 191** | **0** | **0** | |
+| BT | 4 / 60 | 0 | 0 / 6 sims | in build |
+| MA | 4 / 66 | 0 | 0 / 6 sims | in build |
+| FA | 7 / 65 | 0 | 0 / 6 sims | in build |
+| **Total** | **15 / 191** | **0** | **0** | |
 
-Authored so far: BT-01, BT-03, BT-04; MA-06, MA-07, MA-11; FA-04, FA-05, FA-13, FA-22, FA-26, FA-63.
+Authored: BT-01, BT-03, BT-04, BT-05; MA-01, MA-06, MA-07, MA-11; FA-04, FA-05, FA-11, FA-13, FA-22,
+FA-26, FA-63. (Live: all but BT-05, MA-01, FA-11 — held for the next publish batch at ~20.)
 
 ## 3. Judgement calls made (Order §9)
 

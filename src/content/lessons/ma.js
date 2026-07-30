@@ -142,6 +142,57 @@ export const MA_LESSONS = [
       + 'cost behaviour then drives CVP analysis and the flexing of budgets (MA-43).',
     rateFlags: [],
   }
+  ,
+  {
+    conceptId: 'MA-01',
+    title: 'Purpose of management accounting information',
+    syllabusYear: '2026',
+    shape: 'theory',
+    story:
+      'Financial accounting can tell Wanjiku exactly what last month cost, to the last shilling. It '
+      + 'cannot tell her whether to open the bakery. That gap is the whole reason a second kind of '
+      + 'accounting exists. Financial accounting faces backwards and speaks to outsiders under fixed '
+      + 'rules; management accounting faces forwards and speaks only to the manager, with no prescribed '
+      + 'format at all — because its single test is not "is it correct to a standard?" but "did it help '
+      + 'you decide?"',
+    keypoints: [
+      {
+        title: 'What management accounting is for',
+        body:
+          'It produces information to **plan** (set targets and budgets), **control** (compare actual '
+          + 'against plan and correct the difference), and **decide** (choose between options) — always '
+          + 'for managers inside the business, always pointed at the next choice.',
+      },
+      {
+        title: 'How it differs from financial accounting',
+        body:
+          '**Financial accounting**: backward-looking, for outsiders, in a fixed format set by law and '
+          + 'IFRS. **Management accounting**: forward-looking, for the manager, in whatever format helps '
+          + '— no external rules, no audit, no prescribed layout. Its only test is usefulness to a decision.',
+      },
+    ],
+    worked: {
+      prompt:
+        'Which kind of accounting answers each? (a) What was the stall’s profit last year? (b) Should '
+        + 'Wanjiku open the bakery? (c) What price should a new mandazi be? (d) What must the published '
+        + 'accounts show the tax authority?',
+      steps: [
+        '(a) A record of the past for outsiders → financial accounting.',
+        '(b) A forward choice between options → management accounting.',
+        '(c) A pricing decision about the future → management accounting.',
+        '(d) External reporting under fixed rules → financial accounting.',
+      ],
+      answer: 'Financial accounting answers (a) and (d); management accounting answers (b) and (c) — the forward choices.',
+    },
+    compression:
+      'Management accounting produces information to plan, control and decide, for managers inside the '
+      + 'business — forward-looking and format-free, unlike backward-looking, rule-bound financial '
+      + 'accounting; its only test is whether it helped the decision.',
+    forwardPointer:
+      'This splits into the planning-control-decision cycle (MA-03) and the cost techniques that feed '
+      + 'it (MA-02 onward) — the machinery the rest of the paper builds.',
+    rateFlags: [],
+  }
 ];
 
 export default MA_LESSONS;

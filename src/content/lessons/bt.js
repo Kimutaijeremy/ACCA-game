@@ -143,6 +143,60 @@ export const BT_LESSONS = [
       + 'cover — the same idea returns as board-level governance.',
     rateFlags: [],
   }
+  ,
+  {
+    conceptId: 'BT-05',
+    title: 'Political and legal factors',
+    syllabusYear: '2026',
+    shape: 'theory',
+    story:
+      'A folded notice arrives from the county, and a headline catches Wanjiku’s eye in the paper the '
+      + 'same week: the government is floating a new tax on sugary drinks. Neither came from anything she '
+      + 'did, and she cannot vote either away — yet both decide what she may sell and at what cost. This '
+      + 'is the part of the environment set not by customers or rivals but by the state and the law: the '
+      + 'P and the L of the PESTEL scan. Ignore it and you plan for a world that no longer exists.',
+    keypoints: [
+      {
+        title: 'Political factors — the state as a force',
+        body:
+          'What government does reshapes the playing field: **fiscal policy** (taxation and spending), '
+          + '**regulation and subsidies**, **trade rules** (tariffs, import bans), and plain **political '
+          + 'stability**. A sugar tax, a fuel subsidy, a new licensing regime — none is chosen by the '
+          + 'business, all bind it.',
+      },
+      {
+        title: 'Legal factors — the rules of the game',
+        body:
+          'The law sets hard limits, and breach carries penalties: **employment law**, **health and '
+          + 'safety**, **data protection**, **consumer protection**, and **competition (anti-trust) law**. '
+          + 'Compliance is not optional — it is a cost and a constraint the business plans around.',
+      },
+    ],
+    worked: {
+      prompt:
+        'Label each factor facing Wanjiku as political or legal: (a) a proposed sugar-drinks tax; '
+        + '(b) a new minimum-wage law; (c) the county’s trading-licence regime; (d) a duty to keep '
+        + 'customers’ data secure.',
+      steps: [
+        '(a) A tax set by government policy → political.',
+        '(b) A statute governing how she pays staff → legal.',
+        '(c) Licensing imposed by a public authority → political (regulatory).',
+        '(d) A legal obligation under data-protection law → legal.',
+      ],
+      answer: 'Political: the sugar tax and the licence regime. Legal: the minimum-wage law and the data-protection duty.',
+    },
+    compression:
+      'Political factors are what the state does — tax, spend, regulate, set trade rules and stability; '
+      + 'legal factors are the binding rules of the game — employment, health and safety, data '
+      + 'protection, consumer and competition law; both are set outside the business and constrain it.',
+    forwardPointer:
+      'The specific legal duties around data, staff and safety are unpacked in BT-06, and political and '
+      + 'legal join the other four forces when the whole PESTEL scan is assembled in BT-14.',
+    rateFlags: [
+      'Specific taxes, thresholds and named statutes vary by year and jurisdiction — confirm the '
+      + 'current rules against the syllabus at the annual check rather than citing a fixed figure.',
+    ],
+  }
 ];
 
 export default BT_LESSONS;

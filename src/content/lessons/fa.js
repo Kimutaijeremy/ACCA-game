@@ -240,6 +240,59 @@ export const FA_LESSONS = [
       + 'stands upright as the statement of financial position (FA-46).',
     rateFlags: [],
   }
+  ,
+  {
+    conceptId: 'FA-11',
+    title: 'Duality and the double-entry principle',
+    syllabusYear: '2026',
+    shape: 'double-entry',
+    story:
+      'Debit sounds like a loss and credit like a gain — the words leak in from bank statements, where '
+      + 'they mean the opposite of what they mean here. Wanjiku has to unlearn that on day one. In '
+      + 'bookkeeping, **debit** and **credit** are not good and bad; they are simply the **left** and '
+      + '**right** sides of an account. Every transaction touches two accounts, one on each side, by '
+      + 'equal amounts — because the accounting equation it feeds must never tip. That two-sidedness is '
+      + 'duality, and it is the entire mechanism of double entry.',
+    keypoints: [
+      {
+        title: 'Debits and credits — the directions (DEAD CLIC)',
+        body:
+          'Debit = left, credit = right; neither is "good" or "bad".\n'
+          + '**Debits increase: Expenses, Assets, Drawings.**\n'
+          + '**Credits increase: Liabilities, Income, Capital.**\n'
+          + '(Each of those decreases on the opposite side.) The mnemonic is **DEAD CLIC**.',
+      },
+      {
+        title: 'Total debits always equal total credits',
+        body:
+          'Because every transaction has two equal and opposite effects, the debits and credits of the '
+          + 'whole system are always equal. That built-in balance is the self-check the trial balance '
+          + 'later relies on — and it is duality (from FA-05) wearing a uniform.',
+      },
+    ],
+    worked: {
+      prompt:
+        'Give the two entries for each: (a) Wanjiku buys inventory for KES 12,000 cash; (b) she makes a '
+        + 'credit sale of KES 9,000.',
+      steps: [
+        '(a) Inventory (an asset) rises → Dr Inventory 12,000. Cash (an asset) falls → Cr Cash 12,000.',
+        '(a) Debits 12,000 = Credits 12,000. ✓',
+        '(b) A receivable (asset) rises → Dr Receivables 9,000. Sales (income) rises → Cr Sales 9,000.',
+        '(b) Debits 9,000 = Credits 9,000. ✓',
+      ],
+      answer:
+        '(a) Dr Inventory / Cr Cash 12,000. (b) Dr Receivables / Cr Sales 9,000. Every time, one debit '
+        + 'and one credit of equal size.',
+    },
+    compression:
+      'Debit and credit are just left and right, not bad and good; every transaction posts an equal '
+      + 'debit and credit (DEAD CLIC — Debits: Expenses, Assets, Drawings; Credits: Liabilities, Income, '
+      + 'Capital), so total debits always equal total credits.',
+    forwardPointer:
+      'These entries reach the ledger through the books of prime entry (FA-13) and the nominal ledger '
+      + '(FA-14), and their built-in balance is what the trial balance (FA-39) later proves.',
+    rateFlags: [],
+  }
 ];
 
 export default FA_LESSONS;
