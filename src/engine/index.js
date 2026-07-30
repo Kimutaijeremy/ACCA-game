@@ -35,6 +35,11 @@ export {
   validateLesson, indexLessons, lessonSectionCounts, LESSON_SHAPES,
 } from './lessons.js';
 export {
+  validateItem, indexItems, instantiate, questionSetReport, itemsForAllocation,
+  timeBudgetMs, PRACTICE_RUNGS, PER_CONCEPT_FLOORS, CALC_SHAPES, ITEM_CAPS,
+} from './items.js';
+export { mulberry32, makeRng, seedFromString } from './rng.js';
+export {
   paperProgress, paperStatuses, progressLabel,
 } from './progress.js';
 export {

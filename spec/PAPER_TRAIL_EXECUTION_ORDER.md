@@ -32,6 +32,25 @@ layer from brief sections 6.7 and 6.8, and Gate G-PT1 passed.
 
 Not "specified." Not "on a branch." Live, on the phone, usable.
 
+### 1A. The authoring unit is the concept, not the lesson  *(Amendment A5, 30 July 2026)*
+
+**A concept is not done until it has BOTH its lesson and its question set.** Lessons are no longer
+authored in isolation. For each concept, write the lesson AND its questions together — spanning the
+four practice rungs to the per-concept floor (concept-check 3, guided 3, standard 3, stretch 1;
+brief §6.4) — then move to the next concept. Calculation-shaped concepts author at least one
+**parameterized generator** from the start (numbers regenerate per attempt), not retrofitted.
+
+**Why this is the unit.** Without questions nothing progresses past Exposed: no mastery, no
+unlocking, no dashboard, no decay, and the diagnosis engine (brief §6.5) never runs. A pile of
+lessons with no questions is a reading app, not a learning system. So "concepts built" — the number
+on the paper map and the input to lineage unlocking — counts **done** concepts (lesson + question
+set), enforced mechanically by `conceptComplete` / `npm run items:check`. A concept with only a
+lesson is still *readable* (Exposed), but it is **not** built.
+
+**Exception — the accounting-equation cap (brief §6.4).** FA-05 may hold at most two items in the
+whole FA bank; the four-rung floor does not apply to it. Its mastery is demonstrated through the
+concepts it feeds, not a bank of its own. This is the only capped concept.
+
 ---
 
 ## 2. Standing authorization — settled, do not re-ask
@@ -151,6 +170,9 @@ against.
    pointer naming where the concept matures.
 2. **Sole-resource sufficiency:** every fact needed to answer that concept's questions is present in
    the lesson. No assumed prior knowledge beyond concepts marked as prerequisites in the graph.
+   *(Amendment A5: this is now a checkable claim, because the questions exist alongside the lesson —
+   the audit in §6 answers each of the concept's items using only its lesson and reports any item
+   that needs an outside fact.)*
 3. **Phone-readable:** scannable on a narrow screen. Long unbroken prose blocks fail.
 4. **Voice consistent with Wanjiku Volume I** — the same characters and register, not a textbook in
    costume. Where material is genuinely dry, name the dryness and make the stakes the hook rather
@@ -173,7 +195,7 @@ against.
 Self-review by the session that authored the content is not evidence. Run these as **fresh sessions
 with no authoring context**, given only the material and the criteria.
 
-- **After the first 20 lessons (across the parallel tracks):** audit against Section 5's rubric,
+- **After the first 20 concepts (across the parallel tracks):** audit against Section 5's rubric,
   in a fresh session with no authoring context. **The audit assesses the lessons AS RENDERED IN THE
   APP ON A PHONE VIEWPORT — not as a markdown preview file.** Phone-readability (Section 5.3) is a
   rubric criterion and cannot be judged from raw markup; the reviewer must see what Jeremy sees on
@@ -182,6 +204,17 @@ with no authoring context**, given only the material and the criteria.
   *(Amendment A3, 30 July 2026.)* **The audit must explicitly check rubric 7 (no incomplete list
   stated as complete) and rubric 8 (every lesson opens on a distinct device — collect the 20 first
   sentences and confirm no two share a framing).**
+  - **The sole-resource test, now made real *(Amendment A5, 30 July 2026)*.** Because every audited
+    concept now ships its question set, the audit is also **Test A of the validation protocol
+    brought forward to the 20-concept gate, per concept.** The fresh reviewer is given, for each
+    concept, ONLY its lesson and its items (including one rendered instance of every parameterized
+    generator, seed recorded), and must answer each item using nothing but that lesson. For every
+    item they record: answerable from the lesson alone — yes/no; if no, the exact outside fact it
+    needs; and whether the keyed answer and the engineered distractor→cause tags are correct. **Pass
+    threshold: 95% of the concept's items answerable from its lesson alone** (mirrors protocol Test
+    A). A concept below threshold has its lesson thickened or its items retuned before the batch is
+    published — this is the actual sole-resource claim (rubric 5.2), and it could not be tested while
+    lessons existed without questions.
 - **At each slice's completion:** run Test A and Test B from the validation protocol — content
   sufficiency on a stratified sample, and structural fidelity of the sealed pool.
 - **Record every audit result in `BUILD_STATUS.md`**, including failures and what changed.

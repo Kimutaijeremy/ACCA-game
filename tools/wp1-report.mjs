@@ -10,6 +10,9 @@
 import { loadGraphFromSpec, loadSyllabusOutcomes, loadV3Fixture } from '../src/engine/node-loader.js';
 import { planMigration } from '../src/engine/migrate.js';
 import { buildReport, formatReport } from '../src/engine/allocation.js';
+import { lessonSectionCounts } from '../src/engine/lessons.js';
+import { ALL_LESSONS } from '../src/content/lessons/index.js';
+import { allItemsForAllocation } from '../src/content/items/index.js';
 
 const graph = loadGraphFromSpec();
 const syllabus = loadSyllabusOutcomes();
@@ -51,17 +54,26 @@ if (plan.warnings.length) {
 }
 
 // 3. Allocation matrices -----------------------------------------------------
-line('\n3. ALLOCATION MATRICES (WP1: banks empty → must fail loudly)');
-const report = buildReport(syllabus, graph, { generatedAt: Date.now() });
+line('\n3. ALLOCATION MATRICES (partial build → most sub-areas still below floor, correctly)');
+const content = {
+  generatedAt: Date.now(),
+  lessonSections: lessonSectionCounts(ALL_LESSONS),
+  items: allItemsForAllocation(),
+};
+const report = buildReport(syllabus, graph, content);
 line('');
 line(formatReport(report));
 
 rule();
-const gateColour = report.allGreen ? 'GREEN' : 'RED (expected in WP1 — no content authored yet)';
+const gateColour = report.allGreen
+  ? 'GREEN'
+  : 'RED (expected — only the authored concepts are populated; most sub-areas await content)';
 line(`COVERAGE GATE: ${gateColour}`);
+line('Per-concept "done" (lesson + question set): see `npm run items:check`.');
 line('State machine, migration and persistence: see `npm test` (all green).');
 rule();
 
-// Exit non-zero if the coverage gate is unexpectedly green in WP1 (there is no content yet,
-// so green would mean the floors are not actually being enforced).
+// The paper gate goes green only when EVERY sub-area meets its floors — a whole-paper condition,
+// not reached until a paper is fully authored. A green gate on a partial build would mean the
+// floors are not being enforced, so treat it as a failure.
 process.exit(report.allGreen ? 1 : 0);

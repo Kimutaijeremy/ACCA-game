@@ -212,6 +212,12 @@ position and context never predict the answer.
 
 **Time budgets displayed on every item:** 1.2 minutes per mark at Knowledge level, 1.8 at Skills.
 
+**The authoring unit is the whole node — lesson AND drills together, never a lesson alone**
+*(Amendment A5, 30 July 2026; see Execution Order §1A).* A concept is authored as one unit: its
+lesson and its question set, written together and completed before moving on. A lesson with no
+questions cannot move a learner past Exposed or feed the diagnostic engine, so it does not count as
+built. Calculation-shaped concepts include at least one parameterized generator from the outset.
+
 ### 6.4 Coverage and allocation — completeness is mechanical
 
 Per paper, produce and publish an **allocation matrix**: every study-guide outcome ×
@@ -221,6 +227,19 @@ Per paper, produce and publish an **allocation matrix**: every study-guide outco
 - at least one lesson section
 - at least three practice items spanning at least two rungs
 - at least one sealed-pool item
+
+**Per-concept floor — the "done" gate** *(Amendment A5, 30 July 2026)*. The per-outcome floors above
+guarantee breadth across a sub-area; the per-concept floor guarantees each concept is individually
+finishable. A concept is **done** only with a lesson AND a question set of: **concept-check ≥ 3,
+guided ≥ 3, standard ≥ 3, stretch ≥ 1** (derived from the §6.2 evidence rules, so Understood,
+Practised and Competent are each reachable from the set). Calculation-shaped concepts must include
+**≥ 1 parameterized generator**. Integrated and sealed items are cross-concept and assembled
+separately — not part of a single concept's "done". Enforced mechanically (`npm run items:check`).
+
+**Accounting-equation cap (overrides the per-concept floor for one concept).** The accounting
+equation may hold **at most two items in the entire FA bank** — deliberately under-weighted because
+the v1 bank drowned in it; its mastery shows through the concepts it feeds. The four-rung floor does
+not apply to it. It is the only capped concept.
 
 **Concentration cap:** no concept exceeds 8% of a paper's practice bank.
 

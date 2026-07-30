@@ -63,7 +63,10 @@ performance at all.
 - **Pass:** 95% or more of sampled items fully traceable.
 - **Fail:** below 95% means the content does not meet the sole-resource standard. Content is
   reworked before any readiness claim is made.
-- **Runs:** after WP3.
+- **Runs:** after WP3 (paper-wide, stratified sample). **Also brought forward, per concept, to the
+  20-concept independent audit** (Execution Order §6, Amendment A5): because every concept now ships
+  its question set, the 20-concept audit answers each concept's items from its lesson alone at the
+  same 95% threshold. This catches sole-resource gaps at 20 concepts, not after WP3 across 191.
 
 ### Test B — Structural fidelity of the sealed pool
 

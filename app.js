@@ -7,6 +7,7 @@ import {
 import {
   LESSONS_BY_PAPER, lessonForConcept, hasLesson,
 } from './src/content/lessons/index.js';
+import { conceptComplete } from './src/content/items/index.js';
 
 const PAPER_NAMES = {
   BT: 'Business and Technology', MA: 'Management Accounting', FA: 'Financial Accounting',
@@ -77,7 +78,8 @@ async function refreshStates() {
   const log = await store.readLogRecords();
   states = deriveAll(log, { now: Date.now(), conceptIds: graph.liveIds() }).states;
 }
-const statuses = () => paperStatuses(graph, states, hasLesson);
+// A concept is "available" only when DONE — a lesson AND its question set (standing order §1).
+const statuses = () => paperStatuses(graph, states, conceptComplete);
 const stateOf = (id) => states.get(id)?.state ?? 'Unvisited';
 
 // ---------- shared bits ----------
