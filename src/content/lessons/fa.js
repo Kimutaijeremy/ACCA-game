@@ -132,6 +132,111 @@ export const FA_LESSONS = [
     "forwardPointer": "These books post into the nominal ledger (FA-14) and, once summed, must prove themselves in the trial balance (FA-39); the orderly intake they impose is the beginning of the audit trail that AA later relies on.",
     "rateFlags": []
   }
+  ,
+  {
+    conceptId: 'FA-04',
+    title: 'The elements — assets, liabilities, equity, income, expenses',
+    syllabusYear: '2026',
+    shape: 'theory',
+    story:
+      'Before Wanjiku can record a single transaction, accounting needs five words to mean exactly one '
+      + 'thing each. Everything else in the whole of FA — and later FR — is built from these five '
+      + 'definitions. Get them precise now and the rest of the paper has somewhere to stand; leave them '
+      + 'vague and every statement you build later wobbles.',
+    keypoints: [
+      {
+        title: 'The five elements',
+        body:
+          '• **Asset** — a resource the business **controls** from a past event, expected to bring future '
+          + 'economic benefit (cash, inventory, the fridge, money customers owe).\n'
+          + '• **Liability** — a **present obligation** from a past event, expected to cause an outflow '
+          + '(a supplier bill, a loan).\n'
+          + '• **Equity** — the **residual**: assets minus liabilities. What the business owes its owner.\n'
+          + '• **Income** — increases in economic benefit (revenue, gains).\n'
+          + '• **Expenses** — decreases in economic benefit (costs, losses).',
+      },
+      {
+        title: 'Equity is a residual, not a thing you can point to',
+        body:
+          'You never measure equity directly — it is whatever is left when liabilities are taken from '
+          + 'assets. That is why capital, profit and drawings all flow through it, and why the accounting '
+          + 'equation (next concept) can never break.',
+      },
+    ],
+    worked: {
+      prompt:
+        'Classify each for Wanjiku Ltd as asset, liability, equity, income or expense: (a) cash in the '
+        + 'till; (b) a supplier’s unpaid bill; (c) the owner’s capital; (d) a cash sale; (e) rent paid.',
+      steps: [
+        '(a) Cash — a resource controlled → asset.',
+        '(b) Unpaid supplier bill — a present obligation → liability.',
+        '(c) Owner’s capital — what the business owes the owner → equity.',
+        '(d) Cash sale — an increase in economic benefit → income.',
+        '(e) Rent paid — a decrease in economic benefit → expense.',
+      ],
+      answer: 'Asset: cash. Liability: the supplier bill. Equity: capital. Income: the sale. Expense: rent.',
+    },
+    compression:
+      'Five definitions underlie everything: assets (controlled resources), liabilities (present '
+      + 'obligations), equity (the residual, assets minus liabilities), income (benefit up) and expenses '
+      + '(benefit down).',
+    forwardPointer:
+      'These five definitions are sharpened in FR’s Conceptual Framework (FR-S11), where recognition and '
+      + 'measurement of each element are examined in full.',
+    rateFlags: [],
+  },
+  {
+    conceptId: 'FA-05',
+    title: 'The accounting equation',
+    syllabusYear: '2026',
+    shape: 'double-entry',
+    story:
+      'The moment Wanjiku’s KES 20,000 enters the stall, accounting performs its founding trick: it '
+      + 'treats the business as a **separate entity** from Wanjiku herself. The business now holds 20,000 '
+      + '— but it **owes that 20,000 back to her**. Her stake is **capital**, and here is the shock most '
+      + 'students never cleanly recover from: capital is a debt the business owes its owner. From that one '
+      + 'idea comes an equation that has held after every transaction ever recorded, anywhere, forever.',
+    keypoints: [
+      {
+        title: 'The accounting equation',
+        body:
+          '**Assets = Capital + Liabilities.**\n'
+          + '• **Assets** — what the business owns or controls.\n'
+          + '• **Liabilities** — what it owes outsiders.\n'
+          + '• **Capital** — what it owes the owner; it **grows** with profit and new capital, **shrinks** '
+          + 'with losses and drawings.\n'
+          + 'It holds after every transaction — all of double entry is bookkeeping for this one identity.',
+      },
+      {
+        title: 'Duality — every transaction keeps it balanced',
+        body:
+          'Every transaction has **two equal and opposite effects**, so the equation never trembles. Buy '
+          + 'stock for cash and one asset simply becomes another. This two-sidedness is **duality** — the '
+          + 'secret of double entry, met here before a single debit.',
+      },
+    ],
+    worked: {
+      prompt:
+        'Show the equation after each step: (1) Wanjiku pays in KES 20,000 capital; (2) she buys stock '
+        + 'for KES 12,000 cash.',
+      steps: [
+        'Start: Assets (cash 20,000) = Capital 20,000 + Liabilities 0. ✓',
+        'Buy stock for cash: cash −12,000, inventory +12,000. Assets = cash 8,000 + inventory 12,000 = 20,000.',
+        'Equation after step 2: Assets 20,000 = Capital 20,000 + Liabilities 0. Still balanced — one asset became another.',
+      ],
+      answer:
+        'After both steps: Assets 20,000 (cash 8,000 + inventory 12,000) = Capital 20,000 + Liabilities 0. '
+        + 'The equation held through every step.',
+    },
+    compression:
+      'Assets = Capital + Liabilities: the business is a separate entity that owes its owner (capital) '
+      + 'and its outsiders (liabilities), and every transaction’s two equal effects keep the equation '
+      + 'balanced — the seed of double entry.',
+    forwardPointer:
+      'This identity becomes double-entry bookkeeping (FA-11, debits and credits) and, at year end, '
+      + 'stands upright as the statement of financial position (FA-46).',
+    rateFlags: [],
+  }
 ];
 
 export default FA_LESSONS;

@@ -3,7 +3,7 @@
 *Read at the start of every session, after `spec/PAPER_TRAIL_EXECUTION_ORDER.md`. Update after
 every unit of work. This is the handoff between sessions and the report to Jeremy.*
 
-Last updated: 2026-07-30 · Branch: `rebuild/wp1-foundation` · Tests: 60 node + browser harness green.
+Last updated: 2026-07-30 (batch 1) · Branch: `rebuild/wp1-foundation` · Tests: 60 node + browser harness green.
 
 ---
 
@@ -16,19 +16,19 @@ pre-flight checklist. **Not yet published** — no UI shell yet; engine + conten
 - Engine foundation (WP1-equivalent): complete — attempt log (IndexedDB) as single source of
   truth, five mastery states derived by fold, neglect + failed-review decay, migration, allocation
   matrices, diagnosis engine, flag mechanism, lineage-gated unlocking. All tested.
-- Lessons: **6 of 191** authored (BT 1/60, MA 1/66, FA 4/65). Next: author toward the first
-  **20-lesson independent audit** (Order §6) across all three papers.
+- Lessons: **12 of 191** authored (BT 3/60, MA 3/66, FA 6/65). Next: continue in parallel toward the
+  first **20-lesson independent audit** (Order §6, replaces human format review).
 
 ## 2. Ledger (mechanically derived — run `npm run ledger` for the full per-concept table)
 
 | Paper | Lessons | Items | Sealed | Track |
 |---|---|---|---|---|
-| BT | 1 / 60 | 0 | 0 / 6 sims | in build |
-| MA | 1 / 66 | 0 | 0 / 6 sims | in build |
-| FA | 4 / 65 | 0 | 0 / 6 sims | in build |
-| **Total** | **6 / 191** | **0** | **0** | |
+| BT | 3 / 60 | 0 | 0 / 6 sims | in build |
+| MA | 3 / 66 | 0 | 0 / 6 sims | in build |
+| FA | 6 / 65 | 0 | 0 / 6 sims | in build |
+| **Total** | **12 / 191** | **0** | **0** | |
 
-Authored so far: BT-04; MA-11; FA-13, FA-22, FA-26, FA-63.
+Authored so far: BT-01, BT-03, BT-04; MA-06, MA-07, MA-11; FA-04, FA-05, FA-13, FA-22, FA-26, FA-63.
 
 ## 3. Judgement calls made (Order §9)
 

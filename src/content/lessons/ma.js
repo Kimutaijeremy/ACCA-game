@@ -31,6 +31,108 @@ export const MA_LESSONS = [
     "forwardPointer": "When two points aren’t enough, linear regression (MA-12) fits a line through all of them; and the fixed/variable split you make here is what every flexible budget and cost variance later depends on.",
     "rateFlags": []
   }
+  ,
+  {
+    conceptId: 'MA-06',
+    title: 'Cost classification by nature, function and traceability',
+    syllabusYear: '2026',
+    shape: 'process',
+    story:
+      'The moment Wanjiku starts baking rather than only reselling, one question she never had to ask '
+      + 'in retail arrives: what does a single mandazi actually cost? To answer it she has to sort every '
+      + 'shilling she spends into kinds. The flour she can point to in the batch. The baker’s wages she '
+      + 'can point to. But the rent, the supervisor, the electricity for the whole building — those are '
+      + 'real costs that attach to no single mandazi. Sorting costs correctly is dull, but every costing '
+      + 'method later stands on getting this sort right.',
+    keypoints: [
+      {
+        title: 'Direct vs indirect (traceability), and prime cost',
+        body:
+          '**Direct costs** can be traced to one unit: **direct materials** (flour in the batch), '
+          + '**direct labour** (the baker’s wages), direct expenses. Their total is the **prime cost**.\n'
+          + '**Indirect costs = overheads**: real costs that cannot be traced to one unit — rent, the '
+          + 'supervisor, building electricity.',
+      },
+      {
+        title: 'Product costs vs period costs',
+        body:
+          '**Product costs** attach to the units made and sit in inventory until the units sell (materials, '
+          + 'labour, production overhead). **Period costs** are charged in full to the period they arise in '
+          + '(office rent, selling costs). The split decides what lands in closing inventory versus profit.',
+      },
+    ],
+    worked: {
+      prompt:
+        'Classify each bakery cost as direct or indirect, and say whether it is part of prime cost: '
+        + '(a) flour; (b) the baker’s wages; (c) the bakery’s rent; (d) the supervisor’s salary.',
+      steps: [
+        '(a) Flour — direct material → part of prime cost.',
+        '(b) Baker’s wages — direct labour → part of prime cost.',
+        '(c) Rent — indirect (overhead) → not prime cost.',
+        '(d) Supervisor — indirect labour (overhead) → not prime cost.',
+      ],
+      answer:
+        'Prime cost = flour + baker’s wages (the direct costs). Rent and the supervisor are overheads '
+        + 'that must be attached to units by a separate step later.',
+    },
+    compression:
+      'Costs are classified by traceability — direct (traceable to a unit; their total is prime cost) vs '
+      + 'indirect/overheads — and by timing — product costs (into inventory) vs period costs (expensed '
+      + 'now).',
+    forwardPointer:
+      'The overheads separated here are the ones that must be absorbed into unit cost (MA-23, MA-24), and '
+      + 'the direct/indirect split is the fork between absorption and marginal costing.',
+    rateFlags: [],
+  },
+  {
+    conceptId: 'MA-07',
+    title: 'Cost behaviour — fixed, variable, semi-variable, stepped',
+    syllabusYear: '2026',
+    shape: 'theory',
+    story:
+      'Classifying costs tells Wanjiku what a cost IS. Cost behaviour tells her what a cost DOES when she '
+      + 'bakes more or less. This is the difference between a budget that survives contact with reality '
+      + 'and one that does not — because some costs move with output and some sit still, and treating one '
+      + 'like the other is how a bakery quietly prices itself into a loss.',
+    keypoints: [
+      {
+        title: 'The four cost behaviours',
+        body:
+          '• **Fixed** — flat in total, whatever the output (rent). Falls **per unit** as volume rises.\n'
+          + '• **Variable** — flat **per unit**, rising in total with output (flour).\n'
+          + '• **Stepped fixed** — flat, then jumps at a threshold (one supervisor per eight bakers).\n'
+          + '• **Semi-variable** — a fixed standing charge plus a variable part (electricity).',
+      },
+      {
+        title: 'The relevant range, and the split that follows',
+        body:
+          'These patterns hold only within the **relevant range** — the band of activity the business '
+          + 'actually operates in. And a **semi-variable** cost hides a fixed part and a variable part '
+          + 'inside one bill, so before you can budget it you must split it (the next concept).',
+      },
+    ],
+    worked: {
+      prompt:
+        'For each, name the behaviour and say what happens to the cost PER UNIT as Wanjiku bakes more: '
+        + '(a) bakery rent; (b) flour; (c) the electricity bill.',
+      steps: [
+        '(a) Rent — fixed: total unchanged, so cost per mandazi FALLS as volume rises.',
+        '(b) Flour — variable: cost per mandazi stays the same; total rises.',
+        '(c) Electricity — semi-variable: a fixed standing charge (per-unit share falls) plus a variable part (per-unit share steady).',
+      ],
+      answer:
+        'Rent is fixed (per-unit falls), flour is variable (per-unit steady), electricity is '
+        + 'semi-variable (a bit of both) — and the semi-variable one must be split before budgeting.',
+    },
+    compression:
+      'Costs behave as fixed (flat in total, falling per unit), variable (flat per unit, rising in '
+      + 'total), stepped fixed (jumps at thresholds) or semi-variable (fixed + variable) — all within a '
+      + 'relevant range.',
+    forwardPointer:
+      'Semi-variable costs are split into their fixed and variable halves by the high-low method (MA-11); '
+      + 'cost behaviour then drives CVP analysis and the flexing of budgets (MA-43).',
+    rateFlags: [],
+  }
 ];
 
 export default MA_LESSONS;

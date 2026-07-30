@@ -32,6 +32,115 @@ export const BT_LESSONS = [
     "forwardPointer": "This matrix grows up in SBL, where the same power/interest map governs board-level decisions and every stakeholder-conflict question in strategic governance.",
     "rateFlags": []
   }
+  ,
+  {
+    conceptId: 'BT-01',
+    title: 'Purpose and types of business organisation',
+    syllabusYear: '2026',
+    shape: 'theory',
+    story:
+      'Wanjiku takes KES 20,000 of her savings and opens a soda-and-sweets kibanda near Gikomba. '
+      + 'In that one act she has chosen, without knowing the words, a type of business organisation: '
+      + 'she is a **sole trader** — simple to start, total control, but **unlimited liability**: if the '
+      + 'business owes, she owes, down to her own mattress. Her cousin suggests they join forces — that '
+      + 'would be a **partnership**: shared capital, shared skill, and still unlimited liability. Down '
+      + 'the road stands what she may one day become: a **limited liability company**, a separate legal '
+      + 'person whose owners can lose only what they put in. And around her sit other species entirely — '
+      + 'the county clinic, an NGO, a savings co-operative — organisations that do not exist to make a '
+      + 'profit at all. The first lesson of the whole paper: what the organisation is FOR decides how you '
+      + 'judge whether it is doing well.',
+    keypoints: [
+      {
+        title: 'The main types of business organisation',
+        body:
+          '• **Sole trader** — one owner, total control, unlimited liability, not a separate legal person.\n'
+          + '• **Partnership** — two or more owners sharing capital, profit and (usually) unlimited liability.\n'
+          + '• **Limited liability company** — a **separate legal person**; owners (shareholders) risk only '
+          + 'their investment.\n'
+          + '• **Not-for-profit / public sector / co-operative** — exist for a purpose other than profit '
+          + '(a service, a mission, mutual benefit).',
+      },
+      {
+        title: 'Purpose sets the measure of success',
+        body:
+          'A **profit-orientated** business is judged on profit. A **not-for-profit or public body** is '
+          + 'judged on **value for money — the three Es: economy** (buy inputs cheaply), **efficiency** '
+          + '(outputs per input), **effectiveness** (did it achieve its objective?). Same question — is it '
+          + 'doing well? — measured differently because the purpose differs.',
+      },
+    ],
+    worked: {
+      prompt:
+        'For each, name the organisation type and the right measure of success: (a) Wanjiku’s one-woman '
+        + 'kibanda; (b) the county health clinic next door; (c) Safaricom PLC.',
+      steps: [
+        '(a) Sole trader — judged on profit (and her own drawings), with unlimited liability on her.',
+        '(b) Public sector body — judged on value for money (the three Es), not profit.',
+        '(c) Limited liability company (public) — judged on profit and shareholder return; owners risk only their shares.',
+      ],
+      answer:
+        'Sole trader → profit; public clinic → value for money (economy, efficiency, effectiveness); '
+        + 'PLC → profit and shareholder return with limited liability.',
+    },
+    compression:
+      'Businesses are sole traders, partnerships, limited companies, or not-for-profit/public bodies — '
+      + 'and what the organisation exists for decides whether you judge it on profit or on value for '
+      + 'money (economy, efficiency, effectiveness).',
+    forwardPointer:
+      'The reporting consequences of each type return in FA (FA-02): a company is a separate legal '
+      + 'person that must publish, a sole trader is not — which is why the accounts differ.',
+    rateFlags: [],
+  },
+  {
+    conceptId: 'BT-03',
+    title: 'Stakeholders and stakeholder classification',
+    syllabusYear: '2026',
+    shape: 'theory',
+    story:
+      'Within a month, Wanjiku is surrounded by people with a claim on what she does. Some are inside '
+      + 'the business, some are tied to it by contract, some stand entirely outside it and still shape '
+      + 'it. Before she can manage them (that comes next, with Mendelow), she has to see them clearly — '
+      + 'and the exam wants them sorted into three groups.',
+    keypoints: [
+      {
+        title: 'A stakeholder, and the three groups',
+        body:
+          'A **stakeholder** is anyone who affects or is affected by the organisation. They sort into:\n'
+          + '• **Internal** — inside the business: employees, managers, and the owner herself.\n'
+          + '• **Connected** — tied to it by a contract or investment: shareholders, customers, suppliers, '
+          + 'lenders.\n'
+          + '• **External** — outside, but still affecting or affected: government, the Kenya Revenue '
+          + 'Authority, the local community, pressure groups.',
+      },
+      {
+        title: 'Each holds a different claim',
+        body:
+          'Employees want pay and security; customers want low prices and quality; suppliers want prompt '
+          + 'payment; lenders want their interest; government wants tax and compliance. These claims '
+          + '**conflict** — which is the problem the next concept (power vs interest) is built to resolve.',
+      },
+    ],
+    worked: {
+      prompt:
+        'Sort into internal / connected / external: (a) Otieno who runs the stall; (b) the soda '
+        + 'distributor; (c) the Kenya Revenue Authority; (d) a regular customer.',
+      steps: [
+        '(a) Otieno — an employee → internal.',
+        '(b) The distributor — a supplier under contract → connected.',
+        '(c) KRA — government body outside the business → external.',
+        '(d) A customer — tied by the sale → connected.',
+      ],
+      answer: 'Internal: Otieno. Connected: the distributor and the customer. External: KRA.',
+    },
+    compression:
+      'Stakeholders — anyone who affects or is affected by the business — sort into internal (staff, '
+      + 'owner), connected (shareholders, customers, suppliers, lenders) and external (government, '
+      + 'community), each holding a different and often conflicting claim.',
+    forwardPointer:
+      'These groups are then mapped by power and interest and prioritised in BT-04 (Mendelow), and the '
+      + 'whole idea grows up to board scale in SBL.',
+    rateFlags: [],
+  }
 ];
 
 export default BT_LESSONS;

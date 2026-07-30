@@ -1,6 +1,6 @@
-# Pilot lessons — WP2a format review
+# Lessons — readable preview
 
-Five full-quality pilot lessons, in the Wanjiku voice, each stressing a different shape. This is the format to approve before the remaining 186 lessons (WP2b) are written against it. Generated from `src/content/pilot-lessons.js` — the content is data, this is just a readable view.
+12 authored lessons, in the Wanjiku voice. Generated from `src/content/lessons/*.js` — the content is data, this is just a readable view.
 
 ---
 
@@ -39,6 +39,71 @@ Within a month of opening her kibanda near Gikomba, Wanjiku discovers she is sur
 
 ---
 
+## Purpose and types of business organisation
+*BT-01 · shape: theory · syllabus 2026*
+
+### Lesson
+Wanjiku takes KES 20,000 of her savings and opens a soda-and-sweets kibanda near Gikomba. In that one act she has chosen, without knowing the words, a type of business organisation: she is a **sole trader** — simple to start, total control, but **unlimited liability**: if the business owes, she owes, down to her own mattress. Her cousin suggests they join forces — that would be a **partnership**: shared capital, shared skill, and still unlimited liability. Down the road stands what she may one day become: a **limited liability company**, a separate legal person whose owners can lose only what they put in. And around her sit other species entirely — the county clinic, an NGO, a savings co-operative — organisations that do not exist to make a profit at all. The first lesson of the whole paper: what the organisation is FOR decides how you judge whether it is doing well.
+
+> 🔑 **KEYPOINT — The main types of business organisation**
+>
+> • **Sole trader** — one owner, total control, unlimited liability, not a separate legal person.
+> • **Partnership** — two or more owners sharing capital, profit and (usually) unlimited liability.
+> • **Limited liability company** — a **separate legal person**; owners (shareholders) risk only their investment.
+> • **Not-for-profit / public sector / co-operative** — exist for a purpose other than profit (a service, a mission, mutual benefit).
+
+> 🔑 **KEYPOINT — Purpose sets the measure of success**
+>
+> A **profit-orientated** business is judged on profit. A **not-for-profit or public body** is judged on **value for money — the three Es: economy** (buy inputs cheaply), **efficiency** (outputs per input), **effectiveness** (did it achieve its objective?). Same question — is it doing well? — measured differently because the purpose differs.
+
+### Worked example
+**For each, name the organisation type and the right measure of success: (a) Wanjiku’s one-woman kibanda; (b) the county health clinic next door; (c) Safaricom PLC.**
+
+1. (a) Sole trader — judged on profit (and her own drawings), with unlimited liability on her.
+2. (b) Public sector body — judged on value for money (the three Es), not profit.
+3. (c) Limited liability company (public) — judged on profit and shareholder return; owners risk only their shares.
+
+**Answer.** Sole trader → profit; public clinic → value for money (economy, efficiency, effectiveness); PLC → profit and shareholder return with limited liability.
+
+**In one breath.** Businesses are sole traders, partnerships, limited companies, or not-for-profit/public bodies — and what the organisation exists for decides whether you judge it on profit or on value for money (economy, efficiency, effectiveness).
+
+**Where it matures →** The reporting consequences of each type return in FA (FA-02): a company is a separate legal person that must publish, a sole trader is not — which is why the accounts differ.
+
+---
+
+## Stakeholders and stakeholder classification
+*BT-03 · shape: theory · syllabus 2026*
+
+### Lesson
+Within a month, Wanjiku is surrounded by people with a claim on what she does. Some are inside the business, some are tied to it by contract, some stand entirely outside it and still shape it. Before she can manage them (that comes next, with Mendelow), she has to see them clearly — and the exam wants them sorted into three groups.
+
+> 🔑 **KEYPOINT — A stakeholder, and the three groups**
+>
+> A **stakeholder** is anyone who affects or is affected by the organisation. They sort into:
+> • **Internal** — inside the business: employees, managers, and the owner herself.
+> • **Connected** — tied to it by a contract or investment: shareholders, customers, suppliers, lenders.
+> • **External** — outside, but still affecting or affected: government, the Kenya Revenue Authority, the local community, pressure groups.
+
+> 🔑 **KEYPOINT — Each holds a different claim**
+>
+> Employees want pay and security; customers want low prices and quality; suppliers want prompt payment; lenders want their interest; government wants tax and compliance. These claims **conflict** — which is the problem the next concept (power vs interest) is built to resolve.
+
+### Worked example
+**Sort into internal / connected / external: (a) Otieno who runs the stall; (b) the soda distributor; (c) the Kenya Revenue Authority; (d) a regular customer.**
+
+1. (a) Otieno — an employee → internal.
+2. (b) The distributor — a supplier under contract → connected.
+3. (c) KRA — government body outside the business → external.
+4. (d) A customer — tied by the sale → connected.
+
+**Answer.** Internal: Otieno. Connected: the distributor and the customer. External: KRA.
+
+**In one breath.** Stakeholders — anyone who affects or is affected by the business — sort into internal (staff, owner), connected (shareholders, customers, suppliers, lenders) and external (government, community), each holding a different and often conflicting claim.
+
+**Where it matures →** These groups are then mapped by power and interest and prioritised in BT-04 (Mendelow), and the whole idea grows up to board scale in SBL.
+
+---
+
 ## The high-low method
 *MA-11 · shape: calculation · syllabus 2026*
 
@@ -69,6 +134,69 @@ Wanjiku opens a small bakery behind the shop — mandazi and bread. The first bi
 **In one breath.** Split a mixed cost from its highest and lowest activity levels: variable per unit is the change in cost over the change in units, and fixed is whatever is left once the variable part is stripped out at either level.
 
 **Where it matures →** When two points aren’t enough, linear regression (MA-12) fits a line through all of them; and the fixed/variable split you make here is what every flexible budget and cost variance later depends on.
+
+---
+
+## Cost classification by nature, function and traceability
+*MA-06 · shape: process · syllabus 2026*
+
+### Lesson
+The moment Wanjiku starts baking rather than only reselling, one question she never had to ask in retail arrives: what does a single mandazi actually cost? To answer it she has to sort every shilling she spends into kinds. The flour she can point to in the batch. The baker’s wages she can point to. But the rent, the supervisor, the electricity for the whole building — those are real costs that attach to no single mandazi. Sorting costs correctly is dull, but every costing method later stands on getting this sort right.
+
+> 🔑 **KEYPOINT — Direct vs indirect (traceability), and prime cost**
+>
+> **Direct costs** can be traced to one unit: **direct materials** (flour in the batch), **direct labour** (the baker’s wages), direct expenses. Their total is the **prime cost**.
+> **Indirect costs = overheads**: real costs that cannot be traced to one unit — rent, the supervisor, building electricity.
+
+> 🔑 **KEYPOINT — Product costs vs period costs**
+>
+> **Product costs** attach to the units made and sit in inventory until the units sell (materials, labour, production overhead). **Period costs** are charged in full to the period they arise in (office rent, selling costs). The split decides what lands in closing inventory versus profit.
+
+### Worked example
+**Classify each bakery cost as direct or indirect, and say whether it is part of prime cost: (a) flour; (b) the baker’s wages; (c) the bakery’s rent; (d) the supervisor’s salary.**
+
+1. (a) Flour — direct material → part of prime cost.
+2. (b) Baker’s wages — direct labour → part of prime cost.
+3. (c) Rent — indirect (overhead) → not prime cost.
+4. (d) Supervisor — indirect labour (overhead) → not prime cost.
+
+**Answer.** Prime cost = flour + baker’s wages (the direct costs). Rent and the supervisor are overheads that must be attached to units by a separate step later.
+
+**In one breath.** Costs are classified by traceability — direct (traceable to a unit; their total is prime cost) vs indirect/overheads — and by timing — product costs (into inventory) vs period costs (expensed now).
+
+**Where it matures →** The overheads separated here are the ones that must be absorbed into unit cost (MA-23, MA-24), and the direct/indirect split is the fork between absorption and marginal costing.
+
+---
+
+## Cost behaviour — fixed, variable, semi-variable, stepped
+*MA-07 · shape: theory · syllabus 2026*
+
+### Lesson
+Classifying costs tells Wanjiku what a cost IS. Cost behaviour tells her what a cost DOES when she bakes more or less. This is the difference between a budget that survives contact with reality and one that does not — because some costs move with output and some sit still, and treating one like the other is how a bakery quietly prices itself into a loss.
+
+> 🔑 **KEYPOINT — The four cost behaviours**
+>
+> • **Fixed** — flat in total, whatever the output (rent). Falls **per unit** as volume rises.
+> • **Variable** — flat **per unit**, rising in total with output (flour).
+> • **Stepped fixed** — flat, then jumps at a threshold (one supervisor per eight bakers).
+> • **Semi-variable** — a fixed standing charge plus a variable part (electricity).
+
+> 🔑 **KEYPOINT — The relevant range, and the split that follows**
+>
+> These patterns hold only within the **relevant range** — the band of activity the business actually operates in. And a **semi-variable** cost hides a fixed part and a variable part inside one bill, so before you can budget it you must split it (the next concept).
+
+### Worked example
+**For each, name the behaviour and say what happens to the cost PER UNIT as Wanjiku bakes more: (a) bakery rent; (b) flour; (c) the electricity bill.**
+
+1. (a) Rent — fixed: total unchanged, so cost per mandazi FALLS as volume rises.
+2. (b) Flour — variable: cost per mandazi stays the same; total rises.
+3. (c) Electricity — semi-variable: a fixed standing charge (per-unit share falls) plus a variable part (per-unit share steady).
+
+**Answer.** Rent is fixed (per-unit falls), flour is variable (per-unit steady), electricity is semi-variable (a bit of both) — and the semi-variable one must be split before budgeting.
+
+**In one breath.** Costs behave as fixed (flat in total, falling per unit), variable (flat per unit, rising in total), stepped fixed (jumps at thresholds) or semi-variable (fixed + variable) — all within a relevant range.
+
+**Where it matures →** Semi-variable costs are split into their fixed and variable halves by the high-low method (MA-11); cost behaviour then drives CVP analysis and the flexing of budgets (MA-43).
 
 ---
 
@@ -217,4 +345,72 @@ Not every part of accounting gets a hero. This one is about filing — and it is
 **In one breath.** Every transaction lands first in a book of prime entry — sales and purchases day books for credit trade, the cash and petty cash books for money, the journal for everything odd — and is then posted in totals to the nominal ledger, with customer and supplier detail kept in memorandum ledgers.
 
 **Where it matures →** These books post into the nominal ledger (FA-14) and, once summed, must prove themselves in the trial balance (FA-39); the orderly intake they impose is the beginning of the audit trail that AA later relies on.
+
+---
+
+## The elements — assets, liabilities, equity, income, expenses
+*FA-04 · shape: theory · syllabus 2026*
+
+### Lesson
+Before Wanjiku can record a single transaction, accounting needs five words to mean exactly one thing each. Everything else in the whole of FA — and later FR — is built from these five definitions. Get them precise now and the rest of the paper has somewhere to stand; leave them vague and every statement you build later wobbles.
+
+> 🔑 **KEYPOINT — The five elements**
+>
+> • **Asset** — a resource the business **controls** from a past event, expected to bring future economic benefit (cash, inventory, the fridge, money customers owe).
+> • **Liability** — a **present obligation** from a past event, expected to cause an outflow (a supplier bill, a loan).
+> • **Equity** — the **residual**: assets minus liabilities. What the business owes its owner.
+> • **Income** — increases in economic benefit (revenue, gains).
+> • **Expenses** — decreases in economic benefit (costs, losses).
+
+> 🔑 **KEYPOINT — Equity is a residual, not a thing you can point to**
+>
+> You never measure equity directly — it is whatever is left when liabilities are taken from assets. That is why capital, profit and drawings all flow through it, and why the accounting equation (next concept) can never break.
+
+### Worked example
+**Classify each for Wanjiku Ltd as asset, liability, equity, income or expense: (a) cash in the till; (b) a supplier’s unpaid bill; (c) the owner’s capital; (d) a cash sale; (e) rent paid.**
+
+1. (a) Cash — a resource controlled → asset.
+2. (b) Unpaid supplier bill — a present obligation → liability.
+3. (c) Owner’s capital — what the business owes the owner → equity.
+4. (d) Cash sale — an increase in economic benefit → income.
+5. (e) Rent paid — a decrease in economic benefit → expense.
+
+**Answer.** Asset: cash. Liability: the supplier bill. Equity: capital. Income: the sale. Expense: rent.
+
+**In one breath.** Five definitions underlie everything: assets (controlled resources), liabilities (present obligations), equity (the residual, assets minus liabilities), income (benefit up) and expenses (benefit down).
+
+**Where it matures →** These five definitions are sharpened in FR’s Conceptual Framework (FR-S11), where recognition and measurement of each element are examined in full.
+
+---
+
+## The accounting equation
+*FA-05 · shape: double-entry · syllabus 2026*
+
+### Lesson
+The moment Wanjiku’s KES 20,000 enters the stall, accounting performs its founding trick: it treats the business as a **separate entity** from Wanjiku herself. The business now holds 20,000 — but it **owes that 20,000 back to her**. Her stake is **capital**, and here is the shock most students never cleanly recover from: capital is a debt the business owes its owner. From that one idea comes an equation that has held after every transaction ever recorded, anywhere, forever.
+
+> 🔑 **KEYPOINT — The accounting equation**
+>
+> **Assets = Capital + Liabilities.**
+> • **Assets** — what the business owns or controls.
+> • **Liabilities** — what it owes outsiders.
+> • **Capital** — what it owes the owner; it **grows** with profit and new capital, **shrinks** with losses and drawings.
+> It holds after every transaction — all of double entry is bookkeeping for this one identity.
+
+> 🔑 **KEYPOINT — Duality — every transaction keeps it balanced**
+>
+> Every transaction has **two equal and opposite effects**, so the equation never trembles. Buy stock for cash and one asset simply becomes another. This two-sidedness is **duality** — the secret of double entry, met here before a single debit.
+
+### Worked example
+**Show the equation after each step: (1) Wanjiku pays in KES 20,000 capital; (2) she buys stock for KES 12,000 cash.**
+
+1. Start: Assets (cash 20,000) = Capital 20,000 + Liabilities 0. ✓
+2. Buy stock for cash: cash −12,000, inventory +12,000. Assets = cash 8,000 + inventory 12,000 = 20,000.
+3. Equation after step 2: Assets 20,000 = Capital 20,000 + Liabilities 0. Still balanced — one asset became another.
+
+**Answer.** After both steps: Assets 20,000 (cash 8,000 + inventory 12,000) = Capital 20,000 + Liabilities 0. The equation held through every step.
+
+**In one breath.** Assets = Capital + Liabilities: the business is a separate entity that owes its owner (capital) and its outsiders (liabilities), and every transaction’s two equal effects keep the equation balanced — the seed of double entry.
+
+**Where it matures →** This identity becomes double-entry bookkeeping (FA-11, debits and credits) and, at year end, stands upright as the statement of financial position (FA-46).
 
