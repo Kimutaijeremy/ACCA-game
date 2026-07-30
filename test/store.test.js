@@ -12,6 +12,16 @@ class QuotaStore extends MemoryStore {
   setItem() { const e = new Error('quota'); e.name = 'QuotaExceededError'; throw e; }
 }
 
+// Build a LearnerStore plus a captured list of persistence-error callbacks.
+function mkStore(kv = new MemoryStore()) {
+  const errors = [];
+  const store = new LearnerStore({
+    logAdapter: new MemoryLogAdapter(), kv,
+    onPersistenceError: (info) => errors.push(info),
+  });
+  return { store, errors, kv };
+}
+
 test('a failed meta write is reported, never swallowed', () => {
   const res = trySaveMeta(emptyState(), new QuotaStore());
   assert.equal(res.ok, false);
@@ -33,8 +43,22 @@ test('state uses the distinctive papertrail:v4: namespace', () => {
   assert.equal(KEY_PREFIX, 'papertrail:v4:');
 });
 
+test('LearnerStore refuses to construct without a persistence-failure handler', () => {
+  assert.throws(() => new LearnerStore({ logAdapter: new MemoryLogAdapter(), kv: new MemoryStore() }),
+    /onPersistenceError/);
+});
+
+test('a failed meta write fires the handler, not just a return value', () => {
+  const { store, errors } = mkStore(new QuotaStore());
+  const res = store.saveMeta(emptyState());
+  assert.equal(res.ok, false);
+  assert.equal(errors.length, 1, 'handler was invoked');
+  assert.equal(errors[0].op, 'saveMeta');
+  assert.equal(errors[0].quota, true);
+});
+
 test('the attempt log lives in the log adapter, not in meta', async () => {
-  const store = new LearnerStore(new MemoryLogAdapter(), new MemoryStore());
+  const { store } = mkStore();
   store.saveMeta({ ...emptyState(), createdAt: 1 });
   await store.appendRecords([
     { id: 'a1', kind: 'lesson', conceptIds: ['FA-05'], sessionId: 's', timestamp: 10 },
@@ -48,7 +72,7 @@ test('the attempt log lives in the log adapter, not in meta', async () => {
 });
 
 test('exportAll → importAll round-trips meta and the whole log', async () => {
-  const a = new LearnerStore(new MemoryLogAdapter(), new MemoryStore());
+  const { store: a } = mkStore();
   a.saveMeta({ ...emptyState(), createdAt: 5, streak: { cur: 3, best: 10 } });
   await a.appendRecords([
     { id: 'x1', kind: 'item', conceptIds: ['FA-05'], rung: 'standard', correct: true, sessionId: 's', timestamp: 1 },
@@ -58,7 +82,7 @@ test('exportAll → importAll round-trips meta and the whole log', async () => {
   assert.equal(blob.attemptLog.length, 2);
   assert.deepEqual(blob.streak, { cur: 3, best: 10 });
 
-  const b = new LearnerStore(new MemoryLogAdapter(), new MemoryStore());
+  const { store: b } = mkStore();
   await b.importAll(blob);
   const back = await b.exportAll();
   assert.deepEqual(back, blob);

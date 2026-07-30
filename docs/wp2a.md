@@ -25,7 +25,10 @@ Every one of the seven causes has a remediation route (the §6.5 table); careles
 pacing flag, not content remediation. Diagnosed cause + confidence are exactly the fields the
 attempt log already records, so a diagnosis is written once, with the attempt.
 
-## Five pilot lessons (§6.3)
+Read ten worked diagnoses in plain language in **`docs/diagnosis-demo.md`**
+(`npm run diagnosis:demo`) — the routing sanity-checked by reading, not by test count.
+
+## Six pilot lessons (§6.3)
 
 `src/content/pilot-lessons.js` — full-quality, in the Wanjiku voice, each stressing a different
 shape. Read them rendered in **`docs/pilot-lessons-preview.md`** (regenerate with
@@ -38,6 +41,7 @@ shape. Read them rendered in **`docs/pilot-lessons-preview.md`** (regenerate wit
 | FA-26 | Depreciation methods and the annual charge | double entry |
 | FA-22 | Cost and net realisable value | treatment / rule |
 | FA-63 | Liquidity and efficiency ratios | interpretation / integration |
+| FA-13 | Books of prime entry | process (deliberately dry — no natural story hook) |
 
 Each has: a story beat, keypoint boxes (the load-bearing formulas/rules), one worked example, the
 one-breath compression, and a forward pointer naming where the concept matures (FA-26 → FR

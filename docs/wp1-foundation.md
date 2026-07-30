@@ -31,10 +31,12 @@ tools/verify.mjs         Node-side idempotency + derivation-cost evidence
 
 ## Persistence, quota and eviction
 
-Meta is written with `trySaveMeta`, which **reports** a failed write instead of throwing or
-swallowing it — a full quota returns `{ ok:false, quota:true }` so the UI can warn and prompt an
-export. (The attempt log's IndexedDB budget is far larger, but the same reporting discipline
-applies.) Storage can still be *evicted by the OS later* (nothing can catch that at write
+`LearnerStore` **refuses to construct without an `onPersistenceError` handler**, and it *calls*
+that handler on any failed write (`{ op, quota, error }`) — so a future UI cannot silently drop a
+failed save; it is forced to register what happens. Meta writes go through `trySaveMeta`
+(`{ ok:false, quota:true }` on a full quota). The attempt log's IndexedDB budget is far larger,
+but a failed append fires the same handler and rethrows. Storage can still be *evicted by the OS
+later* (nothing can catch that at write
 time); the guard for that is the one-tap export + off-device backup (Brief §6.9). Clearing storage
 makes state read as absent (a clean fresh start), never as stale/partial data.
 

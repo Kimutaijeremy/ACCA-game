@@ -14,7 +14,7 @@ const graph = loadGraphFromSpec();
 // ── Q2: idempotency — apply the migration twice against the real export ──────
 line('Q2 — MIGRATION IDEMPOTENCY (apply twice to the same store)');
 const kv = new MemoryStore();
-const store = new LearnerStore(new MemoryLogAdapter(), kv);
+const store = new LearnerStore({ logAdapter: new MemoryLogAdapter(), kv, onPersistenceError: () => {} });
 
 await applyMigration(V3, store, { now: 1000 });
 const s1 = loadMeta(kv); const log1 = await store.readLogRecords();

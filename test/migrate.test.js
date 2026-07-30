@@ -6,7 +6,9 @@ import { planMigration, applyMigration, rollbackMigration } from '../src/engine/
 import { MemoryStore, MemoryLogAdapter, LearnerStore, KEYS, loadMeta } from '../src/engine/store.js';
 import { AttemptLog } from '../src/engine/log.js';
 
-const newStore = (kv) => new LearnerStore(new MemoryLogAdapter(), kv ?? new MemoryStore());
+const newStore = (kv) => new LearnerStore({
+  logAdapter: new MemoryLogAdapter(), kv: kv ?? new MemoryStore(), onPersistenceError: () => {},
+});
 import { deriveAll } from '../src/engine/derive.js';
 import { loadV3Fixture, loadGraphFromSpec } from '../src/engine/node-loader.js';
 

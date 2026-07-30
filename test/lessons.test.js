@@ -9,8 +9,8 @@ import { loadGraphFromSpec } from '../src/engine/node-loader.js';
 
 const graph = loadGraphFromSpec();
 
-test('all five pilot lessons validate (story, keypoints, worked example, compression, forward pointer)', () => {
-  assert.equal(PILOT_LESSONS.length, 5);
+test('all six pilot lessons validate (story, keypoints, worked example, compression, forward pointer)', () => {
+  assert.equal(PILOT_LESSONS.length, 6);
   for (const L of PILOT_LESSONS) assert.doesNotThrow(() => validateLesson(L));
   assert.doesNotThrow(() => indexLessons(PILOT_LESSONS));
 });
@@ -34,8 +34,9 @@ test('the pilots deliberately span the required shapes', () => {
   assert.equal(PILOT_LESSONS.find((L) => L.conceptId === 'BT-04').shape, 'theory');
   assert.equal(PILOT_LESSONS.find((L) => L.conceptId === 'MA-11').shape, 'calculation');
   assert.equal(PILOT_LESSONS.find((L) => L.conceptId === 'FA-26').shape, 'double-entry');
-  // five distinct shapes in all
-  assert.equal(new Set(shapes).size, 5);
+  // six distinct shapes in all — incl. a deliberately dry 'process' concept (FA-13)
+  assert.equal(new Set(shapes).size, 6);
+  assert.equal(PILOT_LESSONS.find((L) => L.conceptId === 'FA-13').shape, 'process');
 });
 
 test("a forward pointer names where the concept matures, honouring the graph's growth edges", () => {
@@ -49,5 +50,6 @@ test('lessonSectionCounts feeds the allocation lesson floor', () => {
   const counts = lessonSectionCounts(PILOT_LESSONS);
   assert.equal(counts['BT-04'], 1);
   assert.equal(counts['FA-63'], 1);
-  assert.equal(Object.keys(counts).length, 5);
+  assert.equal(counts['FA-13'], 1);
+  assert.equal(Object.keys(counts).length, 6);
 });

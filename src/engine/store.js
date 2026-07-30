@@ -154,6 +154,10 @@ export class IdbLogAdapter {
   async clear() {
     return this._tx('readwrite', (store) => store.clear());
   }
+  /** Close the connection (so a later indexedDB.deleteDatabase won't block). */
+  close() {
+    if (this._db) { this._db.close(); this._db = null; }
+  }
 }
 
 /** IndexedDB adapter in the browser, MemoryLogAdapter otherwise. */
@@ -167,20 +171,44 @@ export function defaultLogAdapter() {
 /**
  * Ties the meta half (localStorage) and the log half (IndexedDB) together. The attempt log stays
  * the single source of truth; meta is only streak + read-only v1 history + schema/date.
+ *
+ * A persistence-failure HANDLER is mandatory: the store refuses to construct without one, and it
+ * is CALLED (not merely returned) whenever a write fails — quota exceeded, storage disabled, an
+ * IndexedDB error. This is the wiring that makes it impossible for a future UI to silently drop a
+ * failed save: to use the store at all, you must register what happens when a write fails, and the
+ * intended handler warns the learner and prompts a one-tap export (Brief §6.9).
  */
 export class LearnerStore {
-  constructor(logAdapter = defaultLogAdapter(), kv = defaultKV()) {
-    this.log = logAdapter;
-    this.kv = kv;
+  constructor({ logAdapter, kv, onPersistenceError } = {}) {
+    if (typeof onPersistenceError !== 'function') {
+      throw new Error(
+        'LearnerStore requires an onPersistenceError(info) handler — a failed write must never be '
+        + 'silently dropped. Register one that warns the learner and prompts an export.',
+      );
+    }
+    this.log = logAdapter ?? defaultLogAdapter();
+    this.kv = kv ?? defaultKV();
+    this.onPersistenceError = onPersistenceError;
   }
 
   loadMeta() { return loadMeta(this.kv); }
-  saveMeta(meta) { return trySaveMeta(meta, this.kv); }
+
+  saveMeta(meta) {
+    const res = trySaveMeta(meta, this.kv);
+    if (!res.ok) this.onPersistenceError({ op: 'saveMeta', quota: res.quota, error: res.error });
+    return res;
+  }
 
   /** Append attempt/lesson records (normalised + validated) to the log. */
   async appendRecords(rawRecords) {
     const recs = rawRecords.map(normaliseRecord);
-    await this.log.appendMany(recs);
+    try {
+      await this.log.appendMany(recs);
+    } catch (error) {
+      // A failed append means the attempt was not persisted — the loudest possible failure.
+      this.onPersistenceError({ op: 'appendRecords', quota: isQuotaError(error), error });
+      throw error;
+    }
     return recs;
   }
 

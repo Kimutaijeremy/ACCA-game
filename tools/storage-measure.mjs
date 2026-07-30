@@ -69,11 +69,16 @@ try {
     for (let n = 5000; n <= 200000; n += 5000) {
       const st = store.emptyState();
       st.attemptLog = new log.AttemptLog(synthLog(liveIds, n)).toJSON();
-      const bytes = enc.encode(JSON.stringify(st)).length;
-      const res = store.trySaveState(st, window.localStorage);
-      if (!res.ok) return { firstFailN: n, firstFailBytes: bytes, quota: res.quota, lastOk };
+      const json = JSON.stringify(st);
+      const bytes = enc.encode(json).length;
+      // measure raw localStorage capacity for the OLD single-blob approach (the evidence that
+      // justified moving the log to IndexedDB) — write the blob directly, not via the store.
+      let ok = true; let quota = false;
+      try { window.localStorage.setItem('__pt_probe__', json); }
+      catch (e) { ok = false; quota = store.isQuotaError(e); }
+      if (!ok) return { firstFailN: n, firstFailBytes: bytes, quota, lastOk };
       lastOk = { n, bytes };
-      window.localStorage.removeItem(store.KEYS.STATE);
+      window.localStorage.removeItem('__pt_probe__');
     }
     return { firstFailN: null, lastOk };
   }, { liveIds });
@@ -96,9 +101,11 @@ try {
       const st = store.emptyState();
       st.attemptLog = new log.AttemptLog(synthLog(liveIds, n)).toJSON();
       const t0 = performance.now();
-      const res = store.trySaveState(st, window.localStorage);
+      let ok = true; let quota = false;
+      try { window.localStorage.setItem('__pt_probe__', JSON.stringify(st)); }
+      catch (e) { ok = false; quota = store.isQuotaError(e); }
       const ms = performance.now() - t0;
-      rows.push({ n, ms, ok: res.ok, quota: res.quota });
+      rows.push({ n, ms, ok, quota });
       window.localStorage.clear();
     }
     return rows;

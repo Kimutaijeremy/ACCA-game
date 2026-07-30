@@ -72,10 +72,11 @@ try {
   // attempt log → IndexedDB.
   const mig = await page.evaluate(async () => {
     const { store, migrate, loadV3 } = window.PT;
-    // fresh: clear meta + delete the IndexedDB
+    // fresh: clear meta + empty the IndexedDB log (clearLog, not deleteDatabase, so open
+    // connections from other stores in this page cannot block it)
     window.localStorage.clear();
-    await new Promise((r) => { const req = indexedDB.deleteDatabase(store.DB_NAME); req.onsuccess = req.onerror = () => r(); });
-    const ls = new store.LearnerStore(); // defaults: IdbLogAdapter + window.localStorage
+    const ls = window.PT.newStore(); // IdbLogAdapter + localStorage + error handler
+    await ls.clearLog();
     const v3 = await loadV3();
     await migrate.applyMigration(v3, ls, { now: 1770000000000 });
     // then a few real attempts land in IndexedDB
@@ -116,7 +117,7 @@ try {
   await page.waitForFunction('window.__READY__ === true');
   const afterReload = await page.evaluate(async () => {
     const { store } = window.PT;
-    const ls = new store.LearnerStore();
+    const ls = window.PT.newStore();
     const meta = ls.loadMeta();
     const recs = await ls.readLogRecords();
     return { streak: meta ? meta.streak : null, topics: meta ? meta.v1History.topics.length : 0, logCount: recs.length };
@@ -127,7 +128,7 @@ try {
   // export → wipe everything → import → reload → identical
   const roundTrip = await page.evaluate(async () => {
     const { store } = window.PT;
-    const ls = new store.LearnerStore();
+    const ls = window.PT.newStore();
     const exported = JSON.stringify(await ls.exportAll()); // one-tap export payload (meta + log)
     window.localStorage.clear();
     await ls.clearLog();
@@ -139,24 +140,64 @@ try {
   await page.reload();
   await page.waitForFunction('window.__READY__ === true');
   const afterImport = await page.evaluate(async () => {
-    const ls = new window.PT.store.LearnerStore();
+    const ls = window.PT.newStore();
     return JSON.stringify(await ls.exportAll());
   });
   check('clearing storage makes state read as absent (not stale)',
     roundTrip.clearedMetaNull && roundTrip.clearedLogEmpty);
   check('export → import round-trips identically across reload', afterImport === roundTrip.exported);
 
-  // non-silent quota failure on the meta write, in the browser
+  // non-silent quota failure on the meta write — the registered handler must actually FIRE.
   const quota = await page.evaluate(() => {
     const { store } = window.PT;
-    const ls = new store.LearnerStore();
+    const fired = [];
+    const ls = new store.LearnerStore({ onPersistenceError: (info) => fired.push(info) });
     const orig = window.localStorage.setItem.bind(window.localStorage);
     window.localStorage.setItem = () => { const e = new Error('quota'); e.name = 'QuotaExceededError'; throw e; };
     const res = ls.saveMeta(store.emptyState());
     window.localStorage.setItem = orig;
-    return res;
+    // and the store cannot even be constructed without a handler
+    let refused = false;
+    try { new store.LearnerStore({}); } catch { refused = true; }
+    return { res, firedCount: fired.length, firedQuota: fired[0] && fired[0].quota, refused };
   });
-  check('a failed meta write is reported, not swallowed (quota)', quota.ok === false && quota.quota === true);
+  check('a failed meta write fires the registered handler (not just a return value)',
+    quota.res.ok === false && quota.firedCount === 1 && quota.firedQuota === true);
+  check('the store refuses to construct without a persistence-failure handler', quota.refused);
+
+  // ── Q3-scale: export + re-import a full 50,000-attempt log (~14 MB) in IndexedDB ──
+  out('\nQ3-scale — EXPORT / RE-IMPORT AT 50,000 ATTEMPTS (~14 MB) through IndexedDB');
+  const scale = await page.evaluate(async ({ liveIds }) => {
+    const { store, log, synthLog } = window.PT;
+    const a = window.PT.newStore();
+    window.localStorage.clear();
+    await a.clearLog(); // reset without deleteDatabase (open connections would block it)
+    a.saveMeta({ ...store.emptyState(), createdAt: 1, streak: { cur: 1, best: 1 } });
+    const recs = new log.AttemptLog(synthLog(liveIds, 50000)).toJSON();
+    const t0 = performance.now();
+    await a.appendRecords(recs);
+    const appendMs = performance.now() - t0;
+
+    const t1 = performance.now();
+    const blob = await a.exportAll();
+    const bytes = new TextEncoder().encode(JSON.stringify(blob)).length;
+    const exportMs = performance.now() - t1;
+
+    // wipe and re-import into a fresh store over the (cleared) same DB
+    const b = window.PT.newStore();
+    window.localStorage.clear();
+    await b.clearLog();
+    const t2 = performance.now();
+    await b.importAll(blob);
+    const importMs = performance.now() - t2;
+    const restored = (await b.readLogRecords()).length;
+    return { exportedCount: blob.attemptLog.length, bytes, restored, appendMs, exportMs, importMs };
+  }, { liveIds: loadGraphFromSpec().liveIds() });
+  const MB = (scale.bytes / (1024 * 1024)).toFixed(1);
+  check(`export produced the full log (~${MB} MB)`, scale.exportedCount === 50000 && scale.bytes > 10 * 1024 * 1024,
+    `${scale.exportedCount} attempts, ${MB} MB`);
+  check('re-import restored all 50,000 attempts', scale.restored === 50000);
+  out(`  timings: append ${scale.appendMs.toFixed(0)} ms · export ${scale.exportMs.toFixed(0)} ms · import ${scale.importMs.toFixed(0)} ms`);
 
   // ── Q4 ────────────────────────────────────────────────────────────────────
   out('\nQ4 — YEAR-SCALE REPLAY under phone-like CPU throttle');

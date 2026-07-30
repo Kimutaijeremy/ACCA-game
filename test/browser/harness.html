@@ -22,7 +22,17 @@
     return (await fetch('../../spec/paper-trail-progress.json')).json();
   }
 
-  window.PT = { concepts, log, derive, states, migrate, store, loadGraph, loadV3, synthLog };
+  // A persistence-error sink + a store factory that always registers a handler (the store now
+  // refuses to construct without one).
+  window.__PT_ERRORS__ = [];
+  function newStore(opts = {}) {
+    return new store.LearnerStore({
+      onPersistenceError: (info) => window.__PT_ERRORS__.push(info),
+      ...opts,
+    });
+  }
+
+  window.PT = { concepts, log, derive, states, migrate, store, loadGraph, loadV3, synthLog, newStore };
   window.__READY__ = true;
 </script>
 </body>

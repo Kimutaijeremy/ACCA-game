@@ -182,3 +182,39 @@ Wanjiku Ltd is profitable — and nearly misses payroll. Profit is opinion; cash
 **Annual-check flags:**
 - Ratios use a 365-day year here; some syllabi/answers use 360 — confirm the convention at the annual check.
 
+---
+
+## Books of prime entry
+*FA-13 · shape: process · syllabus 2026*
+
+### Lesson
+Not every part of accounting gets a hero. This one is about filing — and it is exactly the kind of unglamorous plumbing the whole system stands on. By her third month Wanjiku records dozens of transactions a day: credit sales, cash taken, sodas bought on account, the odd correction. If she tried to post each one straight into the ledger as it happened, she would drown, and errors would scatter everywhere. So accounting inserts a calm first step: an intake desk. Every transaction is first written into a **book of prime entry** — sorted by type — and only later posted, in tidy totals, into the ledger. There is no drama here. But get the intake wrong and every number downstream — the trial balance, the statements, the audit — inherits the mess.
+
+> 🔑 **KEYPOINT — The five books of prime entry (the intake, before the ledger)**
+>
+> • **Sales day book** — credit sales (goods sold on account).
+> • **Purchases day book** — credit purchases of goods for resale.
+> • **Cash book** — all money in and out through bank/cash.
+> • **Petty cash book** — small cash payments, run on the imprest system.
+> • **The journal** — everything odd: corrections, year-end adjustments, opening entries, non-routine items.
+> They are books of **prime (first) entry** — a listing stage, NOT yet the double-entry ledger.
+
+> 🔑 **KEYPOINT — The flow: document → prime entry → ledger**
+>
+> Source document (invoice, receipt, till roll) → the right book of prime entry → posted, in **totals**, to the **general (nominal) ledger**. Individual customer and supplier balances are kept alongside in the **memorandum (subsidiary) receivables and payables ledgers**. You post periodic totals, not one transaction at a time — that is the whole point of the intake.
+
+### Worked example
+**Into which book of prime entry does each go? (a) sold goods on credit to a neighbouring shop; (b) paid the electricity bill by M-Pesa; (c) bought a crate of sodas on credit from the distributor; (d) recorded the year-end depreciation charge; (e) bought postage stamps with a few shillings from the float.**
+
+1. (a) Credit sale of goods → sales day book.
+2. (b) Payment of money out → cash book (payments side).
+3. (c) Credit purchase of goods for resale → purchases day book.
+4. (d) A year-end adjustment, not a routine trade transaction → the journal.
+5. (e) A small cash payment from the float → petty cash book.
+
+**Answer.** Sales day book; cash book; purchases day book; the journal; petty cash book. Note that (d) goes to the journal precisely because it fits none of the routine day books — that is what the journal is for.
+
+**In one breath.** Every transaction lands first in a book of prime entry — sales and purchases day books for credit trade, the cash and petty cash books for money, the journal for everything odd — and is then posted in totals to the nominal ledger, with customer and supplier detail kept in memorandum ledgers.
+
+**Where it matures →** These books post into the nominal ledger (FA-14) and, once summed, must prove themselves in the trial balance (FA-39); the orderly intake they impose is the beginning of the audit trail that AA later relies on.
+
