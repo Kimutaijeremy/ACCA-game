@@ -98,14 +98,14 @@ export function progressLabel(status) {
  * @param {(topicId:string)=>boolean} hasTopic - is a topic page authored for this sub-area?
  * @returns {object[]} per-paper: { paper, locked, reason, contentStatus, opens, progress, summary }
  */
-export function paperStatusesByTopic(graph, syllabus, logRecords, hasTopic = () => false) {
+export function paperStatusesByTopic(graph, syllabus, logRecords, hasTopic = () => false, states = null) {
   const parents = parentsOf();
   const roots = new Set(rootPapers());
 
   const summaryOf = {};
   for (const p of KNOWN_PAPERS) {
     summaryOf[p] = (syllabus.subareas[p]?.length)
-      ? paperTopicSummary(logRecords, graph, syllabus, p) : null;
+      ? paperTopicSummary(logRecords, graph, syllabus, p, states) : null;
   }
   const completeOf = {};
   for (const p of KNOWN_PAPERS) completeOf[p] = summaryOf[p] ? summaryOf[p].paperComplete : false;

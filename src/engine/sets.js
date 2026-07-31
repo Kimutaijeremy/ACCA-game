@@ -16,47 +16,105 @@ export const TOPIC_NEED = 8;
 export const TOPIC_MIN_SESSIONS = 2;
 
 const PRACTICE = [RUNGS.CONCEPT_CHECK, RUNGS.GUIDED, RUNGS.STANDARD, RUNGS.STRETCH];
+const PER_CONCEPT_IN_SET = 2; // no single concept dominates a set
 
-function shuffle(arr, rng) {
-  for (let i = arr.length - 1; i > 0; i -= 1) {
-    const j = rng.int(0, i);
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+// FA objective-item distribution (Brief §6.4), per 35 — the authoritative FA area weighting.
+export const FA_AREA_WEIGHTS = Object.freeze({ A: 2, B: 2, C: 4, D: 10, E: 7, F: 6, G: 2, H: 2 });
+
+/**
+ * Area weights for a paper. FA uses the exam table; BT/MA weight each area by its concept count
+ * (syllabus emphasis) until authoritative exam weightings are confirmed — flag for the annual check.
+ * @returns {{ [areaLetter:string]: number }}
+ */
+export function defaultAreaWeights(graph, paper) {
+  if (paper === 'FA') return { ...FA_AREA_WEIGHTS };
+  const w = {};
+  for (const cid of graph.conceptsForPaper(paper)) {
+    const a = graph.get(cid).outcome.split(' ')[1][0];
+    w[a] = (w[a] ?? 0) + 1;
   }
-  return arr;
+  return w;
+}
+
+/** Distribute `total` across keys by weight, largest-remainder rounding so it sums exactly. */
+function largestRemainder(keys, weights, total) {
+  const wsum = keys.reduce((s, k) => s + (weights[k] > 0 ? weights[k] : 0), 0) || keys.length;
+  const alloc = {};
+  const rem = [];
+  let used = 0;
+  for (const k of keys) {
+    const q = total * ((weights[k] > 0 ? weights[k] : (wsum === keys.length ? 1 : 0)) / wsum);
+    alloc[k] = Math.floor(q);
+    used += alloc[k];
+    rem.push([k, q - alloc[k]]);
+  }
+  rem.sort((a, b) => b[1] - a[1]);
+  for (let i = 0, left = total - used; i < rem.length && left > 0; i += 1, left -= 1) alloc[rem[i][0]] += 1;
+  return alloc;
 }
 
 /**
- * Assemble a mixed set of `size` items drawn across a paper, spread over concepts (round-robin), so
- * position and topic never predict the answer. Takes the paper's authored items and a seeded rng.
- * @param {object[]} items - authored items for the paper (any rung; only practice rungs are used)
- * @param {object} rng - from makeRng(seed)
- * @param {number} [size]
- * @returns {object[]} up to `size` distinct items
+ * Assemble a mixed set of `size` items drawn to the exam's AREA weighting (not round-robin across
+ * concepts), biased within each area toward topics short of completion so thin areas still finish.
+ * @param {object[]} items - the paper's authored items (any rung; only practice rungs are used)
+ * @param {object} opts
+ * @param {object} opts.rng - from makeRng(seed)
+ * @param {number} [opts.size]
+ * @param {(item:object)=>string} opts.areaOf - the syllabus area letter for an item
+ * @param {{[area:string]:number}} opts.areaWeights - target weight per area (see defaultAreaWeights)
+ * @param {(item:object)=>number} [opts.shortfallOf] - >=0; higher = topic more short of completion
+ * @returns {{items, areaTarget, areaActual, examShaped}}
  */
-export function assembleSet(items, rng, size = SET_SIZE) {
+export function assembleSet(items, opts = {}) {
+  const { rng, size = SET_SIZE, areaOf, areaWeights = {}, shortfallOf = () => 0 } = opts;
   const practice = items.filter((it) => PRACTICE.includes(it.rung));
-  const byConcept = new Map();
+  if (!practice.length) return { items: [], areaTarget: {}, areaActual: {}, examShaped: true };
+
+  const byArea = new Map();
   for (const it of practice) {
-    const c = it.conceptIds[0];
-    if (!byConcept.has(c)) byConcept.set(c, []);
-    byConcept.get(c).push(it);
+    const a = areaOf(it);
+    if (!byArea.has(a)) byArea.set(a, []);
+    byArea.get(a).push(it);
   }
-  const concepts = shuffle([...byConcept.keys()], rng);
-  for (const c of concepts) shuffle(byConcept.get(c), rng);
+  const areas = [...byArea.keys()];
+
+  // Target counts over the areas that actually have items (renormalised), summing to `size`.
+  const target = largestRemainder(areas, areaWeights, size);
+  for (const a of areas) target[a] = Math.min(target[a], byArea.get(a).length);
 
   const picked = [];
   const used = new Set();
-  let progressed = true;
-  while (picked.length < size && progressed) {
-    progressed = false;
-    for (const c of concepts) {
+  const perConcept = new Map();
+  // Higher shortfall first (drive thin/incomplete topics toward completion), rng jitter to vary sets.
+  const order = (pool) => pool
+    .filter((it) => !used.has(it.id))
+    .sort((x, y) => (shortfallOf(y) - shortfallOf(x)) || (rng.unit() - 0.5));
+  const take = (it) => {
+    const c = it.conceptIds[0];
+    if ((perConcept.get(c) ?? 0) >= PER_CONCEPT_IN_SET) return false;
+    used.add(it.id); perConcept.set(c, (perConcept.get(c) ?? 0) + 1); picked.push(it); return true;
+  };
+
+  for (const a of areas) {
+    let n = target[a];
+    for (const it of order(byArea.get(a))) { if (n <= 0) break; if (take(it)) n -= 1; }
+  }
+  // Fill any shortfall (an area couldn't meet its target) from the rest, still shortfall-biased.
+  if (picked.length < size) {
+    for (const it of order(practice)) { if (picked.length >= size) break; take(it); }
+  }
+  // Last resort: relax the per-concept cap only if genuinely starved.
+  if (picked.length < size) {
+    for (const it of practice) {
       if (picked.length >= size) break;
-      const pool = byConcept.get(c);
-      const next = pool.find((it) => !used.has(it.id));
-      if (next) { used.add(next.id); picked.push(next); progressed = true; }
+      if (!used.has(it.id)) { used.add(it.id); picked.push(it); }
     }
   }
-  return picked;
+
+  const areaActual = {};
+  for (const it of picked) { const a = areaOf(it); areaActual[a] = (areaActual[a] ?? 0) + 1; }
+  const examShaped = areas.every((a) => Math.abs((areaActual[a] ?? 0) - (target[a] ?? 0)) <= 1);
+  return { items: picked, areaTarget: target, areaActual, examShaped };
 }
 
 /**
@@ -89,7 +147,7 @@ export function topicCompletion(attempts) {
 
 /** A short progress line toward completion, e.g. "Depreciation — 6 of last 8 correct, needs 2 more questions". */
 export function topicHint(title, comp) {
-  if (comp.complete) return `${title} — complete ✓`;
+  if (comp.complete) return comp.stale ? `${title} — complete · needs revision` : `${title} — complete ✓`;
   if (comp.windowSize < TOPIC_WINDOW) {
     const need = TOPIC_WINDOW - comp.windowSize;
     return `${title} — ${comp.windowCorrect} of last ${comp.windowSize} correct, needs ${need} more question${need > 1 ? 's' : ''}`;
@@ -106,9 +164,11 @@ export function topicHint(title, comp) {
  * @param {ConceptGraph} graph
  * @param {object} syllabus - { subareas: { [paper]: string[] } }
  * @param {string} paper
- * @returns {{paper, total, complete, paperComplete, topics: object[]}}
+ * @param {Map<string,object>} [states] - derived concept states; if given, a completed topic whose
+ *   concepts have a review due is marked `stale` ("complete · needs revision"). Latch is unaffected.
+ * @returns {{paper, total, complete, stale, paperComplete, topics: object[]}}
  */
-export function paperTopicSummary(logRecords, graph, syllabus, paper) {
+export function paperTopicSummary(logRecords, graph, syllabus, paper, states = null) {
   const subs = syllabus.subareas[paper] ?? [];
   const items = logRecords.filter((r) => r.kind === 'item');
   const conceptsByTopic = new Map(subs.map((s) => [s, new Set()]));
@@ -121,11 +181,15 @@ export function paperTopicSummary(logRecords, graph, syllabus, paper) {
     const attempts = items
       .filter((r) => r.conceptIds.some((c) => cids.has(c)))
       .map((r) => ({ correct: r.correct, sessionId: r.sessionId, timestamp: r.timestamp }));
-    return { topicId: sub, ...topicCompletion(attempts) };
+    const comp = topicCompletion(attempts);
+    // Stale = completed but a concept's review has fallen due underneath (decay). Access is kept.
+    const stale = comp.complete && !!states && [...cids].some((c) => states.get(c)?.due === true);
+    return { topicId: sub, ...comp, stale };
   });
   const complete = topics.filter((t) => t.complete).length;
   return {
     paper, total: subs.length, complete,
+    stale: topics.filter((t) => t.stale).length,
     paperComplete: subs.length > 0 && complete === subs.length,
     topics,
   };

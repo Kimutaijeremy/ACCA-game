@@ -5,6 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   assembleSet, topicCompletion, topicHint, paperTopicSummary, rollingAverage,
+  defaultAreaWeights, FA_AREA_WEIGHTS,
 } from '../src/engine/sets.js';
 import { makeRng } from '../src/engine/rng.js';
 import { ITEMS_BY_PAPER } from '../src/content/items/index.js';
@@ -13,26 +14,56 @@ import { LearnerStore, MemoryStore, MemoryLogAdapter } from '../src/engine/store
 
 const graph = loadGraphFromSpec();
 const syllabus = loadSyllabusOutcomes();
+const areaOf = (it) => graph.get(it.conceptIds[0]).outcome.split(' ')[1][0];
+const buildSet = (paper, seed, extra = {}) => assembleSet(ITEMS_BY_PAPER[paper], {
+  rng: makeRng(seed), size: 10, areaOf, areaWeights: defaultAreaWeights(graph, paper), ...extra,
+});
 
-test('assembleSet draws ten distinct items spread across concepts', () => {
-  const rng = makeRng(42);
-  const set = assembleSet(ITEMS_BY_PAPER.FA, rng, 10);
-  assert.equal(set.length, 10);
-  assert.equal(new Set(set.map((i) => i.id)).size, 10, 'items are distinct');
-  const concepts = new Set(set.map((i) => i.conceptIds[0]));
-  assert.ok(concepts.size >= 5, `spread across concepts (got ${concepts.size})`);
+test('assembleSet draws ten distinct items', () => {
+  const { items } = buildSet('FA', 42);
+  assert.equal(items.length, 10);
+  assert.equal(new Set(items.map((i) => i.id)).size, 10, 'items are distinct');
 });
 
 test('assembleSet still reaches ten even when a paper has few concepts (BT)', () => {
-  const set = assembleSet(ITEMS_BY_PAPER.BT, makeRng(7), 10);
-  assert.equal(set.length, 10);
-  assert.equal(new Set(set.map((i) => i.id)).size, 10);
+  const { items } = buildSet('BT', 7);
+  assert.equal(items.length, 10);
+  assert.equal(new Set(items.map((i) => i.id)).size, 10);
 });
 
 test('assembleSet is deterministic for a seed', () => {
-  const a = assembleSet(ITEMS_BY_PAPER.MA, makeRng(99), 10).map((i) => i.id);
-  const b = assembleSet(ITEMS_BY_PAPER.MA, makeRng(99), 10).map((i) => i.id);
+  const a = buildSet('MA', 99).items.map((i) => i.id);
+  const b = buildSet('MA', 99).items.map((i) => i.id);
   assert.deepEqual(a, b);
+});
+
+test('sets are drawn to the area weighting, not round-robin', () => {
+  // FA authored areas are A, C, D, H. D (weight 10) must get more airtime than A (weight 2).
+  // Aggregate over several seeds to see the weighting, not a single draw.
+  const tally = {};
+  for (let seed = 1; seed <= 20; seed += 1) {
+    for (const it of buildSet('FA', seed).items) { const a = areaOf(it); tally[a] = (tally[a] ?? 0) + 1; }
+  }
+  assert.ok((tally.D ?? 0) > (tally.A ?? 0), `D should outweigh A (got D=${tally.D}, A=${tally.A})`);
+  // and a single set reports whether it was exam-shaped
+  assert.equal(typeof buildSet('FA', 3).examShaped, 'boolean');
+});
+
+test('within an area, selection is biased toward topics short of completion', () => {
+  // Give FA-63 (area H) a big shortfall; with H items present it should be preferred within H.
+  const shortfallOf = (it) => (it.conceptIds.includes('FA-63') ? 100 : 0);
+  let seen = 0;
+  for (let seed = 1; seed <= 10; seed += 1) {
+    if (buildSet('FA', seed, { shortfallOf }).items.some((i) => i.conceptIds.includes('FA-63'))) seen += 1;
+  }
+  assert.ok(seen >= 8, `high-shortfall topic should appear in most sets (got ${seen}/10)`);
+});
+
+test('defaultAreaWeights: FA uses the exam table; BT/MA weight by concept count', () => {
+  assert.deepEqual(defaultAreaWeights(graph, 'FA'), FA_AREA_WEIGHTS);
+  const bt = defaultAreaWeights(graph, 'BT');
+  assert.equal(bt.A, 14); // 14 BT concepts in area A
+  assert.equal(bt.E, 5);
 });
 
 const S1 = 's1'; const S2 = 's2';
@@ -84,6 +115,19 @@ test('paperTopicSummary completes one topic on its own questions and leaves the 
   assert.equal(d5.complete, true);
   assert.equal(sum.complete, 1);
   assert.equal(sum.paperComplete, false); // one topic of 34
+});
+
+test('a completed topic whose concept has a due review is marked stale (needs revision), still complete', () => {
+  const log = Array.from({ length: 10 }, (_, i) => ({
+    kind: 'item', conceptIds: ['FA-26'], correct: true, sessionId: i < 5 ? S1 : S2, timestamp: 1000 + i,
+  }));
+  const states = new Map([['FA-26', { due: true }]]); // decayed underneath
+  const sum = paperTopicSummary(log, graph, syllabus, 'FA', states);
+  const d5 = sum.topics.find((t) => t.topicId === 'FA D5');
+  assert.equal(d5.complete, true, 'latched — access not withdrawn');
+  assert.equal(d5.stale, true, 'shown as needs revision');
+  assert.equal(sum.stale, 1);
+  assert.equal(topicHint('Depreciation', d5), 'Depreciation — complete · needs revision');
 });
 
 test('rollingAverage averages the last n set scores for a paper', () => {
