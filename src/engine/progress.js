@@ -6,6 +6,7 @@
 
 import { rank, STATE } from './states.js';
 import { OPENS, LINEAGE_NOTES, KNOWN_PAPERS, CONTENT_TRACKS, parentsOf, rootPapers } from '../content/lineage.js';
+import { paperTopicSummary } from './sets.js';
 
 const COMPETENT_RANK = rank(STATE.COMPETENT);
 
@@ -80,4 +81,62 @@ export function progressLabel(status) {
   if (status.locked) return `${status.paper} — ${status.reason}`;
   if (status.contentStatus === 'not-built') return `${status.paper} — content not built yet`;
   return `${status.paper} — ${status.progress.built} of ${status.progress.total} concepts available`;
+}
+
+// ---------------------------------------------------------------------------
+// Amendment A6 — completion/unlock by the 8-of-last-10 TOPIC rule (BT/MA/FA).
+// The visible gate is topic completion (sets.js), not concept-Competent. Concept mastery and decay
+// keep running underneath for reviews/diagnosis. FR/AA (no live concepts yet) revert to the
+// concept path above when built.
+// ---------------------------------------------------------------------------
+
+/**
+ * Full unlock + status picture, with completion measured by the 8-of-last-10 topic rule.
+ * @param {ConceptGraph} graph
+ * @param {object} syllabus - { subareas: { [paper]: string[] } }
+ * @param {object[]} logRecords - the full attempt log (array)
+ * @param {(topicId:string)=>boolean} hasTopic - is a topic page authored for this sub-area?
+ * @returns {object[]} per-paper: { paper, locked, reason, contentStatus, opens, progress, summary }
+ */
+export function paperStatusesByTopic(graph, syllabus, logRecords, hasTopic = () => false) {
+  const parents = parentsOf();
+  const roots = new Set(rootPapers());
+
+  const summaryOf = {};
+  for (const p of KNOWN_PAPERS) {
+    summaryOf[p] = (syllabus.subareas[p]?.length)
+      ? paperTopicSummary(logRecords, graph, syllabus, p) : null;
+  }
+  const completeOf = {};
+  for (const p of KNOWN_PAPERS) completeOf[p] = summaryOf[p] ? summaryOf[p].paperComplete : false;
+
+  return KNOWN_PAPERS.map((paper) => {
+    const summary = summaryOf[paper];
+
+    let locked = false;
+    let reason = null;
+    if (!roots.has(paper)) {
+      const ps = parents[paper] ?? [];
+      const unmet = ps.filter((p) => !completeOf[p]);
+      if (unmet.length > 0) {
+        locked = true;
+        reason = `opens when you complete ${unmet.join(' and ')}`;
+        const notes = ps.map((p) => LINEAGE_NOTES[p]).filter(Boolean);
+        if (notes.length) reason += ` — ${notes.join('; ')}`;
+      }
+    }
+
+    const authored = summary ? summary.topics.filter((t) => hasTopic(t.topicId)).length : 0;
+
+    let contentStatus;
+    if (locked) contentStatus = 'locked';
+    else if (CONTENT_TRACKS.includes(paper) && authored > 0) contentStatus = 'built';
+    else contentStatus = 'not-built';
+
+    const progress = summary
+      ? { total: summary.total, complete: summary.complete, authored, paperComplete: summary.paperComplete }
+      : { total: 0, complete: 0, authored: 0, paperComplete: false };
+
+    return { paper, locked, reason, contentStatus, opens: OPENS[paper] ?? [], progress, summary };
+  });
 }

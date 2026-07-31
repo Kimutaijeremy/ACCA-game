@@ -38,12 +38,15 @@ the spine underneath. FR/AA keep full lessons. Specs amended & committed (`2db59
 - [x] **Topic-page model** (`src/engine/topics.js`) + **12 topic pages** converting the 15 concepts
   (`src/content/topics/{bt,ma,fa}.js`): BT 3 (A1, A2, A3), MA 3 (A1, A3, B2), FA 6 (A3, C1, C2, D3,
   D5, H2). 6 topic tests green. Old concept lessons kept (not discarded; FR/AA use that model).
-- [ ] **Sets-of-10 engine** — assemble a mixed set across a paper from the item bank; score /10;
-  record set results; rolling per-paper average; topic/paper completion by the 8/10 rule.
-- [ ] **Rewire lineage/progress** completion to the 8/10 rule (concept mastery keeps running for
-  reviews/diagnosis).
+- [x] **Sets-of-10 engine** (`src/engine/sets.js`) — `assembleSet` (10 items across the paper,
+  round-robin over concepts, deterministic by seed), topic completion by the **8-of-last-10 rule**
+  (refined: on a topic's own questions, ≥2 sessions, latched), `paperTopicSummary`, `topicHint`,
+  `rollingAverage`. Store now holds `sets` + `teachUses` in meta (`addSetResult`/`addTeachUse`).
+- [x] **Rewire lineage/progress** — `paperStatusesByTopic` (completion/unlock by the topic rule;
+  concept mastery + decay keep running underneath). 10 new tests; 88 node tests green.
 - [ ] **App UI rewire** — topic-page screen, sets-of-10 play screen, home showing topics-complete +
-  rolling average; then publish (Section 8) as the coherent A6 experience.
+  rolling average; switch app to `paperStatusesByTopic`; then publish (Section 8) as the coherent A6
+  experience. *(Live app still the v4.1.0 drill runner until this lands.)*
 - [ ] **Teach Me This** — Vercel serverless function (`/api/teach`, key server-side only) + client
   thread; grounded in the topic page, worked example, missed question, correct answer, diagnosed
   cause; log every use; surface repeated-use topics as rewrite candidates.

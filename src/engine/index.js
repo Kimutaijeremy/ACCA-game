@@ -43,8 +43,12 @@ export {
 } from './topics.js';
 export { mulberry32, makeRng, seedFromString } from './rng.js';
 export {
-  paperProgress, paperStatuses, progressLabel,
+  paperProgress, paperStatuses, paperStatusesByTopic, progressLabel,
 } from './progress.js';
+export {
+  assembleSet, topicCompletion, topicHint, paperTopicSummary, rollingAverage,
+  SET_SIZE, TOPIC_WINDOW, TOPIC_NEED, TOPIC_MIN_SESSIONS,
+} from './sets.js';
 export {
   OPENS, LINEAGE_NOTES, KNOWN_PAPERS, CONTENT_TRACKS, parentsOf, rootPapers, validateLineage,
 } from '../content/lineage.js';
