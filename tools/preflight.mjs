@@ -76,25 +76,33 @@ try {
     && keys.ptStats === JSON.stringify(V3.stats);
   check('7. old pt_* keys untouched; papertrail:v4: is the only namespace written', wroteOnlyV4, keys.all.join(','));
 
-  // functional: read a lesson → Exposed
+  // functional: a topic page renders, and answering a set question logs an item attempt
   await page.click('[data-act="paper"][data-paper="FA"]');
-  await page.waitForSelector('[data-act="concept"]');
-  await page.click('[data-act="concept"]'); // first FA concept with a lesson
-  await page.waitForSelector('[data-act="read"]');
-  await page.screenshot({ path: join(ROOT, 'docs/screens/concept.png') });
-  await page.click('[data-act="read"]');
-  await page.waitForSelector('[data-act="read"][disabled]');
-  const exposed = await page.evaluate(async () => {
-    const recs = await window.__PT__.store.readLogRecords();
-    return recs.some((r) => r.kind === 'lesson');
-  });
-  check('reading a lesson records completion → concept becomes Exposed', exposed);
+  await page.waitForSelector('[data-act="topic"]');
+  await page.click('[data-act="topic"]'); // first FA topic page
+  await page.waitForSelector('[data-act="set"]');
+  await page.screenshot({ path: join(ROOT, 'docs/screens/topic.png') });
+  const topicOk = /In a nutshell/.test(await page.textContent('#app')) && /Worked example/.test(await page.textContent('#app'));
+  check('a topic page renders (nutshell + worked example)', topicOk);
 
-  // flag
-  await page.click('[data-act="flag"]');
-  await page.click('[data-r="confusing"]');
+  // flag on the topic page — drive via the DOM so the fixed overlay can't block later clicks
+  await page.evaluate(() => document.querySelector('[data-act="flag"][data-kind="topic"]').click());
+  await page.waitForSelector('.sheet [data-r="confusing"]');
+  await page.evaluate(() => document.querySelector('.sheet [data-r="confusing"]').click());
+  await page.evaluate(() => document.querySelectorAll('.sheet').forEach((s) => s.remove()));
   const flagged = await page.evaluate(() => window.__PT__.store.flags().length);
   check('flag button writes to the review queue', flagged === 1);
+
+  // start a set, answer one question → an item attempt is logged
+  await page.click('[data-act="set"]');
+  await page.waitForSelector('.opt');
+  await page.screenshot({ path: join(ROOT, 'docs/screens/set.png') });
+  const ans = await page.evaluate(() => window.__PT__.curItem().answerId);
+  await page.click(`.opt[data-opt="${ans}"]`);
+  await page.click('[data-act="check"]');
+  await page.waitForSelector('.verdict');
+  const logged = await page.evaluate(async () => (await window.__PT__.store.readLogRecords()).some((r) => r.kind === 'item'));
+  check('answering a set question logs an item attempt', logged);
 
   // export/import round-trip
   const rt = await page.evaluate(async () => {
@@ -113,7 +121,7 @@ try {
   });
   check('4. rollback tested in-browser — migration reverts cleanly', rb);
   // restore for screenshots
-  await page.evaluate(async () => { const mod = await import('./src/engine/index.js'); const s = window.__PT__.store; if (!s.loadMeta()) { const v3 = mod.readV3FromStore(localStorage); await mod.applyMigration(v3 ?? {}, s, { now: Date.now() }); await window.__PT__.refreshStates(); } });
+  await page.evaluate(async () => { const mod = await import('./src/engine/index.js'); const s = window.__PT__.store; if (!s.loadMeta()) { const v3 = mod.readV3FromStore(localStorage); await mod.applyMigration(v3 ?? {}, s, { now: Date.now() }); await window.__PT__.refreshAll(); } });
 
   // (6) phone viewport — no horizontal overflow, screenshots for the record
   mkdirSync(join(ROOT, 'docs/screens'), { recursive: true });
@@ -121,7 +129,7 @@ try {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   check('6. phone viewport — no horizontal overflow', overflow <= 1, `overflow ${overflow}px`);
   await page.screenshot({ path: join(ROOT, 'docs/screens/home.png') });
-  await page.click('[data-act="paper"][data-paper="FA"]'); await page.waitForSelector('[data-act="concept"]');
+  await page.click('[data-act="paper"][data-paper="FA"]'); await page.waitForSelector('[data-act="set"]');
   await page.screenshot({ path: join(ROOT, 'docs/screens/paper.png') });
   await page.goto(`${base}/index.html#/dashboard`); await page.waitForSelector('.bar');
   await page.screenshot({ path: join(ROOT, 'docs/screens/dashboard.png') });

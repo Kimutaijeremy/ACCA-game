@@ -7,7 +7,8 @@
 // the store persists them (see store.js addFlag/flags), and the app surfaces the one-tap control.
 
 export const FLAG_REASONS = Object.freeze(['wrong', 'confusing', 'contradiction']);
-export const FLAG_TARGET_KINDS = Object.freeze(['lesson', 'item']);
+// 'topic' — a topic page (Amendment A6); 'lesson' — an FR/AA full lesson; 'item' — a question.
+export const FLAG_TARGET_KINDS = Object.freeze(['topic', 'lesson', 'item']);
 
 /**
  * Validate a flag record. Throws on any violation.
@@ -18,7 +19,8 @@ export function validateFlag(f) {
   const bad = (m) => { throw new Error(`flag ${f?.id ?? '?'}: ${m}`); };
   if (!f || typeof f !== 'object') bad('not an object');
   if (!f.id || typeof f.id !== 'string') bad('id required');
-  if (!f.target || !FLAG_TARGET_KINDS.includes(f.target.kind)) bad("target.kind must be 'lesson' or 'item'");
+  if (!f.target || !FLAG_TARGET_KINDS.includes(f.target.kind)) bad(`target.kind must be one of ${FLAG_TARGET_KINDS.join(', ')}`);
+  if (f.target.kind === 'topic' && !f.target.topicId) bad('topic flag needs target.topicId');
   if (f.target.kind === 'lesson' && !f.target.conceptId) bad('lesson flag needs target.conceptId');
   if (f.target.kind === 'item' && !f.target.itemId) bad('item flag needs target.itemId');
   if (!FLAG_REASONS.includes(f.reason)) bad(`reason must be one of ${FLAG_REASONS.join(', ')}`);
@@ -33,7 +35,12 @@ export function normaliseFlag(f) {
   validateFlag(f);
   return {
     id: f.id,
-    target: { kind: f.target.kind, conceptId: f.target.conceptId ?? null, itemId: f.target.itemId ?? null },
+    target: {
+      kind: f.target.kind,
+      topicId: f.target.topicId ?? null,
+      conceptId: f.target.conceptId ?? null,
+      itemId: f.target.itemId ?? null,
+    },
     reason: f.reason,
     note: f.note ?? null,
     sessionId: f.sessionId,

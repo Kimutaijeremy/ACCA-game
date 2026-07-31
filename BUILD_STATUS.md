@@ -13,6 +13,12 @@ Section 8 pre-flight green.
 
 ## 0. Publishing log
 
+- **2026-07-31 — A6 EXPERIENCE PUBLISHED & VERIFIED LIVE.** SW `papertrail-v4.2.0`. The app is now
+  topic pages + mixed **sets of ten** drawn to the exam's area weighting, scored /10 with a rolling
+  average; completion by the 8-of-last-10 topic rule (latches, shows "needs revision" when stale);
+  per-question diagnosis + repair kept. Section 8 pre-flight green, browser harness green,
+  `npm run set:smoke` green, live-smoke green on the deployed URL. URL unchanged; v1 history intact;
+  only `papertrail:v4:` written. Teach Me This button placed but stubbed (endpoint is the next slice).
 - **2026-07-31 — DRILL RUNNER PUBLISHED & VERIFIED LIVE.** commit `31e3fd8` on `main` (SW
   `papertrail-v4.1.0`). Questions are now answerable on the phone: read a lesson → practise its
   questions → the concept climbs the mastery states, with a diagnosed cause + repair on wrong
@@ -44,12 +50,18 @@ the spine underneath. FR/AA keep full lessons. Specs amended & committed (`2db59
   `rollingAverage`. Store now holds `sets` + `teachUses` in meta (`addSetResult`/`addTeachUse`).
 - [x] **Rewire lineage/progress** — `paperStatusesByTopic` (completion/unlock by the topic rule;
   concept mastery + decay keep running underneath). 10 new tests; 88 node tests green.
-- [ ] **App UI rewire** — topic-page screen, sets-of-10 play screen, home showing topics-complete +
-  rolling average; switch app to `paperStatusesByTopic`; then publish (Section 8) as the coherent A6
-  experience. *(Live app still the v4.1.0 drill runner until this lands.)*
-- [ ] **Teach Me This** — Vercel serverless function (`/api/teach`, key server-side only) + client
-  thread; grounded in the topic page, worked example, missed question, correct answer, diagnosed
-  cause; log every use; surface repeated-use topics as rewrite candidates.
+- [x] **App UI rewire — LIVE.** `app.js` rebuilt around A6: home shows topics-complete/total +
+  rolling average per paper; paper screen lists topics (with complete / needs-revision / progress);
+  topic-page screen (nutshell + exam readiness + worked example + Teach-me + flag); **sets-of-10 play
+  screen** (exam-weighted draw, per-item check → diagnosis → repair, promotion, score /10, rolling
+  average, exam-shaped, topic progress, Teach-me-on-fail). Uses `paperStatusesByTopic`; set draw is
+  exam-weighted with completion bias. SW `papertrail-v4.2.0`. `npm run set:smoke` + Section 8
+  pre-flight + browser harness green. Flag model gained a `topic` kind (fixed under pre-flight).
+- [ ] **Teach Me This** — Vercel serverless function (`/api/teach`, key server-side only, passphrase
+  gate) + client thread; grounded in the topic page, worked example, missed question, correct answer,
+  diagnosed cause; log every use; surface repeated-use topics as rewrite candidates. *(Button placed
+  in the UI now; wired to a "coming next" stub until the endpoint ships. Needs Jeremy to set the
+  env vars + KV in Vercel.)*
 - [ ] **Audit tooling** — Test A split into two numbers (answerable-from-page-alone; gap-closed-by-Teach-Me).
 
 ## 1. Current position
