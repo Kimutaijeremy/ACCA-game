@@ -54,6 +54,12 @@ blocked by topic. Many sets. Each set is scored **out of 10**, with a **rolling 
 shown, and the "where you slip" diagnosis (brief §6.5) kept. Parameterized generators wherever a
 question is calculational (numbers regenerate per attempt — anti-memorisation).
 
+**Sets are drawn to the exam's area weighting, not round-robin** *(2026-07-31; brief §6.4)*. FA uses
+the objective-item distribution table; BT/MA weight areas by concept count (flagged for the annual
+check). Within each area, bias toward topics short of their ten completion questions, so thin areas
+still reach completion. After a set, report how close each topic is and whether the set was
+exam-shaped.
+
 ### 1B. What is kept, running underneath  *(Amendment A6)*
 
 Throw nothing away. The **concept graph stays the tagging spine**: every question still tags to one
@@ -155,6 +161,9 @@ amendment and a change of scope beyond Phase 1. Report readiness to start it; do
   - **Latches:** once first achieved it stays complete; the underlying concept mastery and its decay
     (§1B) drive future reviews. Auditable as a fold of the topic's attempts: complete iff at some
     point the last-10 window held ≥ 8 correct across ≥ 2 sessions.
+  - **Staleness, not expiry** *(2026-07-31)*: a completed topic never loses its unlock, but if its
+    concepts have decayed (a review is due underneath) it is shown as **"complete · needs revision"**
+    rather than a clean tick — the pass stands, the label warns.
   - **Two-session requirement:** 8/8 in a single sitting is not complete — a second session is
     required, so completion reflects retention, not one lucky run.
   - **Show progress toward it**, e.g. *"Depreciation — 6 of last 8 correct, needs 2 more questions."*
@@ -300,9 +309,17 @@ FA, not after.**
 **The endpoint is a public, billable URL — it must be hardened before it ships** *(2026-07-31)*.
 Anyone who finds the function URL can call it and spend money. Non-negotiable, before Teach Me This
 goes live:
+- **A passphrase gates the endpoint** *(2026-07-31)*. A per-device cap keyed on a client-supplied
+  device id is spoofable, and a bare global cap lets any stranger who finds the URL lock Jeremy out
+  of his own tutor. So Jeremy sets a **passphrase as a Vercel environment variable**, enters it once
+  in the app (stored on-device), and the function **rejects any request without the matching
+  passphrase** (401) — before any Anthropic call, before any counter is touched. Variable name given
+  when built. This is the real access gate; the caps below are the spend backstop behind it.
 - **Rate limit per device and per day**, plus a **hard global daily cap** on total calls across all
   devices. Counters persist server-side (Vercel KV / Upstash), not in the client, so they cannot be
-  cleared by the caller. **Caps set: 25 calls per device per day; 150 calls per day globally.**
+  cleared by the caller. **Caps set: 25 calls per device per day; 150 calls per day globally** — and
+  because the passphrase gates access, the global cap protects spend without locking Jeremy out
+  (strangers can't pass the gate).
 - **Closed shape only — no open proxy.** The function accepts only a **grounded Teach-Me request**:
   the fixed set of fields (topic id, worked example ref, the missed question + correct answer +
   diagnosed cause, and the follow-up thread). It **rejects** anything else — no client-supplied

@@ -252,6 +252,24 @@ each **topic's own questions**, from the attempt log — NOT on whole-set scores
 - Show progress toward it (e.g. "6 of last 8 correct, needs 2 more questions").
 - Concept mastery states and decay keep running underneath for reviews and diagnosis, but they are
   not the visible gate. (FR/AA revert to concept-mastery completion — they teach from scratch.)
+- **Staleness on a completed topic** *(2026-07-31)*. Completion **latches** — a real pass does not
+  expire, and you never lose FR because you forgot depreciation. But if a completed topic's concepts
+  have **decayed** (a review has fallen due underneath), show it as **"complete · needs revision"**,
+  not a clean tick. The tick stays (access is not withdrawn); the label warns.
+
+**Set composition — exam-weighted, not round-robin** *(2026-07-31)*. A set of ten is drawn to the
+exam's **area weighting**, NOT one item per concept round-robin (which would give a one-concept area
+the same airtime as a ten-concept area — the v1 failure):
+- **FA** uses the objective-item distribution table below (A2 B2 C4 D10 E7 F6 G2 H2 per 35).
+- **BT and MA** weight each area **in proportion to its concept count** (syllabus emphasis) until
+  authoritative exam weightings are confirmed — **flagged** for the annual syllabus check.
+- Targets **renormalise over the areas that actually have authored items**, so partial content still
+  produces sensible sets; the shape approaches the exam as more areas are authored.
+- **Within each area, bias selection toward topics short of their ten completion questions**, so thin
+  areas (consolidation, interpretation) still reach completion instead of stalling. Per-concept cap
+  within a set so no single concept dominates.
+- **Report both:** how close each topic is to completion (the progress hints), and **whether the set
+  was exam-shaped** (actual area mix vs target).
 
 **Accounting-equation cap (overrides the per-concept floor for one concept).** The accounting
 equation may hold **at most two items in the entire FA bank** — deliberately under-weighted because
@@ -377,10 +395,12 @@ Topic pages are deliberately thin, so the learner can go deeper on the spot. Bui
 - **Conversational:** follow-up questions in a thread.
 - **Logged:** every use is logged (topic, question, timestamp) and exports with everything else.
   **Repeated use on one topic flags that page as too thin — a rewrite candidate in `BUILD_STATUS.md`.**
-- **Hardened public endpoint** (see Execution Order §7A): rate-limited per device and per day with a
-  hard global daily cap (**25/device/day, 150/day globally**), server-side counters, response size
-  capped, closed request shape only (no open proxy — system prompt and context assembled server-side
-  from authored material), graceful messages when a cap is hit.
+- **Hardened public endpoint** (see Execution Order §7A): **passphrase-gated** (Jeremy sets it as a
+  Vercel env var, enters it once in the app; the function rejects anything without it — the real
+  access gate); rate-limited per device and per day with a hard global daily cap (**25/device/day,
+  150/day globally**) as the spend backstop; server-side counters; response size capped; closed
+  request shape only (no open proxy — system prompt and context assembled server-side from authored
+  material); graceful messages when a cap is hit.
 
 ---
 
