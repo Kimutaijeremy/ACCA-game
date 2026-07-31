@@ -66,9 +66,10 @@ performance at all.
 - **Runs:** after WP3 (paper-wide, stratified sample). **Also brought forward to the 20-topic-page
   independent audit** (Execution Order §6). *(Amendment A6, 31 July 2026: topic pages are thin by
   design, so this splits into TWO numbers, reported separately — (1) items answerable from the topic
-  page alone, and (2) of the remainder, the fraction whose gap "Teach Me This" closes from the
-  authored material. There is no single 95% line; a topic that neither the page nor Teach Me This can
-  make answerable is a rewrite candidate. Supersedes A5's single per-concept 95% threshold.)*
+  page alone, and (2) of the remainder, the fraction whose gap the topic's pre-generated "Go deeper"
+  layer closes. There is no single 95% line; a topic that neither the page nor Go deeper can make
+  answerable is a rewrite candidate. Supersedes A5's single per-concept 95% threshold; the Go deeper
+  layer replaces the earlier live-API "Teach Me This".)*
 
 ### Test B — Structural fidelity of the sealed pool
 

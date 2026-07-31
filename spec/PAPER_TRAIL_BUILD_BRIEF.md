@@ -372,35 +372,30 @@ session id, timestamp.
 
 Every state and every dashboard number derives from it. **States are never written directly.**
 
-Set results (score out of 10, the concepts/topics each set covered, timestamp) and **Teach Me This
-uses** are logged too, so topic completion (the 8-of-last-10 rule) and the rolling average are recomputable,
-and thin topics are detectable.
+Set results (score out of 10, the concepts/topics each set covered, timestamp) and **"Go deeper"
+opens** are logged too, so topic completion (the 8-of-last-10 rule) and the rolling average are
+recomputable, and thin topics are detectable.
 
-Learner state — concept states, attempt log, set results, Teach Me uses, review schedule — persists
-across sessions and papers, and **exports on demand in one tap.** The learning history gets the same
-backup discipline as everything else Jeremy runs.
+Learner state — concept states, attempt log, set results, Go deeper opens, review schedule —
+persists across sessions and papers, and **exports on demand in one tap.** The learning history gets
+the same backup discipline as everything else Jeremy runs.
 
-### 6.10 "Teach Me This" — grounded expansion on demand  *(Amendment A6, 31 July 2026)*
+### 6.10 "Go deeper" — pre-generated depth, shipped in the repo  *(Amendment A6; approach changed 2026-07-31)*
 
-Topic pages are deliberately thin, so the learner can go deeper on the spot. Built alongside FA.
+Topic pages are deliberately thin, so the learner can go deeper on the spot — **without any runtime
+cost.** *(The earlier Claude-API-via-Vercel design is cancelled: no serverless function, no KV, no
+passphrase, no caps, no keys.)*
 
-- **Where:** on every topic page, and after any failed question set.
-- **Server-side only:** the app calls the **Claude API via a Vercel serverless function**; the API
-  **key lives in the Vercel environment, never in the app bundle or git** (never-list, Execution
-  Order §2/§7A).
-- **Grounded, not inventive:** every request is grounded in the authored material — the topic page,
-  its worked example, the missed question, the correct answer, the diagnosed cause. The system prompt
-  constrains it to that material and the paper's syllabus scope. It expands validated content; it does
-  not invent curriculum.
-- **Conversational:** follow-up questions in a thread.
-- **Logged:** every use is logged (topic, question, timestamp) and exports with everything else.
-  **Repeated use on one topic flags that page as too thin — a rewrite candidate in `BUILD_STATUS.md`.**
-- **Hardened public endpoint** (see Execution Order §7A): **passphrase-gated** (Jeremy sets it as a
-  Vercel env var, enters it once in the app; the function rejects anything without it — the real
-  access gate); rate-limited per device and per day with a hard global daily cap (**25/device/day,
-  150/day globally**) as the spend backstop; server-side counters; response size capped; closed
-  request shape only (no open proxy — system prompt and context assembled server-side from authored
-  material); graceful messages when a cap is hit.
+- **Pre-generated, shipped content.** Every topic page ships a **"Go deeper" layer** — a fuller
+  explanation authored at build time and stored in the repo (`src/content/topics/…`, a `deeper`
+  field of sections). **Free at runtime, works offline, never rate-limited.**
+- **Where:** a "Go deeper" control on every topic page, and after any failed question set.
+- **Repair links into it:** where a question set exposes a specific error, the repair route links to
+  the relevant section of that topic's deeper layer — an in-app link into shipped content, never a
+  live call.
+- **Logged:** every open is logged (topic, timestamp) and exports with everything else. **Repeated
+  opens on one topic flag that page as too thin — a rewrite candidate in `BUILD_STATUS.md`.**
+- **Live API only later, only for FR written-answer marking**, which cannot be pre-generated. Not now.
 
 ---
 

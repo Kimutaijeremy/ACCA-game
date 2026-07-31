@@ -95,8 +95,10 @@ one-page summary cannot teach consolidation from zero, which is exactly the dest
 - Force-pushing to the Pages branch, or rewriting published history.
 - Any operation that could discard learner progress without a verified backup in hand.
 - Renaming or moving the deployed app. It stays at `kimutaijeremy.github.io/ACCA-game`.
-- Putting the Claude API key (or any secret) in the app bundle, in git, or anywhere the phone can
-  read it. It lives only in the Vercel server-side environment (§7A).
+- Adding a runtime paid API or public billable endpoint to Phase 1. "Go deeper" is pre-generated,
+  shipped content (§7A) — free, offline, no keys. (A live API is revisited only for FR written-answer
+  marking, when FR is built — never silently.) Should that ever change, no secret goes in the app
+  bundle, in git, or anywhere the phone can read it.
 
 ---
 
@@ -227,9 +229,9 @@ Section 6 checks against for BT/MA/FA.
 6. **No list presented as complete is actually incomplete.** Every examinable member of any
    enumerated set must be present (e.g. all seven books of prime entry). A content failure, not a
    stylistic one. *(Rubric A4.)*
-7. **Sole-resource-plus-Teach-Me:** the topic page carries what its questions need; where it
-   deliberately cannot (it is thin by design), **Teach Me This** (§7A) must close the gap from the
-   authored material. The audit reports both numbers separately (§6).
+7. **Sole-resource-plus-Go-deeper:** the topic page carries what its questions need; where it
+   deliberately cannot (it is thin by design), the **Go deeper** layer (§7A) must close the gap from
+   the authored material. The audit reports both numbers separately (§6).
 
 ### 5B. Full-lesson rubric — FR, AA only (retained)  *(the pre-A6 rubric)*
 
@@ -259,11 +261,11 @@ with no authoring context**, given only the material and the criteria.
        generator, seed recorded), and answers each item using nothing but that page. Record, per
        item: answerable from the page alone — yes/no; if no, the exact outside fact it needs; and
        whether the keyed answer and distractor→cause tags are correct.
-    2. **Gap closed by Teach Me This.** For each item NOT answerable from the page alone, check
-       whether **Teach Me This** (§7A), grounded only in the authored material, supplies the missing
-       fact. Report the fraction of gaps it closes.
+    2. **Gap closed by the Go deeper layer.** For each item NOT answerable from the page alone, check
+       whether the topic's **Go deeper** layer (§7A) — pre-generated, shipped content — supplies the
+       missing fact. Report the fraction of gaps it closes.
     - There is **no single 95% pass line** now: a lower page-alone number is acceptable *by design*,
-      provided Teach Me This closes the remainder. A topic where neither the page nor Teach Me This
+      provided the Go deeper layer closes the remainder. A topic where neither the page nor Go deeper
       makes its questions answerable is a **rewrite candidate** — surface it in `BUILD_STATUS.md`.
 - **At each slice's completion:** run Test A and Test B from the validation protocol — content
   sufficiency on a stratified sample, and structural fidelity of the sealed pool.
@@ -287,51 +289,26 @@ This is the closing of the loop he asked for: he uses it, and using it is the au
 
 ---
 
-## 7A. "Teach Me This" — grounded expansion on demand  *(Amendment A6, 31 July 2026)*
+## 7A. "Go deeper" — pre-generated depth, shipped in the repo  *(Amendment A6; approach changed 2026-07-31)*
 
-Because topic pages are thin, the learner needs a way to go deeper on the spot. **Build it alongside
-FA, not after.**
+Because topic pages are thin, the learner needs a way to go deeper on the spot. **No live API, no
+serverless function, no Vercel, no runtime cost, no public billable endpoint** *(supersedes the
+earlier Claude-API-via-Vercel design; the serverless function, KV store, passphrase and daily caps
+are cancelled).*
 
-- **Placement:** a "Teach Me This" control on **every topic page** and **after any failed question
-  set**.
-- **How it works:** the app calls the **Claude API through a Vercel serverless function**. Jeremy has
-  Vercel connected; **the API key lives server-side only, never in the app bundle** (never-list:
-  no secret in client code, in git, or shipped to the phone).
-- **Grounding is mandatory.** Every request is grounded in the **authored material**: the topic page,
-  its worked example, the specific question got wrong, the correct answer, and the diagnosed cause.
-  It **expands validated content; it does not invent curriculum.** The system prompt constrains it to
-  the supplied material and to the paper's syllabus scope.
-- **Conversational:** Jeremy can ask follow-ups in a thread.
-- **Log every use** (topic, question if any, timestamp) in learner state, exporting with everything
-  else. **Repeated use on one topic means that topic page is too thin** — surface such topics in
-  `BUILD_STATUS.md` as **rewrite candidates**.
-
-**The endpoint is a public, billable URL — it must be hardened before it ships** *(2026-07-31)*.
-Anyone who finds the function URL can call it and spend money. Non-negotiable, before Teach Me This
-goes live:
-- **A passphrase gates the endpoint** *(2026-07-31)*. A per-device cap keyed on a client-supplied
-  device id is spoofable, and a bare global cap lets any stranger who finds the URL lock Jeremy out
-  of his own tutor. So Jeremy sets a **passphrase as a Vercel environment variable**, enters it once
-  in the app (stored on-device), and the function **rejects any request without the matching
-  passphrase** (401) — before any Anthropic call, before any counter is touched. Variable name given
-  when built. This is the real access gate; the caps below are the spend backstop behind it.
-- **Rate limit per device and per day**, plus a **hard global daily cap** on total calls across all
-  devices. Counters persist server-side (Vercel KV / Upstash), not in the client, so they cannot be
-  cleared by the caller. **Caps set: 25 calls per device per day; 150 calls per day globally** — and
-  because the passphrase gates access, the global cap protects spend without locking Jeremy out
-  (strangers can't pass the gate).
-- **Closed shape only — no open proxy.** The function accepts only a **grounded Teach-Me request**:
-  the fixed set of fields (topic id, worked example ref, the missed question + correct answer +
-  diagnosed cause, and the follow-up thread). It **rejects** anything else — no client-supplied
-  system prompt, no arbitrary context, no free-form passthrough. The **system prompt and the
-  authored context are assembled server-side** from the repo's own material, so the model can only
-  ever answer *with authored material as context*.
-- **Cap the response size** (`max_tokens` ~700) and validate/limit request size; reject oversized or
-  malformed payloads with a 400.
-- **When a cap is hit, no API call is made.** The app shows: per-device → *"You've reached today's
-  Teach Me limit (25). It resets tomorrow."*; global cap → *"Teach Me is resting for today — try
-  again tomorrow."* Everything else in the app keeps working.
-- Jeremy sets an Anthropic account **spend limit** separately, as a backstop.
+- **Pre-generated content.** Every topic page ships a **"Go deeper" layer** underneath it — a fuller
+  explanation, for when the learner has blanked on the topic entirely — **authored at build time and
+  stored in the repo like everything else.** Free at runtime, works offline, never rate-limited.
+- **Placement:** a "Go deeper" control on **every topic page**, and after any failed question set.
+- **Structured for linking.** The deeper layer is a set of sections; where a question set exposes a
+  specific error, the **repair route links to the relevant part of that topic's deeper layer** (an
+  in-app link into the shipped content) — it never calls anything live.
+- **Log every open** (topic, timestamp) in learner state, exporting with everything else. **If the
+  learner opens "Go deeper" on one topic repeatedly, that topic page is too thin** — surface such
+  topics in `BUILD_STATUS.md` as **rewrite candidates**. (This is the signal the live version would
+  have given, kept for free.)
+- **The only place a live API is revisited is marking written answers at FR** (Skills level), which
+  genuinely cannot be pre-generated. Out of scope now; decided when FR is built.
 
 ---
 
