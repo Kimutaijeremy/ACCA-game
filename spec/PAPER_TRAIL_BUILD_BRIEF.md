@@ -241,12 +241,15 @@ guided ≥ 3, standard ≥ 3, stretch ≥ 1** so every tag has enough items for 
 the underlying mastery states to be reachable. Calculation-shaped concepts include **≥ 1
 parameterized generator**. Enforced mechanically (`npm run items:check`).
 
-**Completion and unlocking — the 8/10 rule** *(Amendment A6; supersedes concept-Competent completion
-for BT/MA/FA; see Execution Order §4A)*. The **visible** gate is set-score based, not concept-mastery
-based:
-- A set of ten **covers** a topic when it includes ≥ 1 item tagged to a concept in that sub-area.
-- A **topic is complete** when the learner averages **≥ 8/10 across two different sets covering it**.
+**Completion and unlocking — the 8-of-last-10 rule** *(Amendment A6, refined 2026-07-31; supersedes
+concept-Competent completion for BT/MA/FA; see Execution Order §4A)*. The visible gate is measured on
+each **topic's own questions**, from the attempt log — NOT on whole-set scores:
+- A **topic is complete** when **8 of the learner's last 10 questions tagged to that topic are
+  correct, spanning at least two different sessions.** (Set scores are session feedback only — a set
+  of ten across ~34 topics gives a topic one or two items, too few to be a gate.) Completion
+  **latches** once achieved.
 - A **paper is complete** (and unlocks its descendants) when **every one of its topics is complete**.
+- Show progress toward it (e.g. "6 of last 8 correct, needs 2 more questions").
 - Concept mastery states and decay keep running underneath for reviews and diagnosis, but they are
   not the visible gate. (FR/AA revert to concept-mastery completion — they teach from scratch.)
 
@@ -325,7 +328,7 @@ Ambiguous cases default to conceptual-plus-practice rather than a guess.**
 
 ### 6.7 Readiness — two numbers, never merged
 
-- **Learning readiness** (per paper): **percentage of topics complete under the 8/10 rule** (§6.4,
+- **Learning readiness** (per paper): **percentage of topics complete under the 8-of-last-10 rule** (§6.4,
   Amendment A6), alongside a green coverage matrix. *(Was "percentage of concepts at Competent"; the
   8/10 topic rule is now the visible gate for BT/MA/FA. FR/AA revert to concept-Competent.)*
 - **Exam readiness** (per paper): two consecutive simulations, each 90%+ unseen items, each scored
@@ -352,7 +355,7 @@ session id, timestamp.
 Every state and every dashboard number derives from it. **States are never written directly.**
 
 Set results (score out of 10, the concepts/topics each set covered, timestamp) and **Teach Me This
-uses** are logged too, so topic completion (the 8/10 rule) and the rolling average are recomputable,
+uses** are logged too, so topic completion (the 8-of-last-10 rule) and the rolling average are recomputable,
 and thin topics are detectable.
 
 Learner state — concept states, attempt log, set results, Teach Me uses, review schedule — persists
@@ -374,6 +377,10 @@ Topic pages are deliberately thin, so the learner can go deeper on the spot. Bui
 - **Conversational:** follow-up questions in a thread.
 - **Logged:** every use is logged (topic, question, timestamp) and exports with everything else.
   **Repeated use on one topic flags that page as too thin — a rewrite candidate in `BUILD_STATUS.md`.**
+- **Hardened public endpoint** (see Execution Order §7A): rate-limited per device and per day with a
+  hard global daily cap (**25/device/day, 150/day globally**), server-side counters, response size
+  capped, closed request shape only (no open proxy — system prompt and context assembled server-side
+  from authored material), graceful messages when a cap is hit.
 
 ---
 

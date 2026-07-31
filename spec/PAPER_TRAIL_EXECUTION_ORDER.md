@@ -28,7 +28,7 @@ is not a bottleneck to route around — he is a user waiting for something usabl
 
 Three papers — FA, MA, BT — each **live on his phone**, each with a full set of **topic pages**
 (one per syllabus sub-area), **many mixed exam-format question sets of ten**, and a sealed
-simulation pool. Every topic complete under the 8/10 rule (§4A), so every paper complete and the
+simulation pool. Every topic complete under the 8-of-last-10 rule (§4A), so every paper complete and the
 next unlocked. Plus the dashboard and readiness layer, and Gate G-PT1 passed.
 
 Not "specified." Not "on a branch." Live, on the phone, usable.
@@ -126,7 +126,7 @@ A paper track is **done** when: every one of its concepts (per `concepts.json` �
 BT 60) is covered by a **topic page** meeting Section 5; its question banks meet the paper's
 allocation matrix with every floor green, the 8% concentration cap enforced, and (FA) the
 accounting-equation cap of two items and thickened areas G and H per brief §6.4; **every topic is
-complete under the 8/10 rule** (§4A); its sealed pool is sized for six simulations; the dashboard
+complete under the 8-of-last-10 rule** (§4A); its sealed pool is sized for six simulations; the dashboard
 and both readiness numbers work for it; and it is published and verified from the phone home screen.
 When all three are done, **run Gate G-PT1** in full.
 
@@ -144,22 +144,32 @@ amendment and a change of scope beyond Phase 1. Report readiness to start it; do
 
 **Lineage-gated unlocking replaces "open everything."**
 
-**The visible completion gate is the 8/10 rule** *(Amendment A6, 31 July 2026 — supersedes the
-concept-Competent completion rule below for BT/MA/FA)*:
+**The visible completion gate is the 8-of-last-10 rule** *(Amendment A6, 31 July 2026; refined
+2026-07-31 — supersedes the concept-Competent completion rule below for BT/MA/FA)*:
 
-- A **topic is COMPLETE** when the learner averages **8/10 or better across two different question
-  sets that each covered it** (a set "covers" a topic when it includes at least one item tagged to a
-  concept in that topic/sub-area). Measured against the paper's FULL sub-area list, never against how
-  many topics have been authored so far. **Partial content must never produce an unlock.**
+- A **topic is COMPLETE** when **8 of the learner's last 10 questions tagged to that topic are
+  correct, spanning at least two different sessions.** It is measured on the **topic's own
+  questions** — items tagged to a concept in that sub-area — read from the **attempt log**, NOT on
+  whole-set scores. (A set of ten spread across ~34 topics gives each topic only one or two items, so
+  a set score cannot be the gate: it could complete a topic whose single question was wrong.)
+  - **Latches:** once first achieved it stays complete; the underlying concept mastery and its decay
+    (§1B) drive future reviews. Auditable as a fold of the topic's attempts: complete iff at some
+    point the last-10 window held ≥ 8 correct across ≥ 2 sessions.
+  - **Two-session requirement:** 8/8 in a single sitting is not complete — a second session is
+    required, so completion reflects retention, not one lucky run.
+  - **Show progress toward it**, e.g. *"Depreciation — 6 of last 8 correct, needs 2 more questions."*
+  - Measured against the paper's FULL sub-area list, never against how many topics are authored so
+    far. **Partial content must never produce an unlock.**
+- The **set score out of 10** stays as **session feedback** (and the rolling per-paper average); it
+  is explicitly **not** the completion gate.
 - A **paper is COMPLETE** when **every one of its topics is complete.** That is what unlocks the
   paper's descendants (the lineage table below).
 - **Concept mastery states and decay keep running underneath** (§1B) — they drive reviews and
-  diagnosis — but they are **not** the visible gate. The gate the learner sees, and the unlock, is
-  the 8/10 topic rule.
+  diagnosis — but they are **not** the visible gate.
 - **Exam readiness is separate and unlocks nothing.**
 - A locked paper always **states why**: "opens when you complete FA" — never a bare LOCKED.
 - *(FR/AA, when built, complete on the full-lesson design of §1C — their gate returns to concept
-  mastery, since they teach from scratch. Rewire only BT/MA/FA to the 8/10 rule.)*
+  mastery, since they teach from scratch. Rewire only BT/MA/FA to this rule.)*
 
 **Paper lineage** — an explicit config table, kept in one file (`src/content/lineage.js`) so it
 extends without touching engine code, and validated against `concepts.json`'s `grows_into` edges
@@ -286,6 +296,25 @@ FA, not after.**
 - **Log every use** (topic, question if any, timestamp) in learner state, exporting with everything
   else. **Repeated use on one topic means that topic page is too thin** — surface such topics in
   `BUILD_STATUS.md` as **rewrite candidates**.
+
+**The endpoint is a public, billable URL — it must be hardened before it ships** *(2026-07-31)*.
+Anyone who finds the function URL can call it and spend money. Non-negotiable, before Teach Me This
+goes live:
+- **Rate limit per device and per day**, plus a **hard global daily cap** on total calls across all
+  devices. Counters persist server-side (Vercel KV / Upstash), not in the client, so they cannot be
+  cleared by the caller. **Caps set: 25 calls per device per day; 150 calls per day globally.**
+- **Closed shape only — no open proxy.** The function accepts only a **grounded Teach-Me request**:
+  the fixed set of fields (topic id, worked example ref, the missed question + correct answer +
+  diagnosed cause, and the follow-up thread). It **rejects** anything else — no client-supplied
+  system prompt, no arbitrary context, no free-form passthrough. The **system prompt and the
+  authored context are assembled server-side** from the repo's own material, so the model can only
+  ever answer *with authored material as context*.
+- **Cap the response size** (`max_tokens` ~700) and validate/limit request size; reject oversized or
+  malformed payloads with a 400.
+- **When a cap is hit, no API call is made.** The app shows: per-device → *"You've reached today's
+  Teach Me limit (25). It resets tomorrow."*; global cap → *"Teach Me is resting for today — try
+  again tomorrow."* Everything else in the app keeps working.
+- Jeremy sets an Anthropic account **spend limit** separately, as a backstop.
 
 ---
 
