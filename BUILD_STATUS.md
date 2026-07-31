@@ -3,9 +3,11 @@
 *Read at the start of every session, after `spec/PAPER_TRAIL_EXECUTION_ORDER.md`. Update after
 every unit of work. This is the handoff between sessions and the report to Jeremy.*
 
-Last updated: 2026-07-31 (DRILL RUNNER LIVE — questions answerable on the phone) ·
-Working branch: `rebuild/wp1-foundation`; Pages `main` at published commit `31e3fd8`. · Tests: 72
-node + drill smoke + browser harness + Section 8 pre-flight green.
+Last updated: 2026-07-31 (DESIGN CHANGE **Amendment A6** — topic pages + sets of 10 + 8/10 gate +
+Teach Me This; teaching-layer conversion done, engine/UI next) · Working branch:
+`rebuild/wp1-foundation`; Pages `main` at published commit `31e3fd8` (live app = the v4.1.0 drill
+runner, unaffected by A6 branch work so far). · Tests: 78 node + drill smoke + browser harness +
+Section 8 pre-flight green.
 
 ---
 
@@ -23,6 +25,29 @@ node + drill smoke + browser harness + Section 8 pre-flight green.
   live smoke on a phone viewport with v3 data seeded passed (`npm run live-smoke`). The new app is
   live at `https://kimutaijeremy.github.io/ACCA-game/` — URL unchanged; his v1 history (streak
   3/10, three FA topics) migrated intact; only `papertrail:v4:` written, old `pt_*` keys read-only.
+
+## 0A. Amendment A6 — redesign in progress (BT/MA/FA)
+
+Teaching layer collapses to **topic pages** (one per sub-area); **questions become the main event**
+as mixed **sets of ten**; completion/unlock by the **8/10 rule**; **Teach Me This** (grounded Claude
+API via Vercel). Concept graph, item model, diagnosis, mastery states, review and decay all kept as
+the spine underneath. FR/AA keep full lessons. Specs amended & committed (`2db59b8`).
+
+**A6 build checklist:**
+- [x] Specs amended (Execution Order, Brief, Validation Protocol) and committed.
+- [x] **Topic-page model** (`src/engine/topics.js`) + **12 topic pages** converting the 15 concepts
+  (`src/content/topics/{bt,ma,fa}.js`): BT 3 (A1, A2, A3), MA 3 (A1, A3, B2), FA 6 (A3, C1, C2, D3,
+  D5, H2). 6 topic tests green. Old concept lessons kept (not discarded; FR/AA use that model).
+- [ ] **Sets-of-10 engine** — assemble a mixed set across a paper from the item bank; score /10;
+  record set results; rolling per-paper average; topic/paper completion by the 8/10 rule.
+- [ ] **Rewire lineage/progress** completion to the 8/10 rule (concept mastery keeps running for
+  reviews/diagnosis).
+- [ ] **App UI rewire** — topic-page screen, sets-of-10 play screen, home showing topics-complete +
+  rolling average; then publish (Section 8) as the coherent A6 experience.
+- [ ] **Teach Me This** — Vercel serverless function (`/api/teach`, key server-side only) + client
+  thread; grounded in the topic page, worked example, missed question, correct answer, diagnosed
+  cause; log every use; surface repeated-use topics as rewrite candidates.
+- [ ] **Audit tooling** — Test A split into two numbers (answerable-from-page-alone; gap-closed-by-Teach-Me).
 
 ## 1. Current position
 
