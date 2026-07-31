@@ -62,7 +62,7 @@ export function emptyState() {
     v1History: null,
     flags: [], // Jeremy's error-finder review queue (Order §7) — small, rides in meta
     sets: [], // set-of-ten results: session feedback + rolling average (Amendment A6). Small, in meta.
-    teachUses: [], // "Teach Me This" usage log (Amendment A6, §7A) — thin-topic signal. Small, in meta.
+    deeperOpens: [], // "Go deeper" opens (Amendment A6, §7A) — thin-topic signal. Small, in meta.
     attemptLog: [],
   };
 }
@@ -74,7 +74,7 @@ export function metaOf(state) {
     streak: state.streak, v1History: state.v1History,
     flags: state.flags ?? [],
     sets: state.sets ?? [],
-    teachUses: state.teachUses ?? [],
+    deeperOpens: state.deeperOpens ?? [],
   };
 }
 
@@ -225,16 +225,16 @@ export class LearnerStore {
   /** All recorded set results. */
   setResults() { return this.loadMeta()?.sets ?? []; }
 
-  /** Record a "Teach Me This" use (thin-topic signal, Amendment A6 §7A). */
-  addTeachUse(use) {
+  /** Record a "Go deeper" open (thin-topic signal, Amendment A6 §7A). */
+  addDeeperOpen(open) {
     const meta = this.loadMeta() ?? emptyState();
-    meta.teachUses = [...(meta.teachUses ?? []), use];
+    meta.deeperOpens = [...(meta.deeperOpens ?? []), open];
     const res = this.saveMeta(meta);
-    return res.ok ? use : null;
+    return res.ok ? open : null;
   }
 
-  /** All recorded Teach Me uses. */
-  teachUses() { return this.loadMeta()?.teachUses ?? []; }
+  /** All recorded "Go deeper" opens. */
+  deeperOpens() { return this.loadMeta()?.deeperOpens ?? []; }
 
   saveMeta(meta) {
     const res = trySaveMeta(meta, this.kv);

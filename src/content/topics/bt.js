@@ -29,6 +29,28 @@ export const BT_TOPICS = [
       ],
       answer: 'Sole trader → profit; public clinic → value for money (the three Es); PLC → profit and shareholder return with limited liability.',
     },
+    deeper: [
+      {
+        heading: 'The four types, and why liability is the hinge',
+        conceptIds: ['BT-01'],
+        body:
+          'Start from a simple question: if the business runs up a debt it cannot pay, whose money is at risk?\n'
+          + '• **Sole trader** — one person owns and runs it. Cheap and instant to start, total control, keeps all profit. But the owner and the business are the *same legal person*, so **liability is unlimited**: creditors can pursue the owner’s house, car, savings.\n'
+          + '• **Partnership** — two or more owners pool capital and skills and share profit by agreement. Still (in the ordinary form) *not* a separate legal person, so partners carry **unlimited liability**, and usually each is liable for the whole debt, not just their share.\n'
+          + '• **Limited liability company** — the law treats the company as a **separate legal person** that can own assets, owe money and be sued in its own name. Because the company (not the owner) owes the debts, shareholders can lose only **what they paid for their shares** — that is limited liability. The price is more regulation: it must register, file and publish accounts.\n'
+          + 'So the ladder from sole trader to company trades **simplicity and privacy** for **protection and access to capital**.',
+      },
+      {
+        heading: 'Not-for-profit, and the three Es',
+        conceptIds: ['BT-01'],
+        body:
+          'Some organisations do not exist to make a profit at all — a public hospital, a charity, a savings co-operative. Judging them on profit would be meaningless, so we judge **value for money**, broken into three Es:\n'
+          + '• **Economy** — are the inputs bought cheaply enough? (Did the clinic pay a fair price for its drugs?)\n'
+          + '• **Efficiency** — how much output per unit of input? (Patients treated per shilling.)\n'
+          + '• **Effectiveness** — did it actually achieve its objective? (Did people get healthier?)\n'
+          + 'A body can be economical and efficient yet ineffective — cheap, busy, and still not curing anyone — which is exactly why all three are needed together.',
+      },
+    ],
     rateFlags: [],
   },
   {
@@ -62,6 +84,33 @@ export const BT_TOPICS = [
       ],
       answer: 'Key player: KRA. Keep satisfied: the distributor. Keep informed: the customer. Minimal effort: the neighbour — but re-read the matrix for a different decision.',
     },
+    deeper: [
+      {
+        heading: 'Who counts as a stakeholder, and the three groups',
+        conceptIds: ['BT-03'],
+        body:
+          'A **stakeholder** is anyone who **affects, or is affected by**, the organisation — deliberately wide. It is not just owners; it reaches staff, customers, suppliers, lenders, government, neighbours, even a journalist who never bought anything.\n'
+          + 'To make the crowd workable, sort by how close each sits to the business:\n'
+          + '• **Internal** — inside it: employees, managers, the owner.\n'
+          + '• **Connected** — bound by a contract or an investment: shareholders, customers, suppliers, lenders.\n'
+          + '• **External** — outside, no contract, but still affecting or affected: government, the tax authority, the community, pressure groups.\n'
+          + 'The point of sorting is that each group holds a **different claim** — staff want pay and security, customers want low prices, suppliers want prompt payment, lenders want their interest, government wants tax and compliance — and those claims pull against each other.',
+      },
+      {
+        heading: 'Mendelow: managing the conflict by power and interest',
+        conceptIds: ['BT-04'],
+        body:
+          'Because the claims conflict, you cannot please everyone; you must decide **whose claim to answer first**. Mendelow maps each stakeholder on two axes:\n'
+          + '• **Power** — can they force your hand? (Can they close you, cut your supply, sack you?)\n'
+          + '• **Interest** — do they care about *this* decision?\n'
+          + 'The quadrant sets the effort:\n'
+          + '• High power + high interest = **key players** — manage closely, involve them.\n'
+          + '• High power + low interest = **keep satisfied** — don’t provoke them; they can act if roused.\n'
+          + '• Low power + high interest = **keep informed** — they care but can’t compel; communicate.\n'
+          + '• Low power + low interest = **minimal effort**.\n'
+          + 'Two traps: (1) the matrix is read **per decision** — a stakeholder can move quadrants when the issue changes; (2) high-power/low-interest is *keep satisfied*, not *keep informed* (that is the low-power/high-interest box). The whole skill is prioritising, and accepting that satisfying one stakeholder disappoints another.',
+      },
+    ],
     rateFlags: [],
   },
   {
@@ -88,6 +137,22 @@ export const BT_TOPICS = [
       ],
       answer: 'Political: the sugar tax and the licence regime. Legal: the minimum-wage law and the data-protection duty.',
     },
+    deeper: [
+      {
+        heading: 'Political vs legal — the state acting, versus the rules it sets',
+        conceptIds: ['BT-05'],
+        body:
+          'PESTEL splits the outside environment into six forces; the P and the L are the two the business cannot vote away.\n'
+          + '**Political factors** are what government *does* as a matter of policy and can change with the political weather:\n'
+          + '• **Fiscal policy** — taxation and government spending (a new sugar tax, a fuel subsidy).\n'
+          + '• **Regulation and licensing** — permits and regimes a public authority imposes.\n'
+          + '• **Trade rules** — tariffs, quotas, import bans.\n'
+          + '• **Political stability** — whether the environment itself is predictable.\n'
+          + '**Legal factors** are the binding rules of the game; breach carries penalties, so compliance is a cost and a constraint, not a choice:\n'
+          + '• **Employment law** (minimum wage, unfair dismissal), **health & safety**, **data protection**, **consumer protection**, **competition (anti-trust) law**.\n'
+          + 'The quick test: *is this the state choosing to act (policy) → political; or a standing rule the business must obey (statute) → legal?* A tax is political; a duty to secure customer data is legal. Some things touch both — a licensing regime is political in origin but enforced through legal duties.',
+      },
+    ],
     rateFlags: [
       'Specific taxes, thresholds and named statutes vary by year and jurisdiction — confirm against the current syllabus at the annual check.',
     ],

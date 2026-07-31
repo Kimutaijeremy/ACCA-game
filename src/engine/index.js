@@ -39,7 +39,7 @@ export {
   timeBudgetMs, PRACTICE_RUNGS, PER_CONCEPT_FLOORS, CALC_SHAPES, ITEM_CAPS,
 } from './items.js';
 export {
-  validateTopic, indexTopics, topicIdForConcept, TEACHING_PAPERS,
+  validateTopic, indexTopics, topicIdForConcept, deeperSectionForConcept, TEACHING_PAPERS,
 } from './topics.js';
 export { mulberry32, makeRng, seedFromString } from './rng.js';
 export {

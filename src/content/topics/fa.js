@@ -29,6 +29,27 @@ export const FA_TOPICS = [
       ],
       answer: 'Assets 20,000 (cash 8,000 + inventory 12,000) = Capital 20,000 + Liabilities 0. The equation held throughout.',
     },
+    deeper: [
+      {
+        heading: 'The five elements, defined precisely',
+        conceptIds: ['FA-04'],
+        body:
+          'Everything in FA is assembled from five words, so they must mean exactly one thing each.\n'
+          + '• **Asset** — a resource the business **controls** as a result of a **past event**, from which **future economic benefit** is expected. Control and a past event both matter: goods you might buy next week are not yet an asset.\n'
+          + '• **Liability** — a **present obligation** from a past event, expected to cause an **outflow** of benefit. An unpaid supplier bill qualifies; a plan to spend next year does not.\n'
+          + '• **Equity** — the **residual**: assets − liabilities. You never measure it directly; it is what is left for the owner once outsiders are paid.\n'
+          + '• **Income** — an increase in economic benefit (revenue, gains).\n'
+          + '• **Expense** — a decrease in economic benefit (costs, losses).\n'
+          + 'The commonest confusions: cash received in advance is an **asset plus a liability** (you owe the goods), not income yet; and **capital is equity, not a liability** — it is owed to the owner, who is the residual claimant, not an outside creditor.',
+      },
+      {
+        heading: 'The accounting equation and duality',
+        conceptIds: ['FA-05'],
+        body:
+          'The business is treated as a **separate entity** from its owner. So when Wanjiku puts in KES 20,000, the *business* holds the cash but **owes it back to her** — that stake is **capital**. Hence **Assets = Capital + Liabilities**: what the business controls equals what it owes the owner plus what it owes outsiders.\n'
+          + 'Capital **rises** with profit and new capital, **falls** with losses and drawings. The equation has held after every transaction ever recorded because of **duality**: every transaction has **two equal and opposite effects**. Buy stock for cash and one asset (cash) simply becomes another (inventory) — totals unchanged. Take a loan and both an asset (cash) and a liability (the loan) rise by the same amount. This two-sidedness is the seed of double entry (topic C1) and why the statement of financial position always balances.',
+      },
+    ],
     rateFlags: [],
   },
   {
@@ -53,6 +74,19 @@ export const FA_TOPICS = [
       ],
       answer: '(a) Dr Inventory / Cr Cash 12,000. (b) Dr Receivables / Cr Sales 9,000 — one debit and one credit of equal size each time.',
     },
+    deeper: [
+      {
+        heading: 'Debits, credits, and DEAD CLIC',
+        conceptIds: ['FA-11'],
+        body:
+          'First, unlearn the bank statement. There, "debit" means money leaving your account — because the bank is describing *its* books, where you are a liability to it. In your own bookkeeping, **debit just means the left side of an account and credit the right side**; neither is good or bad.\n'
+          + 'Which side *increases* an account depends on what kind of account it is — **DEAD CLIC**:\n'
+          + '• **DEAD** — **D**ebits increase **E**xpenses, **A**ssets, **D**rawings.\n'
+          + '• **CLIC** — **C**redits increase **L**iabilities, **I**ncome, **C**apital.\n'
+          + 'Each type decreases on the opposite side (an asset falls with a credit; a liability falls with a debit).\n'
+          + 'To post a transaction, name the two accounts and ask, for each, "up or down, and what type?" Cash purchase of stock: inventory (asset) up → **Dr Inventory**; cash (asset) down → **Cr Cash**. Because every transaction moves two accounts by equal amounts, **total debits always equal total credits** — the self-check the trial balance later relies on. Watch two traps: a reversed entry (right accounts, wrong sides) and a one-sided entry (a missing half), which breaks the balance.',
+      },
+    ],
     rateFlags: [],
   },
   {
@@ -83,6 +117,23 @@ export const FA_TOPICS = [
       ],
       answer: 'The seven in turn — note (f) goes to the journal precisely because it fits none of the routine day books.',
     },
+    deeper: [
+      {
+        heading: 'The intake desk: seven books, then the ledger',
+        conceptIds: ['FA-13'],
+        body:
+          'If every transaction were posted straight into the double-entry ledger as it happened, errors would scatter everywhere. So accounting inserts a calm first step: each transaction is written first into a **book of prime entry** — sorted by type — and only later posted, in **totals**, to the ledger.\n'
+          + 'There are **seven**:\n'
+          + '• **Sales day book** — credit sales of goods.\n'
+          + '• **Sales returns day book** — goods credit customers send back.\n'
+          + '• **Purchases day book** — credit purchases of goods.\n'
+          + '• **Purchases returns day book** — goods you return to suppliers.\n'
+          + '• **Cash book** — all money in and out through bank/cash.\n'
+          + '• **Petty cash book** — small cash payments, run on the imprest system.\n'
+          + '• **The journal** — everything odd: corrections, year-end adjustments (e.g. depreciation), opening entries, non-routine items.\n'
+          + 'The exam loves two things: forgetting the **two returns day books** (people wrongly say "five books"), and knowing the **flow** — source document → book of prime entry → posted in **totals** to the **nominal (general) ledger**, with individual customer/supplier balances kept alongside in the **memorandum receivables and payables ledgers**. A book of prime entry is a *listing* stage; it is not yet the double entry.',
+      },
+    ],
     rateFlags: [],
   },
   {
@@ -107,6 +158,17 @@ export const FA_TOPICS = [
       ],
       answer: 'KES 21,000, applying lower of cost and NRV line by line.',
     },
+    deeper: [
+      {
+        heading: 'Lower of cost and NRV — and why line by line',
+        conceptIds: ['FA-22'],
+        body:
+          'Prudence says an asset is never carried above what it can actually realise. So inventory (IAS 2) is held at the **lower of cost and net realisable value**.\n'
+          + '**NRV = expected selling price − costs to complete − costs to sell.** Subtract BOTH: if goods need a KES 3,000 repair and KES 1,000 to sell before fetching KES 21,000, NRV is KES 17,000, not 21,000.\n'
+          + 'Then compare, per line: if **NRV < cost**, write the item down to NRV (the write-down increases cost of sales and lowers profit); if **NRV ≥ cost**, leave it at cost — you **never** write inventory *up* above cost.\n'
+          + 'The rule is applied **item by item** (or by group of similar items), and this is the point examiners test. Comparing *total* cost with *total* NRV would let an expected profit on one line silently offset a loss on another — hiding exactly the loss prudence exists to surface. Line by line, a good line stays at cost and a bad line is written down, so every loss is recognised in full and no profit is anticipated.',
+      },
+    ],
     rateFlags: [],
   },
   {
@@ -133,6 +195,18 @@ export const FA_TOPICS = [
       ],
       answer: 'KES 6,000 a year; Dr Depreciation expense / Cr Accumulated depreciation; carrying amount KES 28,000 at end of year 2.',
     },
+    deeper: [
+      {
+        heading: 'Depreciation: matching cost to years, not valuing the asset',
+        conceptIds: ['FA-26'],
+        body:
+          'A fridge bought for KES 40,000 earns sales for years, so the accruals concept says match its cost against those years rather than dumping it all into the month of purchase. That spreading is **depreciation** — not a valuation, not a cash payment; last year’s asset turned, slice by slice, into this year’s expense.\n'
+          + '**Straight-line:** (cost − residual value) ÷ useful life → equal slices. The classic slip is dividing cost by life and **forgetting to subtract residual** first.\n'
+          + '**Reducing balance:** a fixed % of the carrying amount each year → big charges early, shrinking later.\n'
+          + '**The double entry is the same for both:** **Dr Depreciation expense** (profit or loss) / **Cr Accumulated depreciation** (a contra-asset). The asset’s original cost account is **never** touched; accumulated depreciation builds up beside it.\n'
+          + '**Carrying amount = cost − accumulated depreciation** = *unexpired cost*, i.e. how much is left to charge — **not** market value. So if a dealer offers less than the carrying amount, that alone does not change it (writing down to market is impairment, which is FR, later). And **land is not depreciated** (it does not get used up); buildings and equipment are.',
+      },
+    ],
     rateFlags: [
       'Useful life and residual value are management estimates, not statutory — review at the annual syllabus/standards check.',
     ],
@@ -166,6 +240,23 @@ export const FA_TOPICS = [
       ],
       answer: 'Current 2.0, quick 1.2, inventory ~73 days — solid cover, but the inventory days invite a comparison.',
     },
+    deeper: [
+      {
+        heading: 'Reading short-term health: liquidity, efficiency, and the cash cycle',
+        conceptIds: ['FA-63'],
+        body:
+          'A business can be profitable and still run out of cash — profit is opinion, cash is fact — so lenders read liquidity and efficiency ratios.\n'
+          + '**Liquidity — can short-term assets cover short-term debts?**\n'
+          + '• **Current ratio = current assets ÷ current liabilities.**\n'
+          + '• **Quick (acid-test) ratio = (current assets − inventory) ÷ current liabilities** — strips out the slowest asset, for businesses that cannot sell stock quickly.\n'
+          + '**Efficiency — turn balances into days:**\n'
+          + '• **Inventory days = inventory ÷ cost of sales × 365** (how long stock sits).\n'
+          + '• **Receivables days = receivables ÷ credit sales × 365** (how long customers take to pay).\n'
+          + '• **Payables days = payables ÷ credit purchases × 365** (how long you take to pay).\n'
+          + '• **Cash operating cycle = inventory days + receivables days − payables days** — the gap between paying for stock and collecting from customers; longer means more cash tied up.\n'
+          + 'The habit that scores marks: **a ratio alone says nothing.** A high current ratio can mean healthy cover OR idle cash and bloated, unsellable stock — only comparison with last year or a rival tells which. Always state the number *and* what it implies against a benchmark. (Note the day-count convention: 365 here, 360 in some answers.)',
+      },
+    ],
     rateFlags: [
       'Ratios use a 365-day year here; some syllabi/answers use 360 — confirm at the annual check.',
     ],

@@ -13,6 +13,13 @@ Section 8 pre-flight green.
 
 ## 0. Publishing log
 
+- **2026-07-31 — "GO DEEPER" PUBLISHED & VERIFIED LIVE.** SW `papertrail-v4.3.0`. Live "Teach Me
+  This" (Claude API via Vercel) cancelled — no runtime cost, no endpoint. Every topic page now ships
+  a pre-generated **Go deeper** layer (16 sections across 12 pages); wrong-answer repair links into
+  the relevant deeper section; opens are logged (thin-topic signal). Also: the **exam-shaped verdict
+  is suppressed while a paper's bank is thin** (<60% topics built) — shows "not yet representative —
+  N of M topics built" instead — and the rolling average is labelled "across topics built so far".
+  Section 8 pre-flight + browser harness + set smoke + live-smoke green; URL unchanged; v1 intact.
 - **2026-07-31 — A6 EXPERIENCE PUBLISHED & VERIFIED LIVE.** SW `papertrail-v4.2.0`. The app is now
   topic pages + mixed **sets of ten** drawn to the exam's area weighting, scored /10 with a rolling
   average; completion by the 8-of-last-10 topic rule (latches, shows "needs revision" when stale);
@@ -57,12 +64,12 @@ the spine underneath. FR/AA keep full lessons. Specs amended & committed (`2db59
   average, exam-shaped, topic progress, Teach-me-on-fail). Uses `paperStatusesByTopic`; set draw is
   exam-weighted with completion bias. SW `papertrail-v4.2.0`. `npm run set:smoke` + Section 8
   pre-flight + browser harness green. Flag model gained a `topic` kind (fixed under pre-flight).
-- [ ] **Teach Me This** — Vercel serverless function (`/api/teach`, key server-side only, passphrase
-  gate) + client thread; grounded in the topic page, worked example, missed question, correct answer,
-  diagnosed cause; log every use; surface repeated-use topics as rewrite candidates. *(Button placed
-  in the UI now; wired to a "coming next" stub until the endpoint ships. Needs Jeremy to set the
-  env vars + KV in Vercel.)*
-- [ ] **Audit tooling** — Test A split into two numbers (answerable-from-page-alone; gap-closed-by-Teach-Me).
+- [x] **"Go deeper" (replaces live Teach Me This) — LIVE.** No API/Vercel/cost. `topics.js` gained a
+  `deeper` field (validator + `deeperSectionForConcept`); all 12 topic pages ship a Go deeper layer
+  (16 sections); topic page has a Go-deeper button (logged via `store.addDeeperOpen`); set-feedback
+  and failed-set repair link into the relevant deeper section. Exam-shaped verdict suppressed while
+  the bank is thin; rolling average labelled "topics built so far". SW `papertrail-v4.3.0`.
+- [ ] **Audit tooling** — Test A split into two numbers (answerable-from-page-alone; gap-closed-by-Go-deeper).
 
 ## 1. Current position
 

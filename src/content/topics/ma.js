@@ -27,6 +27,17 @@ export const MA_TOPICS = [
       ],
       answer: 'Financial answers (a) and (d); management answers (b) and (c) — the forward choices.',
     },
+    deeper: [
+      {
+        heading: 'Two accountings, one business — what each is for',
+        conceptIds: ['MA-01'],
+        body:
+          'The same transactions feed two very different reporting jobs.\n'
+          + '**Financial accounting** looks **backward** and speaks to **outsiders** — owners not involved day to day, lenders, the tax authority. Because outsiders need to trust and compare it, it is **rule-bound**: a fixed format set by law and IFRS, audited. Its question is "what happened, stated correctly to the standard?"\n'
+          + '**Management accounting** looks **forward** and speaks only to the **manager inside** the business. It has **no prescribed format, no audit, no external rules** — a scribbled cost comparison counts if it helps. Its question is not "is it correct to a standard?" but **"did it help you decide?"**\n'
+          + 'Its three jobs are **plan** (set budgets and targets), **control** (compare actual against plan and act on the difference), and **decide** (choose between options). That is why financial accounting can tell Wanjiku last year’s profit but cannot tell her whether to open the bakery — the decision is forward, and only management accounting faces that way.',
+      },
+    ],
     rateFlags: [],
   },
   {
@@ -60,6 +71,30 @@ export const MA_TOPICS = [
       ],
       answer: 'Prime cost = flour + baker’s wages (the direct costs). Rent and the supervisor are overheads, attached to units by a later step.',
     },
+    deeper: [
+      {
+        heading: 'Classifying a cost: three labels at once',
+        conceptIds: ['MA-06'],
+        body:
+          'Every cost carries three labels simultaneously — they are different questions about the same shilling, not alternatives.\n'
+          + '• **By nature (what it IS):** materials, labour, or expenses (overheads).\n'
+          + '• **By function (what it SERVES):** production, or non-production (administration, selling & distribution, finance).\n'
+          + '• **By traceability (can you trace it to ONE unit?):** **direct** if yes, **indirect (overhead)** if no.\n'
+          + 'So flour is *materials + production + direct* all at once. The traceability split matters most: the total of the direct costs is the **prime cost** (direct materials + direct labour + direct expenses). Overheads — rent, the supervisor, building electricity — are real costs that attach to no single unit and must be shared out onto units by a separate step (absorption) later.\n'
+          + 'One more split, about **timing**: **product costs** (materials, labour, production overhead) attach to the units made and sit in **inventory** until those units sell; **period costs** (office rent, selling costs) are charged in full to the period. Get this wrong and closing inventory — and therefore profit — is wrong.',
+      },
+      {
+        heading: 'Cost behaviour: what a cost DOES as output changes',
+        conceptIds: ['MA-07'],
+        body:
+          'Classification says what a cost is; **behaviour** says how it moves when you make more or less.\n'
+          + '• **Fixed** — unchanged in total (rent), so it **falls per unit** as volume rises (spread over more units).\n'
+          + '• **Variable** — constant **per unit** (flour per mandazi), so it **rises in total** with output.\n'
+          + '• **Stepped fixed** — flat, then jumps at a threshold (one supervisor per eight bakers).\n'
+          + '• **Semi-variable** — a fixed standing charge **plus** a variable part (electricity).\n'
+          + 'These patterns hold only within the **relevant range** — the band of activity you actually operate in; push far outside it and the shapes break. The dangerous mistake is treating a fixed cost as if it were variable when pricing: assume rent rises proportionally with output and you will misprice and quietly lose money. And a semi-variable cost must be **split** into its fixed and variable halves before you can budget it — which is what the high-low method (topic B2) does.',
+      },
+    ],
     rateFlags: [],
   },
   {
@@ -85,6 +120,19 @@ export const MA_TOPICS = [
       ],
       answer: 'Variable KES 20/tray, fixed KES 14,000/month; a 700-tray month ≈ KES 28,000.',
     },
+    deeper: [
+      {
+        heading: 'High-low, step by step — and why it can lie',
+        conceptIds: ['MA-11'],
+        body:
+          'A semi-variable bill (total cost = fixed + variable × activity) hides two numbers you need. High-low recovers them from just two rows.\n'
+          + '**Step 1 — pick the two ACTIVITY extremes.** The highest and lowest *activity* levels (units, hours), NOT the highest and lowest *cost*. This is the single commonest error; if the dearest month wasn’t the busiest, ignore the cost column when choosing rows.\n'
+          + '**Step 2 — variable cost per unit** = (cost at highest activity − cost at lowest activity) ÷ (highest units − lowest units). The fixed part is identical in both rows, so subtracting cancels it and leaves only the variable difference.\n'
+          + '**Step 3 — fixed cost** = total cost − (variable per unit × units), computed at either row. Check it at the other row; you should get the same figure.\n'
+          + '**Step 4 — forecast** any activity level as fixed + variable × units.\n'
+          + '**Why it can quietly lie:** it assumes ONE straight line across the whole range. If a **stepped fixed cost** appears between your two points (a second oven switched on) or one row is a freak **outlier**, that jump gets smeared into the variable rate and every number is off. Two points can’t see a kink; when you doubt the line, you need regression (MA-12), not high-low.',
+      },
+    ],
     rateFlags: [],
   },
 ];

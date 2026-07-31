@@ -45,7 +45,12 @@ try {
   const topicText = await page.textContent('#app');
   check('topic page shows nutshell + exam readiness + worked example',
     /In a nutshell/.test(topicText) && /Exam readiness/.test(topicText) && /Worked example/.test(topicText));
-  check('topic page offers Teach me this', /Teach me this/i.test(topicText));
+  check('topic page offers Go deeper', /Go deeper/i.test(topicText));
+  // Go deeper reveals the pre-generated depth (no network), and logs the open
+  await page.click('[data-act="deeper"]');
+  await page.waitForSelector('.deepsec');
+  check('Go deeper reveals shipped depth sections', (await page.$$('.deepsec')).length >= 1);
+  check('a Go deeper open is logged', await page.evaluate(() => window.__PT__.store.deeperOpens().length >= 1));
 
   // Start a set of ten
   await page.goto(`${base}/index.html#/set/FA`);
@@ -69,8 +74,10 @@ try {
   await page.waitForSelector('text=/Set complete/');
   const done = await page.textContent('#app');
   check('set finishes with a score out of 10', /You scored \d+ \/ 10/.test(done), (done.match(/You scored[^<]*/) || [''])[0]);
-  check('rolling average is shown', /Rolling average/.test(done));
-  check('exam-shaped is reported', /exam-shaped/.test(done));
+  check('rolling average is labelled "across topics built so far"', /across topics built so far/.test(done));
+  // FA is thin (6 of ~34 topics), so the exam-shaped verdict must be SUPPRESSED, not shown
+  check('exam-shaped verdict suppressed while the bank is thin', /not yet representative/i.test(done) && !/this set was/.test(done),
+    (done.match(/across topics built so far[^]*?(?=Topics)/) || [''])[0]);
   check('a wrong answer showed a diagnosed cause', sawDiagnosis);
 
   const st = await page.evaluate(async () => ({

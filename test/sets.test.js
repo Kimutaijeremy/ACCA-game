@@ -139,12 +139,12 @@ test('rollingAverage averages the last n set scores for a paper', () => {
   assert.equal(rollingAverage(sets, 'BT'), null);
 });
 
-test('the store persists set results and Teach Me uses in meta, exporting with everything', () => {
+test('the store persists set results and Go deeper opens in meta, exporting with everything', () => {
   const store = new LearnerStore({ kv: new MemoryStore(), logAdapter: new MemoryLogAdapter(), onPersistenceError() {} });
   store.addSetResult({ id: 'set1', paper: 'FA', score: 8, size: 10, at: 1 });
-  store.addTeachUse({ id: 't1', topicId: 'FA D5', at: 2 });
+  store.addDeeperOpen({ id: 'd1', topicId: 'FA D5', at: 2 });
   assert.equal(store.setResults().length, 1);
   assert.equal(store.setResults()[0].score, 8);
-  assert.equal(store.teachUses().length, 1);
-  assert.equal(store.teachUses()[0].topicId, 'FA D5');
+  assert.equal(store.deeperOpens().length, 1);
+  assert.equal(store.deeperOpens()[0].topicId, 'FA D5');
 });

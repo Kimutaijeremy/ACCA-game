@@ -36,8 +36,24 @@ export function validateTopic(T) {
   need(Array.isArray(T.worked.steps) && T.worked.steps.length >= 1, 'worked example needs steps (every one shown)');
   need(typeof T.worked.answer === 'string' && T.worked.answer, 'worked example needs an answer');
 
+  // "Go deeper" layer (Amendment A6 §7A): pre-generated depth shipped with the page, in sections so
+  // a question's repair route can link to the relevant one. Free at runtime, offline.
+  need(Array.isArray(T.deeper) && T.deeper.length >= 1, 'a Go deeper layer (>=1 section) is required');
+  for (const sec of T.deeper) {
+    need(sec && typeof sec.heading === 'string' && sec.heading, 'deeper section needs a heading');
+    need(typeof sec.body === 'string' && sec.body.trim().length >= 80, 'deeper section body too thin');
+    if (sec.conceptIds != null) need(Array.isArray(sec.conceptIds), 'deeper section conceptIds must be an array');
+  }
+
   need(Array.isArray(T.rateFlags), 'rateFlags must be an array (may be empty)');
   return true;
+}
+
+/** Index of a topic's Go-deeper section that covers a concept (for a question's repair link), or 0. */
+export function deeperSectionForConcept(topic, conceptId) {
+  if (!topic || !Array.isArray(topic.deeper)) return 0;
+  const i = topic.deeper.findIndex((s) => Array.isArray(s.conceptIds) && s.conceptIds.includes(conceptId));
+  return i >= 0 ? i : 0;
 }
 
 /** Index topic pages by topicId, validating each and rejecting duplicates. */
