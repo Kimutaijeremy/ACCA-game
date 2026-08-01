@@ -504,6 +504,32 @@ export const BT_ITEMS = [
     distractors: { b: 'conceptual_misunderstanding', c: 'transfer_failure' },
     rationale: 'Tariffs are political (trade policy); consumer-protection statutes are legal — the split is policy versus binding law, not who was involved.',
   },
+
+  // Examiner-report traps (FBT/FMA Sep 2024–Aug 2025). See src/content/examiner-insights.js.
+  {
+    id: 'BT-01-EX1', conceptIds: ['BT-01'], rung: 'standard', marks: 1,
+    stem: 'A public hospital provides care free at the point of use. Which is a PROBLEM when measuring its performance? (1) it has multiple, often conflicting objectives; (2) the value of its outputs is hard to measure with no market price.',
+    options: [
+      { id: 'a', text: 'Both (1) and (2)' },
+      { id: 'b', text: '(1) only' },
+      { id: 'c', text: '(2) only' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'Both are real problems — which is exactly why a not-for-profit body is judged on value for money (the three Es), not profit. Examiners report candidates picking only one. (FMA Sep24–Aug25 Ex6.)',
+  },
+  {
+    id: 'BT-04-EX1', conceptIds: ['BT-04'], rung: 'standard', marks: 1,
+    stem: 'Stefan buys 20% of Gad Co’s output but has many alternative suppliers and deliberately keeps them competing. From GAD CO’s point of view, where does Stefan sit on Mendelow’s matrix?',
+    options: [
+      { id: 'a', text: 'High power, low interest → keep satisfied' },
+      { id: 'b', text: 'Low power, high interest → keep informed' },
+      { id: 'c', text: 'High power, high interest → key player' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'Because Stefan can switch away, he has HIGH power over Gad Co; being one of many suppliers to him, his interest in Gad Co is LOW → keep satisfied. Power/interest are judged from the stakeholder’s leverage, not their size. (BT Sep24–Aug25 Ex1.)',
+  },
 ];
 
 export default BT_ITEMS;

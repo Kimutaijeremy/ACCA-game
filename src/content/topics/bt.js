@@ -50,6 +50,12 @@ export const BT_TOPICS = [
           + '• **Effectiveness** — did it actually achieve its objective? (Did people get healthier?)\n'
           + 'A body can be economical and efficient yet ineffective — cheap, busy, and still not curing anyone — which is exactly why all three are needed together.',
       },
+      {
+        heading: 'What examiners keep flagging',
+        conceptIds: ['BT-01'],
+        body:
+          '• **Measuring a not-for-profit body is hard for TWO reasons at once**, and candidates keep picking only one: it has **multiple, often conflicting objectives**, AND the **value of its outputs is hard to measure** when services are not sold at a market price. That double difficulty is precisely why such a body is judged on value for money (the three Es), not profit. *(FMA examiner’s report, Sep 2024–Aug 2025.)*',
+      },
     ],
     rateFlags: [],
   },
@@ -109,6 +115,12 @@ export const BT_TOPICS = [
           + '• Low power + high interest = **keep informed** — they care but can’t compel; communicate.\n'
           + '• Low power + low interest = **minimal effort**.\n'
           + 'Two traps: (1) the matrix is read **per decision** — a stakeholder can move quadrants when the issue changes; (2) high-power/low-interest is *keep satisfied*, not *keep informed* (that is the low-power/high-interest box). The whole skill is prioritising, and accepting that satisfying one stakeholder disappoints another.',
+      },
+      {
+        heading: 'What examiners keep flagging',
+        conceptIds: ['BT-04'],
+        body:
+          '• **Judge power and interest from the stakeholder’s leverage over THIS organisation, not from their size.** A customer or supplier who can easily **switch** (they have alternatives) holds **HIGH power but LOW interest** → keep satisfied. In a reported question, a buyer who takes 20% of a company’s output but keeps several suppliers competing was **high power, low interest** — candidates wrongly read "one of many" as low power. *(BT examiner’s report, Sep 2024–Aug 2025, Example 1.)*',
       },
     ],
     rateFlags: [],

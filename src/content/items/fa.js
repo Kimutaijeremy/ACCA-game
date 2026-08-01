@@ -821,6 +821,32 @@ export const FA_ITEMS = [
     distractors: { b: 'conceptual_misunderstanding', c: 'transfer_failure' },
     rationale: 'The lesson warns a high current ratio can mean bloated unsellable inventory; the jump in inventory days points exactly there.',
   },
+
+  // Examiner-report traps (FFA/FA Sep 2024–Aug 2025). See src/content/examiner-insights.js.
+  {
+    id: 'FA-04-EX1', conceptIds: ['FA-04'], rung: 'standard', marks: 1,
+    stem: 'Which statement is correct about the two primary statements?',
+    options: [
+      { id: 'a', text: 'The statement of financial position shows assets, liabilities and equity AS AT a point in time; the statement of profit or loss shows performance FOR a period.' },
+      { id: 'b', text: 'The statement of financial position shows performance for the period.' },
+      { id: 'c', text: 'The statement of profit or loss shows the position as at a point in time.' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'SOFP = position "as at" a date (A, L, E); SOPL = performance "for the year ended" (income, expenses). Examiners report candidates confusing the two. (FA Sep24–Aug25 Ex5.)',
+  },
+  {
+    id: 'FA-11-EX1', conceptIds: ['FA-11'], rung: 'standard', marks: 1,
+    stem: 'A customer’s cheque, previously recorded as received in the cash book (bank general ledger), is returned unpaid by the bank. What is the correcting entry in the cash book?',
+    options: [
+      { id: 'a', text: 'Credit the bank ledger — reverse the original debit, since the money did not arrive' },
+      { id: 'b', text: 'Debit the bank ledger again — the cheque was still received' },
+      { id: 'c', text: 'No entry — a returned cheque is only a bank-reconciliation item' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'incorrect_treatment', c: 'conceptual_misunderstanding' },
+    rationale: 'Receipts are debits in the cash book, so a dishonoured receipt is reversed with a CREDIT. A returned cheque is a genuine ledger adjustment, not merely a reconciliation item (that is a bank error or an unpresented cheque). (FA Sep24–Aug25 Ex1 & Ex6.)',
+  },
 ];
 
 export default FA_ITEMS;

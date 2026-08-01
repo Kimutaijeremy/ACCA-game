@@ -49,6 +49,12 @@ export const FA_TOPICS = [
           'The business is treated as a **separate entity** from its owner. So when Wanjiku puts in KES 20,000, the *business* holds the cash but **owes it back to her** — that stake is **capital**. Hence **Assets = Capital + Liabilities**: what the business controls equals what it owes the owner plus what it owes outsiders.\n'
           + 'Capital **rises** with profit and new capital, **falls** with losses and drawings. The equation has held after every transaction ever recorded because of **duality**: every transaction has **two equal and opposite effects**. Buy stock for cash and one asset (cash) simply becomes another (inventory) — totals unchanged. Take a loan and both an asset (cash) and a liability (the loan) rise by the same amount. This two-sidedness is the seed of double entry (topic C1) and why the statement of financial position always balances.',
       },
+      {
+        heading: 'What examiners keep flagging',
+        conceptIds: ['FA-04'],
+        body:
+          '• **Position vs performance — and the words that signal each.** The **statement of financial position** shows assets, liabilities and equity **AS AT** a point in time; the **statement of profit or loss** shows performance **FOR** a period ("for the year ended"). Candidates keep saying the SOFP shows performance — it does not. *(FA examiner’s report, Sep 2024–Aug 2025, Example 5.)*',
+      },
     ],
     rateFlags: [],
   },
@@ -85,6 +91,13 @@ export const FA_TOPICS = [
           + '• **CLIC** — **C**redits increase **L**iabilities, **I**ncome, **C**apital.\n'
           + 'Each type decreases on the opposite side (an asset falls with a credit; a liability falls with a debit).\n'
           + 'To post a transaction, name the two accounts and ask, for each, "up or down, and what type?" Cash purchase of stock: inventory (asset) up → **Dr Inventory**; cash (asset) down → **Cr Cash**. Because every transaction moves two accounts by equal amounts, **total debits always equal total credits** — the self-check the trial balance later relies on. Watch two traps: a reversed entry (right accounts, wrong sides) and a one-sided entry (a missing half), which breaks the balance.',
+      },
+      {
+        heading: 'What examiners keep flagging',
+        conceptIds: ['FA-11'],
+        body:
+          '• **The bank/cash ledger, and dishonoured cheques.** In the cash book (bank general ledger), **receipts are debits** (they increase the balance) and **payments are credits**. So a customer cheque that is **returned, dishonoured or cancelled** must be **reversed with a CREDIT** — the original receipt was a debit, and the money never arrived. Rental income received is a debit (a receipt).\n'
+          + '• **Ledger adjustment vs reconciliation item.** A dishonoured cheque or omitted bank charge is a genuine **cash-book adjustment**. A **bank error**, or a cheque **not yet presented/credited**, is a **bank-reconciliation** item and does NOT change the cash book. Candidates keep mixing these. *(FA examiner’s report, Sep 2024–Aug 2025, Examples 1 & 6.)*',
       },
     ],
     rateFlags: [],
@@ -255,6 +268,13 @@ export const FA_TOPICS = [
           + '• **Payables days = payables ÷ credit purchases × 365** (how long you take to pay).\n'
           + '• **Cash operating cycle = inventory days + receivables days − payables days** — the gap between paying for stock and collecting from customers; longer means more cash tied up.\n'
           + 'The habit that scores marks: **a ratio alone says nothing.** A high current ratio can mean healthy cover OR idle cash and bloated, unsellable stock — only comparison with last year or a rival tells which. Always state the number *and* what it implies against a benchmark. (Note the day-count convention: 365 here, 360 in some answers.)',
+      },
+      {
+        heading: 'What examiners keep flagging',
+        conceptIds: ['FA-63'],
+        body:
+          '• **Decomposing ROCE (a profitability ratio that sits beside these).** **ROCE = profit margin × asset turnover.** So if you are given ROCE and asset turnover, **profit margin = ROCE ÷ asset turnover** — e.g. ROCE 40% ÷ asset turnover 1.2 = 33.3% margin. A *falling* margin can hide behind a *rising* ROCE if asset turnover jumps, so always decompose before concluding. Examiners report candidates who cannot rearrange this getting stuck. *(FA examiner’s report, Sep 2024–Aug 2025, Example 2.)*\n'
+          + '• **True/false questions need not contain a mix** — all the statements can be true. Judge each on its own rather than forcing a balance of answers.',
       },
     ],
     rateFlags: [

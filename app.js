@@ -11,6 +11,11 @@ import {
 } from './src/engine/index.js';
 import { TOPICS_BY_PAPER, topicById, hasTopic } from './src/content/topics/index.js';
 import { ITEMS_BY_PAPER, itemsForConcept } from './src/content/items/index.js';
+import { EXAMINER_FLAGGED_CONCEPTS } from './src/content/examiner-insights.js';
+
+// Concepts an examiner report flags get a small within-area selection boost (an emphasis NUDGE — it
+// does not change the constructed area-weight tables in sets.js). Amendment A6, 2026-08-01.
+const EXAMINER_FLAGGED = new Set(EXAMINER_FLAGGED_CONCEPTS);
 
 const PAPER_NAMES = {
   BT: 'Business and Technology', MA: 'Management Accounting', FA: 'Financial Accounting',
@@ -270,7 +275,10 @@ function startSet(paper) {
   const shortfall = {}; // topicId -> shortfall (higher = more short of completion)
   for (const t of sum.topics) shortfall[t.topicId] = t.complete ? 0 : (11 - t.windowSize);
   const areaOf = (it) => graph.get(it.conceptIds[0]).outcome.split(' ')[1][0];
-  const shortfallOf = (it) => shortfall[topicIdForConcept(graph, it.conceptIds[0])] ?? 0;
+  // Base bias = how far the topic is from completion; +2 nudge if an examiner report flags the
+  // concept (real evidence beats reasoned judgement). Within-area only; area targets are unchanged.
+  const shortfallOf = (it) => (shortfall[topicIdForConcept(graph, it.conceptIds[0])] ?? 0)
+    + (it.conceptIds.some((c) => EXAMINER_FLAGGED.has(c)) ? 2 : 0);
   const built = assembleSet(ITEMS_BY_PAPER[paper] ?? [], {
     rng: makeRng((Math.floor(Math.random() * 0x7fffffff)) >>> 0),
     size: 10, areaOf, areaWeights: defaultAreaWeights(graph, paper), shortfallOf,
