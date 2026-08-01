@@ -135,6 +135,89 @@ export const MA_TOPICS = [
     ],
     rateFlags: [],
   },
+  {
+    topicId: 'MA A4', paper: 'MA', syllabusYear: '2026',
+    title: 'Presenting management information',
+    nutshell:
+      'Management information is only useful if it reaches the right person in a form that fits the decision. Choose the format for the reader and the purpose.\n'
+      + '• **Table** — exact values you need to read off or add up.\n'
+      + '• **Line chart** — a **trend over time**.\n'
+      + '• **Bar chart** — **compare** categories (regions, products) at a point.\n'
+      + '• **Pie chart** — each part’s **share of a whole**.\n'
+      + '• **Scatter diagram** — the **relationship** between two variables (e.g. cost vs output).\n'
+      + 'Good management information is **relevant, clear, concise, timely** and sent to the right person. '
+      + 'Unlike financial reporting, management reports follow **no prescribed external format** — they are tailored to the decision.',
+    examReadiness:
+      '• Match the display to the purpose: trend → line; comparison → bar; proportion → pie; relationship → scatter.\n'
+      + '• Management reports have no statutory format — tailored, not IFRS-bound (links to A1).\n'
+      + '• Know the qualities of good information (relevant, clear, concise, timely, complete, to the right user).',
+    worked: {
+      prompt: 'Pick the best display for: (a) monthly sales over two years; (b) each product’s share of total revenue; (c) whether cost rises with output.',
+      steps: [
+        '(a) A movement over time → line chart.',
+        '(b) Parts of a whole → pie chart.',
+        '(c) The relationship between two variables → scatter diagram.',
+      ],
+      answer: 'Line chart; pie chart; scatter diagram — each chosen to fit what the reader must see.',
+    },
+    deeper: [
+      {
+        heading: 'Choosing the right format for the decision',
+        conceptIds: ['MA-09'],
+        body:
+          'Presentation is not decoration — the wrong format hides the answer. Start from the question the reader is asking.\n'
+          + '• If they need to **read exact figures** or add them up, a **table** beats any chart.\n'
+          + '• If they ask "is this rising or falling over time?", a **line chart** shows the **trend**.\n'
+          + '• If they ask "which is biggest?" across categories, a **bar chart** makes the **comparison**.\n'
+          + '• If they ask "what share is each part?", a **pie chart** shows **proportions** of a whole.\n'
+          + '• If they ask "does A move with B?", a **scatter diagram** reveals the **relationship** (and hints at correlation).\n'
+          + 'Whatever the format, the information must be **relevant** to the decision, **clear**, **concise**, **complete** and **timely**, and reach the **right person** — late or misdirected information is useless however well drawn. And because this is management (not financial) accounting, there is **no external rulebook**: the report is shaped entirely to serve the decision.',
+      },
+    ],
+    rateFlags: [],
+  },
+  {
+    topicId: 'MA B1', paper: 'MA', syllabusYear: '2026',
+    title: 'Sampling methods',
+    nutshell:
+      'When examining a whole population is too costly, take a **sample** and infer from it. The method decides whether the sample is fair.\n'
+      + '• **Random** — every item has an equal chance; needs a complete list (**sampling frame**).\n'
+      + '• **Systematic** — take every *n*th item from the list.\n'
+      + '• **Stratified** — split the population into groups (strata) and sample each **in proportion** to its size.\n'
+      + '• **Cluster** — sample whole groups (clusters), then examine everything within them.\n'
+      + '• **Multistage** — sample in stages (e.g. regions, then towns, then people).\n'
+      + '• **Quota** — **non-random**: interviewers fill set quotas by category.\n'
+      + '**Bias:** systematic can go wrong if the list has a repeating pattern matching the interval; quota and judgement samples are non-random and prone to interviewer bias.',
+    examReadiness:
+      '• Match a description to its method — "every 20th invoice" = systematic; "in proportion to each grade" = stratified.\n'
+      + '• Random needs a complete sampling frame; quota is non-random (bias risk).\n'
+      + '• Trap: systematic sampling is biased when the interval aligns with a cycle in the data.',
+    worked: {
+      prompt: 'Name the method: (a) every 50th customer on a numbered list; (b) split staff into grades and sample each grade in proportion; (c) interviewers told to survey 20 men and 20 women.',
+      steps: [
+        '(a) Every nth item from a list → systematic sampling.',
+        '(b) Proportional sampling within strata → stratified sampling.',
+        '(c) Filling category quotas, non-random → quota sampling.',
+      ],
+      answer: 'Systematic; stratified; quota (the last is non-random and prone to bias).',
+    },
+    deeper: [
+      {
+        heading: 'The methods, what each needs, and where bias creeps in',
+        conceptIds: ['MA-10'],
+        body:
+          'Sampling trades completeness for cost: instead of checking every item, you check a part and generalise. The method determines how trustworthy that generalisation is.\n'
+          + '• **Random sampling** gives every item an equal chance, so it is unbiased — but it needs a **complete list (sampling frame)**, which is not always available.\n'
+          + '• **Systematic sampling** takes every *n*th item — simple and quick, but **biased if the list has a repeating pattern** that lines up with the interval (choose every 7th daily record and you might always land on the same weekday).\n'
+          + '• **Stratified sampling** divides the population into meaningful groups (strata — e.g. staff grades, regions) and samples each **in proportion**, so every group is fairly represented.\n'
+          + '• **Cluster sampling** picks whole groups and examines all of them — cheaper when the population is geographically spread.\n'
+          + '• **Multistage sampling** narrows in stages (region → town → household).\n'
+          + '• **Quota sampling** is **non-random**: interviewers simply fill quotas (e.g. 20 of each type), which is fast and needs no frame but is open to **interviewer bias** in who they approach.\n'
+          + 'The rule of thumb: random-based methods reduce bias but demand a frame; non-random ones (quota, judgement) are convenient but must be treated with caution.',
+      },
+    ],
+    rateFlags: [],
+  },
 ];
 
 export default MA_TOPICS;

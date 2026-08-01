@@ -530,6 +530,150 @@ export const BT_ITEMS = [
     distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
     rationale: 'Because Stefan can switch away, he has HIGH power over Gad Co; being one of many suppliers to him, his interest in Gad Co is LOW → keep satisfied. Power/interest are judged from the stakeholder’s leverage, not their size. (BT Sep24–Aug25 Ex1.)',
   },
+
+  // ============================ BT A5 — demand, supply and elasticity (BT-09) ============================
+  {
+    id: 'BT-09-CC1', conceptIds: ['BT-09'], rung: 'concept-check', marks: 1,
+    stem: 'On a normal demand curve, if the price rises, the quantity demanded usually:',
+    options: [
+      { id: 'a', text: 'Falls' },
+      { id: 'b', text: 'Rises' },
+      { id: 'c', text: 'Stays exactly the same' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'knowledge_gap' },
+    rationale: 'Demand slopes down: higher price, lower quantity demanded.',
+  },
+  {
+    id: 'BT-09-CC2', conceptIds: ['BT-09'], rung: 'concept-check', marks: 1,
+    stem: 'Price elasticity of demand (PED) is:',
+    options: [
+      { id: 'a', text: '% change in quantity demanded ÷ % change in price' },
+      { id: 'b', text: '% change in price ÷ % change in quantity demanded' },
+      { id: 'c', text: 'total revenue ÷ quantity sold' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'careless_slip', c: 'conceptual_misunderstanding' },
+    rationale: 'PED = %ΔQ ÷ %ΔP (option b inverts it).',
+  },
+  {
+    id: 'BT-09-CC3', conceptIds: ['BT-09'], rung: 'concept-check', marks: 1,
+    stem: 'A good whose PED has a magnitude greater than 1 is:',
+    options: [
+      { id: 'a', text: 'Price elastic — quantity reacts a lot to price' },
+      { id: 'b', text: 'Price inelastic — quantity barely moves' },
+      { id: 'c', text: 'A complement' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'knowledge_gap' },
+    rationale: 'PED > 1 = elastic; < 1 = inelastic.',
+  },
+  {
+    id: 'BT-09-G1', conceptIds: ['BT-09'], rung: 'guided', marks: 1,
+    stem: 'Consumer incomes rise. For a NORMAL good, the demand curve:',
+    options: [
+      { id: 'a', text: 'Shifts to the right (demand increases at every price)' },
+      { id: 'b', text: 'Moves down along the same curve' },
+      { id: 'c', text: 'Shifts to the left (demand falls)' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    scaffold: ['Income is a non-price factor → it shifts the whole curve.', 'For a normal good, more income means more demand → right.'],
+    rationale: 'A non-price factor shifts the curve; higher income shifts a normal good’s demand right.',
+  },
+  {
+    id: 'BT-09-G2', conceptIds: ['BT-09'], rung: 'guided', marks: 2,
+    stem: 'Price rises from $100 to $120 and quantity demanded falls from 50 to 40 units. What is the PED (magnitude)?',
+    options: [
+      { id: 'a', text: '1.0 (unit elastic)' },
+      { id: 'b', text: '0.5' },
+      { id: 'c', text: '2.0' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'calculation_error', c: 'calculation_error' },
+    scaffold: ['%ΔQ = (40−50)/50 = −20%. %ΔP = (120−100)/100 = +20%.', 'PED = 20% ÷ 20% = 1.'],
+    rationale: '(−20%) ÷ (20%) = −1 → magnitude 1, unit elastic.',
+  },
+  {
+    id: 'BT-09-G3', conceptIds: ['BT-09'], rung: 'guided', marks: 1,
+    stem: 'A change in a good’s OWN price causes:',
+    options: [
+      { id: 'a', text: 'A movement along its demand curve' },
+      { id: 'b', text: 'A shift of the whole demand curve' },
+      { id: 'c', text: 'No change in quantity demanded' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    scaffold: ['Own price = movement along; non-price factor = shift.'],
+    rationale: 'Own-price changes are movements along the curve; non-price factors shift it.',
+  },
+  {
+    // Parameterized standard item — PED from two clean price/quantity points, regenerated per attempt.
+    id: 'BT-09-S1', conceptIds: ['BT-09'], rung: 'standard', marks: 2,
+    generate: (rng) => {
+      const pPct = rng.pick([10, 20, 25]);
+      const ped = rng.pick([0.5, 1, 2]);
+      const qPct = Math.round(pPct * ped); // % fall in quantity
+      const p1 = rng.step(100, 400, 20);
+      const q1 = rng.step(200, 600, 50);
+      const p2 = Math.round(p1 * (1 + pPct / 100));
+      const q2 = Math.round(q1 * (1 - qPct / 100));
+      const money = (n) => `$${n.toLocaleString('en-KE')}`;
+      const inverted = Math.round((pPct / qPct) * 100) / 100;
+      const wrongLevels = Math.round((qPct / pPct) * 100) / 100; // == ped, avoid; use another wrong
+      const opts = [
+        { id: 'a', text: `${ped}` },
+        { id: 'b', text: `${inverted}` }, // inverted the ratio
+        { id: 'c', text: `${Math.round((qPct + pPct))/pPct}` }, // added instead
+      ];
+      // ensure distinct labels
+      if (opts[1].text === opts[0].text) opts[1].text = `${ped + 0.5}`;
+      if (opts[2].text === opts[0].text || opts[2].text === opts[1].text) opts[2].text = `${ped + 1}`;
+      return {
+        stem: `Price rises from ${money(p1)} to ${money(p2)} (a ${pPct}% rise) and quantity demanded falls from ${q1} to ${q2} units (a ${qPct}% fall). What is the PED (magnitude)?`,
+        options: opts,
+        answerId: 'a',
+        distractors: { b: 'calculation_error', c: 'calculation_error' },
+        rationale: `PED = ${qPct}% ÷ ${pPct}% = ${ped}. Option b inverts the ratio; option c adds instead of dividing.`,
+      };
+    },
+  },
+  {
+    id: 'BT-09-S2', conceptIds: ['BT-09'], rung: 'standard', marks: 1,
+    stem: 'A firm’s product has inelastic demand. To increase total revenue it should:',
+    options: [
+      { id: 'a', text: 'Raise the price' },
+      { id: 'b', text: 'Cut the price' },
+      { id: 'c', text: 'Leave price unchanged — revenue cannot be affected' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'incorrect_treatment', c: 'conceptual_misunderstanding' },
+    rationale: 'Inelastic → quantity barely falls when price rises, so revenue rises. (Elastic would be the opposite.)',
+  },
+  {
+    id: 'BT-09-S3', conceptIds: ['BT-09'], rung: 'standard', marks: 1,
+    stem: 'Salt has few substitutes and is a necessity. Its demand is therefore likely to be:',
+    options: [
+      { id: 'a', text: 'Inelastic' },
+      { id: 'b', text: 'Elastic' },
+      { id: 'c', text: 'Perfectly elastic' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'knowledge_gap' },
+    rationale: 'Necessities with few substitutes are price inelastic.',
+  },
+  {
+    id: 'BT-09-ST1', conceptIds: ['BT-09'], rung: 'stretch', marks: 2,
+    stem: 'A luxury with many close substitutes raises its price by 10%. Using only this topic, what happens to quantity and to total revenue, and why?',
+    options: [
+      { id: 'a', text: 'Demand is elastic, so quantity falls by MORE than 10% and total revenue falls' },
+      { id: 'b', text: 'Demand is inelastic, so quantity barely changes and revenue rises' },
+      { id: 'c', text: 'Quantity and revenue are unaffected by price for luxuries' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'transfer_failure' },
+    rationale: 'Luxuries with many substitutes are elastic; a price rise loses proportionally more sales, so revenue falls.',
+  },
 ];
 
 export default BT_ITEMS;

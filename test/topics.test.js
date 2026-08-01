@@ -51,8 +51,9 @@ test('multi-concept sub-areas are one page covering all their concepts', () => {
   }
 });
 
-test('TOPICS_BY_PAPER counts line up with the conversion (BT 3, MA 3, FA 6)', () => {
-  assert.equal(TOPICS_BY_PAPER.BT.length, 3);
-  assert.equal(TOPICS_BY_PAPER.MA.length, 3);
-  assert.equal(TOPICS_BY_PAPER.FA.length, 6);
+test('TOPICS_BY_PAPER counts grow as topics are authored (authoring-only mode)', () => {
+  // Batch 1 (Amendment A7): +BT A5, +MA A4/B1, +FA A2/A4.
+  assert.equal(TOPICS_BY_PAPER.BT.length, 4);
+  assert.equal(TOPICS_BY_PAPER.MA.length, 5);
+  assert.equal(TOPICS_BY_PAPER.FA.length, 8);
 });

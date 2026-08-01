@@ -281,6 +281,89 @@ export const FA_TOPICS = [
       'Ratios use a 365-day year here; some syllabi/answers use 360 — confirm at the annual check.',
     ],
   },
+  {
+    topicId: 'FA A2', paper: 'FA', syllabusYear: '2026',
+    title: 'Users and their information needs',
+    nutshell:
+      'Financial statements are read by many people, each deciding something different. Know the list and what each wants.\n'
+      + '• **Investors / shareholders** — buy, hold or sell? They weigh **return and risk**.\n'
+      + '• **Lenders (banks)** — will we be repaid? They look at **liquidity and gearing**.\n'
+      + '• **Suppliers / trade payables** — will we be paid if we sell on credit?\n'
+      + '• **Customers** — will the business survive to honour warranties and supply?\n'
+      + '• **Employees** — job security and pay.\n'
+      + '• **Government / tax authorities** — tax assessment, regulation, statistics.\n'
+      + '• **The public** — community and environmental impact.\n'
+      + '**Internal** users are management and employees; **external** users are everyone else. The same '
+      + 'statements serve all of them, which is why they must be understandable and comparable.',
+    examReadiness:
+      '• Match a user to their PRIMARY need — lenders → repayment/liquidity; suppliers → will they be paid; investors → return and risk.\n'
+      + '• Split internal (managers, employees) from external (investors, lenders, suppliers, customers, government, public).\n'
+      + '• Trap: different users need different things from the SAME statements — there is no single "the" user.',
+    worked: {
+      prompt: 'Give the primary information need of: (a) a bank considering a loan; (b) a supplier deciding to sell on credit; (c) a potential shareholder.',
+      steps: [
+        '(a) Bank → can the business repay? Focus on liquidity and gearing.',
+        '(b) Supplier → will it be paid? Focus on short-term liquidity.',
+        '(c) Potential shareholder → the return and risk of investing → profitability and prospects.',
+      ],
+      answer: 'Bank: repayment/liquidity. Supplier: will it be paid. Shareholder: return and risk.',
+    },
+    deeper: [
+      {
+        heading: 'Each user and the decision they face',
+        conceptIds: ['FA-03'],
+        body:
+          'Accounts exist to help people decide, so every user is defined by the decision they are making.\n'
+          + '• **Shareholders / investors** decide whether to buy, hold or sell, and how to vote — they weigh the return they get against the risk, so they read profitability, dividends and prospects.\n'
+          + '• **Lenders** decide whether to lend and on what terms — they want assurance of repayment, so they read liquidity, cash flow and gearing.\n'
+          + '• **Suppliers (trade payables)** decide whether to grant credit — they want to know they will be paid, so short-term liquidity matters most.\n'
+          + '• **Customers** decide whether to rely on the business for future supply, warranties and service — they care about survival (going concern).\n'
+          + '• **Employees** decide about their own future — job security, pay and pensions.\n'
+          + '• **Government and tax authorities** assess tax, enforce regulation and compile national statistics.\n'
+          + '• **The public** judge the business’s impact on the community and environment.\n'
+          + 'The same set of statements answers all these different questions, which is why they must be relevant, faithful, understandable and comparable.',
+      },
+    ],
+    rateFlags: [],
+  },
+  {
+    topicId: 'FA A4', paper: 'FA', syllabusYear: '2026',
+    title: 'The regulatory framework and standard setting',
+    nutshell:
+      'Financial statements follow rules so that users can trust and compare them. The rules are **IFRS Accounting Standards**.\n'
+      + '• **IFRS Foundation** — oversight and governance (appoints, funds, monitors).\n'
+      + '• **International Accounting Standards Board (IASB)** — the body that actually **sets the standards**.\n'
+      + '• **IFRS Interpretations Committee** — issues guidance on how standards apply.\n'
+      + '**Due process** (public and consultative): discussion paper → **exposure draft** (public comment) → final **IFRS Accounting Standard**.\n'
+      + 'The **Conceptual Framework** underpins the standards — it defines the elements and recognition — but it is **not itself a standard**.\n'
+      + 'Why regulate at all? To make statements **comparable and reliable**, reduce manipulation, and protect users.',
+    examReadiness:
+      '• The IASB SETS standards; the IFRS Foundation OVERSEES. Do not swap them.\n'
+      + '• The Conceptual Framework is not a standard — it guides where no specific standard applies.\n'
+      + '• Know the due-process order; an exposure draft is a proposed standard out for comment.\n'
+      + '• Regulation’s payoff is comparability across companies (and countries).',
+    worked: {
+      prompt: 'Put in order and name the step: a body issues (1) a final standard, (2) an exposure draft, (3) a discussion paper. Which is published for public comment before the standard?',
+      steps: [
+        'Order: discussion paper → exposure draft → final IFRS Accounting Standard.',
+        'The exposure draft is the proposed standard issued for public comment.',
+        'Only after comments are considered is the final standard issued by the IASB.',
+      ],
+      answer: 'Discussion paper, then exposure draft (public comment), then the final standard. The exposure draft is the consultation step.',
+    },
+    deeper: [
+      {
+        heading: 'The bodies, the due process, and why it matters',
+        conceptIds: ['FA-06'],
+        body:
+          'A regulatory framework exists so that a shareholder in one country can compare two companies and trust both sets of accounts.\n'
+          + '**The bodies:** the **IFRS Foundation** sits at the top for governance and oversight — it appoints members, secures funding and monitors effectiveness, but it does not write standards. The **IASB** is the standard-setting board: it develops and issues **IFRS Accounting Standards**. The **IFRS Interpretations Committee** helps by issuing interpretations where a standard needs clarifying.\n'
+          + '**Due process** is deliberately public: a **discussion paper** explores an issue, an **exposure draft** proposes a standard and invites comment from anyone, and — only after those comments are weighed — the final **IFRS** is issued. This openness is what gives the standards legitimacy.\n'
+          + '**The Conceptual Framework** is the reasoning beneath the standards — it defines assets, liabilities, income and expenses and when to recognise them. It is **not a standard itself**, but where no specific standard covers a transaction, preparers reason from the Framework. The whole apparatus buys one thing for users: **comparability and reliability**.',
+      },
+    ],
+    rateFlags: [],
+  },
 ];
 
 export default FA_TOPICS;

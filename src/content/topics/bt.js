@@ -169,6 +169,43 @@ export const BT_TOPICS = [
       'Specific taxes, thresholds and named statutes vary by year and jurisdiction — confirm against the current syllabus at the annual check.',
     ],
   },
+  {
+    topicId: 'BT A5', paper: 'BT', syllabusYear: '2026',
+    title: 'Demand, supply and elasticity',
+    nutshell:
+      'Markets set price where **demand** meets **supply**.\n'
+      + '• **Demand** slopes down: as price rises, quantity demanded falls. **Supply** slopes up: higher price, more supplied. **Equilibrium** is where they cross.\n'
+      + '• **Movement vs shift:** a change in the good’s **own price** is a *movement along* the curve; a change in a **non-price factor** (income, tastes, the price of substitutes or complements) *shifts* the whole curve.\n'
+      + '• **Price elasticity of demand (PED) = % change in quantity demanded ÷ % change in price** (take the size, ignore the minus sign).\n'
+      + '  – PED **> 1 = elastic** (quantity reacts a lot); **< 1 = inelastic** (quantity barely moves).\n'
+      + '  – Necessities with few substitutes are **inelastic**; luxuries with many substitutes are **elastic**.\n'
+      + '• **Revenue rule:** if demand is **elastic**, *cut* price to raise revenue; if **inelastic**, *raise* price to raise revenue.',
+    examReadiness:
+      '• PED is usually negative — quote the magnitude and classify elastic (>1) / inelastic (<1).\n'
+      + '• Link elasticity to revenue: inelastic → raise price; elastic → cut price.\n'
+      + '• Trap: a change in the good’s own price is a movement ALONG demand, not a shift; only non-price factors shift it.',
+    worked: {
+      prompt: 'When price rises from $100 to $120, quantity demanded falls from 50 to 40 units. Find PED and say whether to raise or cut price to grow revenue.',
+      steps: [
+        '% change in quantity = (40 − 50) ÷ 50 = −20%.',
+        '% change in price = (120 − 100) ÷ 100 = +20%.',
+        'PED = −20% ÷ 20% = −1 → magnitude 1 (unit elastic).',
+        'At elasticity 1 revenue is unchanged by small price moves; above 1 (elastic) you would cut price, below 1 (inelastic) you would raise it.',
+      ],
+      answer: 'PED = 1 (unit elastic). Elastic goods → cut price to raise revenue; inelastic → raise price.',
+    },
+    deeper: [
+      {
+        heading: 'How the market clears, and what elasticity tells a business',
+        conceptIds: ['BT-09'],
+        body:
+          'Two forces meet in a market. **Demand** describes buyers: at a lower price they buy more, so the curve slopes down. **Supply** describes sellers: at a higher price they offer more, so it slopes up. Where the two cross is the **equilibrium** price and quantity — the point the market gravitates to.\n'
+          + '**Movement vs shift** trips people up. If only the good’s **own price** changes, you slide *along* the existing demand curve (a movement). If something else changes — **income**, **tastes**, the price of a **substitute** or **complement** — the whole curve *shifts*: for a normal good, higher income shifts demand right.\n'
+          + '**Elasticity** measures how sharply quantity responds. **PED = %ΔQ ÷ %ΔP.** Greater than 1 is **elastic** (buyers are sensitive — many substitutes, or a luxury); less than 1 is **inelastic** (buyers stuck — a necessity like salt). This drives pricing: with **inelastic** demand a firm can **raise** price and total revenue rises (quantity barely falls); with **elastic** demand raising price loses more sales than it gains in margin, so to grow revenue it should **cut** price. **Income elasticity** is related: normal goods are bought more as income rises; inferior goods less.',
+      },
+    ],
+    rateFlags: [],
+  },
 ];
 
 export default BT_TOPICS;

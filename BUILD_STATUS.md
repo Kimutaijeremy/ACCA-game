@@ -3,11 +3,37 @@
 *Read at the start of every session, after `spec/PAPER_TRAIL_EXECUTION_ORDER.md`. Update after
 every unit of work. This is the handoff between sessions and the report to Jeremy.*
 
-Last updated: 2026-07-31 (DESIGN CHANGE **Amendment A6** — topic pages + sets of 10 + 8/10 gate +
-Teach Me This; teaching-layer conversion done, engine/UI next) · Working branch:
-`rebuild/wp1-foundation`; Pages `main` at published commit `31e3fd8` (live app = the v4.1.0 drill
-runner, unaffected by A6 branch work so far). · Tests: 78 node + drill smoke + browser harness +
-Section 8 pre-flight green.
+Last updated: 2026-08-01 (**AUTHORING-ONLY MODE**, Amendment A7). Working branch:
+`rebuild/wp1-foundation`; Pages `main` at `fca1d6e` (live app = **v4.5.0**). · Tests: 98 node + set
+smoke + browser harness + Section 8 pre-flight green.
+
+---
+
+## TOPIC PROGRESS (authoring-only)
+- **BT: 4 / 38 topics** — A1, A2, A3, **A5** (demand/supply/elasticity, +PED generator).
+- **MA: 5 / 25 topics** — A1, A3, B2, **A4** (presenting info), **B1** (sampling).
+- **FA: 8 / 34 topics** — A3, C1, C2, D3, D5, H2, **A2** (users), **A4** (regulatory framework).
+- **Total: 17 / 97 topics.** Each new topic: page (nutshell + exam readiness + worked example +
+  Go deeper) + a 10-item set (cc3/g3/s3/st1) tagged to its concept. Live at **v4.6.0**.
+- Batches published: batch 1 = the 5 topics above (BT A5, MA A4, MA B1, FA A2, FA A4).
+
+## MODE — AUTHORING ONLY (Amendment A7, Jeremy, 2026-08-01)
+
+**The architecture is finished. From here it is authoring only** — topic pages, questions, and their
+Go deeper layers — across BT, MA and FA in parallel, until all three papers are complete.
+
+- **No new features, refinements or optimisations.** Spot an improvement → write it under
+  "Improvement candidates" below and keep authoring. Jeremy decides later if any is worth building.
+- **Only exceptions:** bugs that block use, and anything Jeremy flags from the app.
+- **"Teach Me" is dropped** entirely (he'll use Claude directly). Keep the Go deeper layers already
+  written; **do not expand the format** or add more of them as a feature. When a question is wrong,
+  the rationale must **explain the answer properly** — that is enough.
+- **Publish every 5 topics** (Section 8 pre-flight each time), not at milestones.
+- **Report briefly:** topics built, what's now playable. Nothing else.
+- **When all three papers are complete, STOP and tell Jeremy.** That is the next decision point.
+
+### Improvement candidates (parked — do not build without Jeremy's go-ahead)
+- _(none yet)_
 
 ---
 
