@@ -54,11 +54,14 @@ blocked by topic. Many sets. Each set is scored **out of 10**, with a **rolling 
 shown, and the "where you slip" diagnosis (brief §6.5) kept. Parameterized generators wherever a
 question is calculational (numbers regenerate per attempt — anti-memorisation).
 
-**Sets are drawn to the exam's area weighting, not round-robin** *(2026-07-31; brief §6.4)*. FA uses
-the objective-item distribution table; BT/MA weight areas by concept count (flagged for the annual
-check). Within each area, bias toward topics short of their ten completion questions, so thin areas
-still reach completion. After a set, report how close each topic is and whether the set was
-exam-shaped.
+**Sets are drawn to a per-area target, not round-robin** *(2026-07-31; weightings confirmed
+2026-08-01; brief §6.4)*. ACCA publishes **no** per-area OT weighting for FBT/BT, FMA/MA (or FFA/FA)
+— confirmed against the 2025-26 study guides ("assess all parts of the syllabus"). So each paper has
+a **constructed breadth-based target** in `src/engine/sets.js`, refined by the fixed Section B areas
+(FA A2/B2/C4/D10/E7/F6/G2/H2; BT A11/B8/C9/D9/E4/F5; MA A4/B4/C9/D7/E6/F5). Within each area, bias
+toward topics short of their ten completion questions, so thin areas still reach completion. After a
+set, report how close each topic is and — once the paper's bank is representative — whether the set
+was exam-shaped.
 
 ### 1B. What is kept, running underneath  *(Amendment A6)*
 

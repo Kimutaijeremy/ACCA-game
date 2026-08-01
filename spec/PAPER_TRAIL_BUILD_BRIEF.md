@@ -257,12 +257,23 @@ each **topic's own questions**, from the attempt log — NOT on whole-set scores
   have **decayed** (a review has fallen due underneath), show it as **"complete · needs revision"**,
   not a clean tick. The tick stays (access is not withdrawn); the label warns.
 
-**Set composition — exam-weighted, not round-robin** *(2026-07-31)*. A set of ten is drawn to the
-exam's **area weighting**, NOT one item per concept round-robin (which would give a one-concept area
-the same airtime as a ten-concept area — the v1 failure):
-- **FA** uses the objective-item distribution table below (A2 B2 C4 D10 E7 F6 G2 H2 per 35).
-- **BT and MA** weight each area **in proportion to its concept count** (syllabus emphasis) until
-  authoritative exam weightings are confirmed — **flagged** for the annual syllabus check.
+**Set composition — exam-weighted, not round-robin** *(2026-07-31; weightings confirmed 2026-08-01)*.
+A set of ten is drawn to a per-area **target**, NOT one item per concept round-robin (which would
+give a one-concept area the same airtime as a ten-concept area — the v1 failure):
+- **No official per-area OT weighting exists.** Confirmed against ACCA's 2025-26 study guides for
+  **FBT/BT** and **FMA/MA**: both state only that "questions will assess **all parts of the
+  syllabus**" (100% compulsory, sampled across the breadth). There is no published per-area
+  percentage to adopt — so every target table here, FA's included, is a **constructed breadth-based
+  target**, refined by the one area-level signal the guides do give: the **fixed Section B structure**.
+- **FA/FFA** — the objective-item distribution table below (A2 B2 C4 D10 E7 F6 G2 H2 per 35).
+- **BT/FBT** — target /46 (Section A is 46 OT questions): **A11 B8 C9 D9 E4 F5**. Breadth-led (A is
+  the largest area); all six represented (Section B examines one MTQ per area); ethics (F) held above
+  its small size for its exam prominence.
+- **MA/FMA** — target /35 (Section A is 35 OT questions): **A4 B4 C9 D7 E6 F5**. Cost accounting (C)
+  and budgeting (D) are the Section-A heavyweights; standard costing (E) and performance (F) lifted
+  above their concept-count share to reflect their **guaranteed Section B MTQ marks**.
+- Tables live in `src/engine/sets.js` (`FA_/BT_/MA_AREA_WEIGHTS`). They are targets, not official
+  figures; refine against examiner-report emphasis over time (annual syllabus gate).
 - Targets **renormalise over the areas that actually have authored items**, so partial content still
   produces sensible sets; the shape approaches the exam as more areas are authored.
 - **Within each area, bias selection toward topics short of their ten completion questions**, so thin

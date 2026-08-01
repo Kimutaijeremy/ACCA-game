@@ -5,7 +5,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   assembleSet, topicCompletion, topicHint, paperTopicSummary, rollingAverage,
-  defaultAreaWeights, FA_AREA_WEIGHTS,
+  defaultAreaWeights, FA_AREA_WEIGHTS, BT_AREA_WEIGHTS, MA_AREA_WEIGHTS,
 } from '../src/engine/sets.js';
 import { makeRng } from '../src/engine/rng.js';
 import { ITEMS_BY_PAPER } from '../src/content/items/index.js';
@@ -59,11 +59,15 @@ test('within an area, selection is biased toward topics short of completion', ()
   assert.ok(seen >= 8, `high-shortfall topic should appear in most sets (got ${seen}/10)`);
 });
 
-test('defaultAreaWeights: FA uses the exam table; BT/MA weight by concept count', () => {
-  assert.deepEqual(defaultAreaWeights(graph, 'FA'), FA_AREA_WEIGHTS);
-  const bt = defaultAreaWeights(graph, 'BT');
-  assert.equal(bt.A, 14); // 14 BT concepts in area A
-  assert.equal(bt.E, 5);
+test('defaultAreaWeights: every paper uses an explicit constructed target table (no official ACCA weighting exists)', () => {
+  // Confirmed 2026-08-01 against the 2025-26 FBT/BT and FMA/MA study guides: ACCA publishes no
+  // per-area OT weighting, so all three tables are constructed breadth-based targets.
+  assert.deepEqual(defaultAreaWeights(graph, 'FA'), { ...FA_AREA_WEIGHTS });
+  assert.deepEqual(defaultAreaWeights(graph, 'BT'), { ...BT_AREA_WEIGHTS });
+  assert.deepEqual(defaultAreaWeights(graph, 'MA'), { ...MA_AREA_WEIGHTS });
+  // BT covers all six areas; MA lifts its Section B areas (E, F) above their concept-count share.
+  assert.equal(Object.keys(BT_AREA_WEIGHTS).length, 6);
+  assert.ok(MA_AREA_WEIGHTS.E > 4 && MA_AREA_WEIGHTS.F > 4);
 });
 
 const S1 = 's1'; const S2 = 's2';

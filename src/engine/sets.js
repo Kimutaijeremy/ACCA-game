@@ -18,16 +18,35 @@ export const TOPIC_MIN_SESSIONS = 2;
 const PRACTICE = [RUNGS.CONCEPT_CHECK, RUNGS.GUIDED, RUNGS.STANDARD, RUNGS.STRETCH];
 const PER_CONCEPT_IN_SET = 2; // no single concept dominates a set
 
-// FA objective-item distribution (Brief §6.4), per 35 — the authoritative FA area weighting.
+// Per-area set-composition TARGETS. Important finding (confirmed 2026-08-01 against the ACCA
+// 2025-26 study guides for FBT/BT and FMA/MA): **ACCA publishes NO per-syllabus-area weighting for
+// the objective-test section of these exams.** Both guides state only that "questions will assess
+// all parts of the syllabus" — 100% compulsory, sampled across the breadth. So there is no official
+// table to drop in; every table here (FA included) is a CONSTRUCTED breadth-based target, refined by
+// the one official area-level signal the guides do give: the fixed Section B structure.
+//
+// FA/FFA — the brief's objective-item distribution target, per 35 (Brief §6.4).
 export const FA_AREA_WEIGHTS = Object.freeze({ A: 2, B: 2, C: 4, D: 10, E: 7, F: 6, G: 2, H: 2 });
+// BT/FBT — Section A = 46 OT questions across all six areas; Section B = 6 four-mark MTQs, ONE per
+// area (all six equally examined there). Target /46: breadth-led (A the largest area), every area
+// represented, ethics (F) held above its small size given its exam prominence + guaranteed MTQ.
+export const BT_AREA_WEIGHTS = Object.freeze({ A: 11, B: 8, C: 9, D: 9, E: 4, F: 5 });
+// MA/FMA — Section A = 35 OT questions across all six areas; Section B = 3 ten-mark MTQs fixed on
+// D (Budgeting), E (Standard costing), F (Performance measurement). Target /35: cost accounting (C)
+// and budgeting (D) are the Section-A heavyweights; E and F lifted above their size to reflect their
+// guaranteed Section B marks; A and B the lighter introductory/technique areas.
+export const MA_AREA_WEIGHTS = Object.freeze({ A: 4, B: 4, C: 9, D: 7, E: 6, F: 5 });
+
+const AREA_WEIGHTS_BY_PAPER = { FA: FA_AREA_WEIGHTS, BT: BT_AREA_WEIGHTS, MA: MA_AREA_WEIGHTS };
 
 /**
- * Area weights for a paper. FA uses the exam table; BT/MA weight each area by its concept count
- * (syllabus emphasis) until authoritative exam weightings are confirmed — flag for the annual check.
+ * Per-area set-composition target for a paper. Returns the constructed target table (above); falls
+ * back to a by-concept-count breadth proxy only for a paper with no table yet (e.g. future papers).
+ * These are targets, not official ACCA weightings — none is published; see the note above.
  * @returns {{ [areaLetter:string]: number }}
  */
 export function defaultAreaWeights(graph, paper) {
-  if (paper === 'FA') return { ...FA_AREA_WEIGHTS };
+  if (AREA_WEIGHTS_BY_PAPER[paper]) return { ...AREA_WEIGHTS_BY_PAPER[paper] };
   const w = {};
   for (const cid of graph.conceptsForPaper(paper)) {
     const a = graph.get(cid).outcome.split(' ')[1][0];

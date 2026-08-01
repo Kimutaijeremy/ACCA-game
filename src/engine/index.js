@@ -47,7 +47,7 @@ export {
 } from './progress.js';
 export {
   assembleSet, topicCompletion, topicHint, paperTopicSummary, rollingAverage,
-  defaultAreaWeights, FA_AREA_WEIGHTS,
+  defaultAreaWeights, FA_AREA_WEIGHTS, BT_AREA_WEIGHTS, MA_AREA_WEIGHTS,
   SET_SIZE, TOPIC_WINDOW, TOPIC_NEED, TOPIC_MIN_SESSIONS,
 } from './sets.js';
 export {

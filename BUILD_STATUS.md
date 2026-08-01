@@ -69,6 +69,12 @@ the spine underneath. FR/AA keep full lessons. Specs amended & committed (`2db59
   (16 sections); topic page has a Go-deeper button (logged via `store.addDeeperOpen`); set-feedback
   and failed-set repair link into the relevant deeper section. Exam-shaped verdict suppressed while
   the bank is thin; rolling average labelled "topics built so far". SW `papertrail-v4.3.0`.
+- [x] **Set weightings confirmed & replaced (2026-08-01).** Researched ACCA's 2025-26 study guides
+  (FBT/BT, FMA/MA): **no official per-area OT weighting exists** — both say only "assess all parts of
+  the syllabus". The provisional concept-count BT/MA weightings are replaced by explicit **constructed
+  breadth-based target tables** in `src/engine/sets.js`, refined by the fixed Section B areas — BT
+  `A11 B8 C9 D9 E4 F5` (/46), MA `A4 B4 C9 D7 E6 F5` (/35); FA unchanged. `defaultAreaWeights` now
+  returns the table per paper. (FA's own table was likewise always a constructed target, not official.)
 - [ ] **Audit tooling** — Test A split into two numbers (answerable-from-page-alone; gap-closed-by-Go-deeper).
 
 ## 1. Current position
@@ -145,6 +151,11 @@ carry a parameterized generator.
   flagged in the lesson's `rateFlags`. Review at the annual September gate.
 - FA-63 ratios: 365- vs 360-day convention — flagged in the lesson's `rateFlags`.
 - (No sales-tax rate, tax threshold or current-standard citation authored yet.)
+- **RESOLVED (2026-08-01) — per-area set weightings.** Previously flagged as provisional (derived
+  from concept counts). Confirmed against ACCA's 2025-26 FBT/BT and FMA/MA study guides that **no
+  official per-area OT weighting is published** (both: "assess all parts of the syllabus"). Replaced
+  with explicit constructed breadth-based targets refined by the fixed Section B areas (see §0A).
+  These are targets, not official figures — revisit against examiner-report emphasis at the annual gate.
 
 ## 5. Blocked items
 
