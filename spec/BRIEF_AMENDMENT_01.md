@@ -3,8 +3,10 @@
 **Amends:** `PAPER_TRAIL_BUILD_BRIEF.md` (primarily §1, §6.2–§6.4, §6.6, §6.9; §8 work packages).
 **Date:** 2026-08-06.
 **Status (updated 2026-08-06):** partially implemented.
-- **Clause E is IMPLEMENTED** — `src/engine/session.js` + `test/session.test.js` (110 tests green).
-- **Clauses A–D and F–I remain specification only** — built to under the **reordered work plan**
+- **Clauses E, F and G are IMPLEMENTED** — `src/engine/session.js` (E), `src/engine/escalation.js`
+  (F, G), tests in `test/session.test.js` + `test/escalation.test.js` (119 tests green). Engine layer
+  only; UI wiring lands with the navigation work.
+- **Clauses A–D, H and I remain specification only** — built to under the **reordered work plan**
   (the WP1 → WP5 numbering was dropped from the brief on 2026-08-06). Nothing in those clauses has
   been built.
 - **LW (clauses C, D) is deferred and variant-undecided** — see the note under clause D.
@@ -99,6 +101,11 @@ Session state is a **persisted object carrying a position index**, not transient
 
 ## F. On a miss — nutshell after commit, then continue
 
+> **IMPLEMENTED 2026-08-06** — `src/engine/escalation.js` (`resolveAfterAnswer` / `answerAndResolve`).
+> A committed miss opens the **nutshell** overlay (ref flagged `offersLesson: false`); a correct
+> answer opens nothing; the overlay never moves the set position, so closing it continues to the next
+> question. Tests in `test/escalation.test.js`.
+
 On a wrong answer:
 
 - Reveal the **nutshell** — the formula or statement **only** — **AFTER the answer is committed**
@@ -106,6 +113,13 @@ On a wrong answer:
 - The **full lesson is NOT offered here.** A miss inside a set costs one nutshell, not a detour.
 
 ## G. Escalation override — three same-cause misses force the lesson
+
+> **IMPLEMENTED 2026-08-06** — `src/engine/escalation.js` (`ESCALATION_MISS_THRESHOLD = 3`). The 3rd
+> same-concept, same-cause miss opens the **lesson** overlay with `forced: true` — the learner is
+> routed in, never asked. Different causes or different concepts do not accumulate; an undiagnosed
+> miss (cause null) never escalates; prior-session misses carry via `priorMisses`. Tests in
+> `test/escalation.test.js`. (The cause is diagnosed by §6.5 / `diagnose.js` and passed in — this
+> module decides the overlay only.)
 
 If a learner records **3 misses on the same concept with the same diagnosed cause** (§6.5 causes):
 

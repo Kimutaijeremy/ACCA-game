@@ -47,6 +47,10 @@ export {
   labelFor, assertControlLabelsHonest, toJSON as sessionToJSON, fromJSON as sessionFromJSON,
   SESSION_SCHEMA, SESSION_STATUS, OVERLAY_SURFACES, CONTROL_LABELS,
 } from './session.js';
+export {
+  resolveAfterAnswer, answerAndResolve, sameConceptCauseMisses,
+  MISS_OUTCOME, ESCALATION_MISS_THRESHOLD,
+} from './escalation.js';
 export { mulberry32, makeRng, seedFromString } from './rng.js';
 export {
   paperProgress, paperStatuses, paperStatusesByTopic, progressLabel,

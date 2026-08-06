@@ -31,14 +31,19 @@ The Execution Order (`spec/PAPER_TRAIL_EXECUTION_ORDER.md`) is standing.
 - **WP numbering dropped.** Brief §8 no longer uses WP1→WP5; it is an inventory of work bodies.
   A **reordered work plan** is coming from Jeremy in the next session — it sets sequence/priority.
 - **Amendment 01.** Recorded (`spec/BRIEF_AMENDMENT_01.md`): exam-shaped navigation (Section A/B),
-  session state, item freshness, `papertrail:` namespace, etc. Only **clause E is implemented**
-  (`src/engine/session.js` + `test/session.test.js`). Clauses A–D and F–I are spec only.
+  session state, item freshness, `papertrail:` namespace, etc. **Clauses E, F, G are implemented**
+  at the engine layer — E `src/engine/session.js`; F/G `src/engine/escalation.js` (nutshell-on-miss;
+  3 same-concept same-cause misses force the lesson as an overlay). Clauses A–D, H, I are spec only.
   **LW (clauses C/D) is deferred and variant-undecided** — do not author LW syllabus, graph, or items;
   the LW format lines are retained for later.
+- **Authoring contract.** `spec/AUTHORING_CONTRACT.md` defines "one concept authored" = lesson +
+  one-line nutshell + rung floor set (cc3/g3/s3/st1) + exactly 1 sealed item, authored together;
+  breadth-before-depth per paper; batch acceptance via `items:check`. **15/191 authored, 176 remain.**
+  Do not start authoring on its strength — the reordered work plan schedules it.
 
 ## Verify commands
 
-- `npm test` — full suite (**110 green** as of 2026-08-06, incl. 12 session tests).
+- `npm test` — full suite (**119 green** as of 2026-08-06, incl. session + escalation tests).
 - `npm run report` — WP-style foundation report (migration dry-run + the three allocation matrices).
 - `npm run items:check` — per-concept floors; `npm run ledger` — BUILD_STATUS ledger.
 
