@@ -2,9 +2,12 @@
 
 **Amends:** `PAPER_TRAIL_BUILD_BRIEF.md` (primarily §1, §6.2–§6.4, §6.6, §6.9; §8 work packages).
 **Date:** 2026-08-06.
-**Status:** RECORDED, NOT IMPLEMENTED. This amendment is **executed in WP2**, not now. WP1 remains
-the stop point. Nothing in this document has been built; it is the specification the next work
-package works to.
+**Status (updated 2026-08-06):** partially implemented.
+- **Clause E is IMPLEMENTED** — `src/engine/session.js` + `test/session.test.js` (110 tests green).
+- **Clauses A–D and F–I remain specification only** — built to under the **reordered work plan**
+  (the WP1 → WP5 numbering was dropped from the brief on 2026-08-06). Nothing in those clauses has
+  been built.
+- **LW (clauses C, D) is deferred and variant-undecided** — see the note under clause D.
 
 This amendment turns the practice surface from "topic pages plus mixed sets of ten" into a structure
 that mirrors the real exam: **each paper has a Section A and a Section B**, and topic-blocked drilling
@@ -47,7 +50,7 @@ Per session:
 |---|---|
 | FA | 1 × 15 marks |
 | MA | 2 × 10 marks |
-| LW | 3 × 6 marks |
+| LW | 3 × 6 marks *(deferred — see note under clause D)* |
 
 - **Timed at 1.2 minutes per mark.**
 - **Rotation:**
@@ -69,7 +72,19 @@ These are the formats of record for readiness (§6.7) and for the sealed mock (�
 Section A (clause B, 10 OTQs) is a scaled sample of the format-of-record Section A; a practice
 Section B (clause C) is a subset of the format-of-record Section B at full per-question value.
 
+> **LW is deferred and variant-undecided (2026-08-06).** Jeremy has **not sat LW**. LW is live scope
+> for him as a student, but **clauses C and D are DEFERRED for LW**: do **not** author LW syllabus,
+> concept graph, or items. The LW lines recorded here — **Section A 25×2 + 20×1, Section B 5×6**, and
+> the practice split **3×6** — are kept **for later reference only**. LW is additionally **blocked on
+> a variant decision** (which LW variant Jeremy will sit); nothing LW proceeds until that is settled.
+> FA and MA under clauses C/D are unaffected.
+
 ## E. Session state is a persisted, resumable object — teaching is always an overlay
+
+> **IMPLEMENTED 2026-08-06** — `src/engine/session.js`, tests in `test/session.test.js`. The engine
+> models the session object, the position index, overlay open/close (position untouched), `resume`
+> (→ question n+1), and `restart` as a function and label distinct from resume. Wiring the app UI to
+> these (overlays as real overlays, honest control labels on screen) lands with the navigation work.
 
 Session state is a **persisted object carrying a position index**, not transient screen state.
 
@@ -120,9 +135,9 @@ default.)*
 
 ---
 
-## Conflicts and supersessions to reconcile in WP2 (not resolved here)
+## Conflicts and supersessions to reconcile under the reordered work plan (not resolved here)
 
-Recorded so WP2 starts with eyes open — do not act on these now:
+Recorded so the next work starts with eyes open — do not act on these now:
 
 1. **The branch is already past the pristine WP1 stop point.** `rebuild/wp1-foundation` carries
    WP2a (diagnosis) and Amendments A2/A5/A6 (lineage unlocking, per-concept authoring, topic pages,
@@ -132,13 +147,16 @@ Recorded so WP2 starts with eyes open — do not act on these now:
    paper" the primary loop; this amendment keeps that engine but reframes it as **Section A** and adds
    **Section B**, demoting topic-blocked drilling. The A6 topic-page navigation tier is replaced by
    the overlay model (clause E).
-3. **LW is introduced here** (clauses C/D) alongside FA/MA/BT. The brief's Knowledge-level scope is
-   BT/MA/FA; LW's syllabus, concept graph and item bank are **not yet authored**. WP2 must confirm
-   whether LW enters scope now or the LW rows are deferred.
+3. **LW is deferred and variant-undecided (resolved 2026-08-06 — see the note under clause D).** LW
+   clauses C/D do not proceed: no LW syllabus, graph, or items are authored, and LW is blocked on a
+   variant decision. The LW format lines are retained for later. FA/MA/BT are unaffected.
 4. **Section B needs whole MTQ items at full mark value.** The current bank is OTQ/short-item shaped
-   (§6.3 rungs); full-value MTQs are a new item class WP2/WP3 must author.
+   (§6.3 rungs); full-value MTQs are a new item class the items work must author.
 5. **8-of-last-10 completion (§6.4) is measured on topic questions.** With Section A drawing across
-   the whole syllabus, WP2 must confirm how completion signal accrues under the new navigation.
+   the whole syllabus, the reordered work plan must confirm how completion signal accrues under the
+   new navigation.
 
-**Execution:** hold until Jeremy reviews. Then fold clauses A–I into the numbered sections of
-`PAPER_TRAIL_BUILD_BRIEF.md` and the Execution Order, and schedule against WP2. Not before.
+**Execution:** hold until Jeremy reviews. Then fold clauses A–D and F–I into the sections of
+`PAPER_TRAIL_BUILD_BRIEF.md` and the Execution Order, and schedule under the reordered work plan.
+Clause E is already implemented at the engine layer; its UI wiring schedules with the navigation
+work. Not before.

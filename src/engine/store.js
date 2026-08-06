@@ -63,6 +63,7 @@ export function emptyState() {
     flags: [], // Jeremy's error-finder review queue (Order §7) — small, rides in meta
     sets: [], // set-of-ten results: session feedback + rolling average (Amendment A6). Small, in meta.
     deeperOpens: [], // "Go deeper" opens (Amendment A6, §7A) — thin-topic signal. Small, in meta.
+    session: null, // the active resumable session (Brief Amendment 01, clause E). One at a time, in meta.
     attemptLog: [],
   };
 }
@@ -75,6 +76,7 @@ export function metaOf(state) {
     flags: state.flags ?? [],
     sets: state.sets ?? [],
     deeperOpens: state.deeperOpens ?? [],
+    session: state.session ?? null,
   };
 }
 
@@ -235,6 +237,23 @@ export class LearnerStore {
 
   /** All recorded "Go deeper" opens. */
   deeperOpens() { return this.loadMeta()?.deeperOpens ?? []; }
+
+  /** Persist the active resumable session (Amendment 01, clause E). Rides in meta, exports with all. */
+  saveSession(session) {
+    const meta = this.loadMeta() ?? emptyState();
+    meta.session = session;
+    return this.saveMeta(meta);
+  }
+
+  /** The persisted active session, or null. */
+  loadSession() { return this.loadMeta()?.session ?? null; }
+
+  /** Drop the active session (e.g. once its set is finished and recorded). */
+  clearSession() {
+    const meta = this.loadMeta() ?? emptyState();
+    meta.session = null;
+    return this.saveMeta(meta);
+  }
 
   saveMeta(meta) {
     const res = trySaveMeta(meta, this.kv);

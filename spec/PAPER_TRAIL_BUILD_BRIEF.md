@@ -435,42 +435,34 @@ Needs a dry-run mode and a rollback path, and must handle a v3 file with keys mi
 
 ---
 
-## 8. Work packages
+## 8. Build work
 
-**Run WP1, then stop and report.** WP2 through WP5 run consecutively after Jeremy approves WP1.
-The stop is deliberate: if the mastery state machine is wrong, it must be found before 191 lessons
-are written against it.
+> **WP numbering dropped, 2026-08-06.** The original WP1 → WP5 sequence has been **overtaken**: the
+> branch already carries the foundation, the seven-cause diagnosis engine, and several amendments
+> (A2, A5, A6, and Amendment 01) that reorder and reshape the remaining work. Jeremy is issuing a
+> **reordered work plan** in the next session. What follows is retained only as the *inventory* of
+> work — bodies of work, not an ordered sequence. The old "run WP1, then stop" rule no longer governs;
+> the foundation stop-point has already been passed and approved in practice.
 
-### WP1 — Foundation
-- Ingest `concepts.json` into the data layer; concept ids as permanent keys.
-- Build the engine data model per 6.1, 6.2 and 6.9: attempt log as single source of truth; five
-  mastery states with the exact evidence rules; review scheduler with decay; every state derived
-  from the log, never written directly.
-- Build the v3 migration per Section 7, with dry-run and rollback.
-- Produce the three allocation matrices per 6.4. **Every cell will read zero items — that is
-  correct.** The report must fail loudly while cells are empty.
-- Unit tests driving a concept through all five states and back down via decay.
-- **No lessons. No items.**
-- **THEN STOP AND REPORT:** the data model as built, test results, migration dry-run result
-  against the real fixture, and the three empty matrices.
+The remaining work, as bodies rather than a numbered order:
 
-### WP2 — Diagnostics and lessons
-The seven-cause engine per 6.5, with engineered distractors and the remediation routing table.
-Lessons for all 191 concepts per 6.3.
+- **Foundation** — *[built]* engine data model per 6.1, 6.2, 6.9: attempt log as single source of
+  truth; five mastery states with the exact evidence rules; review scheduler with decay; every state
+  derived from the log, never written directly. v3 migration per Section 7 with dry-run and rollback.
+  The three allocation matrices per 6.4, failing loudly while cells are empty.
+- **Diagnostics and lessons** — the seven-cause engine per 6.5, with engineered distractors and the
+  remediation routing table; the teaching layer per 6.3.
+- **Items** — practice banks against the allocation matrices, floors and caps enforced, calculation
+  items as parameterized generators.
+- **Sealed pools and readiness** — simulation pools unreachable from any practice path per 6.6; both
+  readiness numbers per 6.7; the dashboard per 6.8.
+- **Cutover** — inventory **every** entry point into the old app (home-screen icon, bookmarks, the
+  desk screen, topic lists, any documented route), redirect each to the new system, retire the old
+  path, verify from Jeremy's phone home screen — his actual starting point — **then ask him to
+  approve publishing.**
 
-### WP3 — Items
-Practice banks against the allocation matrices, floors and caps enforced, at least 40% of
-calculation items as parameterized generators.
-
-### WP4 — Sealed pools and readiness
-Simulation pools unreachable from any practice path per 6.6; both readiness numbers per 6.7; the
-dashboard per 6.8.
-
-### WP5 — Cutover
-When a build replaces existing functionality, "done" requires a cutover phase. Inventory **every**
-entry point into the old app — home-screen icon, bookmarks, the desk screen, topic lists, any
-documented route. Redirect them to the new system. Retire the old path. Verify from Jeremy's
-phone home screen, his actual starting point. **Then ask him to approve publishing.**
+The sequence and priority across these bodies are set by the forthcoming reordered work plan, not by
+this section.
 
 ---
 

@@ -41,6 +41,12 @@ export {
 export {
   validateTopic, indexTopics, topicIdForConcept, deeperSectionForConcept, TEACHING_PAPERS,
 } from './topics.js';
+export {
+  createSession, currentItemId, answerCurrent, resume, restart, isComplete,
+  openOverlay, closeOverlay, overlayOpen, saveSession, loadSession,
+  labelFor, assertControlLabelsHonest, toJSON as sessionToJSON, fromJSON as sessionFromJSON,
+  SESSION_SCHEMA, SESSION_STATUS, OVERLAY_SURFACES, CONTROL_LABELS,
+} from './session.js';
 export { mulberry32, makeRng, seedFromString } from './rng.js';
 export {
   paperProgress, paperStatuses, paperStatusesByTopic, progressLabel,
