@@ -40,12 +40,24 @@ The Execution Order (`spec/PAPER_TRAIL_EXECUTION_ORDER.md`) is standing.
   one-line nutshell + rung floor set (cc3/g3/s3/st1) + exactly 1 sealed item, authored together;
   breadth-before-depth per paper; batch acceptance via `items:check`. **15/191 authored, 176 remain.**
   Do not start authoring on its strength — the reordered work plan schedules it.
+- **Acceptance tooling.** `items:check` is now the contract gate (`src/engine/authoring.js`): it
+  reports lesson/nutshell/rung/sealed/breadth per concept and runs an injected sealed-exclusion probe.
+  **Batch 0 audit (2026-08-06): 0/15 ACCEPTED** — all 15 have lesson + rung floor but **every one is
+  missing its nutshell and its sealed item**; BT-01/BT-04/FA-04/FA-11 also carry a +1 over-floor
+  depth-before-breadth flag. Nutshells live only at topic-page level today; zero sealed items exist.
+  `npm run audit:sample` writes `out/audit-sample.md` (gitignored external-review export; FA-04/11/26).
+- **Amendment 02.** `spec/BRIEF_AMENDMENT_02.md` (RECORDED, NOT IMPLEMENTED): cross-paper retention
+  queue — every concept the decay engine reports due today across all papers, one mixed set, default
+  landing when anything is due, time-bounded (~20 min), clause-H freshness, never sealed, keeps working
+  after a paper is passed. Depends on Amendment 01 clause H.
 
 ## Verify commands
 
-- `npm test` — full suite (**119 green** as of 2026-08-06, incl. session + escalation tests).
+- `npm test` — full suite (**128 green** as of 2026-08-06: session + escalation + authoring tests).
 - `npm run report` — WP-style foundation report (migration dry-run + the three allocation matrices).
-- `npm run items:check` — per-concept floors; `npm run ledger` — BUILD_STATUS ledger.
+- `npm run items:check` — the authoring-contract acceptance gate (exit 1 until artifacts authored).
+- `npm run audit:sample` — write `out/audit-sample.md` (external-review export, gitignored).
+- `npm run ledger` — BUILD_STATUS ledger.
 
 ## Clause E (implemented) — session model contract
 

@@ -51,6 +51,10 @@ export {
   resolveAfterAnswer, answerAndResolve, sameConceptCauseMisses,
   MISS_OUTCOME, ESCALATION_MISS_THRESHOLD,
 } from './escalation.js';
+export {
+  validateNutshell, auditConcept, meetsFloor, isSealed, practicePool, sealedPool, sealedLeaks,
+  NUTSHELL_MAX_CHARS, FLOOR_TOTAL,
+} from './authoring.js';
 export { mulberry32, makeRng, seedFromString } from './rng.js';
 export {
   paperProgress, paperStatuses, paperStatusesByTopic, progressLabel,
