@@ -3,9 +3,11 @@
 **Amends:** `PAPER_TRAIL_BUILD_BRIEF.md` (primarily §1, §6.2–§6.4, §6.6, §6.9; §8 work packages).
 **Date:** 2026-08-06.
 **Status (updated 2026-08-06):** partially implemented.
-- **Clauses E, F and G are IMPLEMENTED** — `src/engine/session.js` (E), `src/engine/escalation.js`
-  (F, G), tests in `test/session.test.js` + `test/escalation.test.js` (119 tests green). Engine layer
-  only; UI wiring lands with the navigation work.
+- **Clauses E, F and G are IMPLEMENTED AND UI-WIRED (2026-08-07)** — engine in `src/engine/session.js`
+  (E) and `src/engine/escalation.js` (F, G); the app is wired through `src/app/session-runner.js`, and
+  `app.js`'s set runner is now the persisted session with teaching overlays. Tests:
+  `test/session.test.js`, `test/escalation.test.js`, `test/session-runner.test.js`, and the real-UI
+  `npm run wiring:smoke` (+ `set:smoke`, `preflight`).
 - **Clauses A–D, H and I remain specification only** — built to under the **reordered work plan**
   (the WP1 → WP5 numbering was dropped from the brief on 2026-08-06). Nothing in those clauses has
   been built.
@@ -85,8 +87,10 @@ Section B (clause C) is a subset of the format-of-record Section B at full per-q
 
 > **IMPLEMENTED 2026-08-06** — `src/engine/session.js`, tests in `test/session.test.js`. The engine
 > models the session object, the position index, overlay open/close (position untouched), `resume`
-> (→ question n+1), and `restart` as a function and label distinct from resume. Wiring the app UI to
-> these (overlays as real overlays, honest control labels on screen) lands with the navigation work.
+> (→ question n+1), and `restart` as a function and label distinct from resume. **UI-wired 2026-08-07:**
+> `app.js` runs sets as persisted sessions (survive an app close, Resume returns to question n+1),
+> teaching surfaces open as overlays (no route change), and set controls use `CONTROL_LABELS`
+> ("Resume" / "Start over").
 
 Session state is a **persisted object carrying a position index**, not transient screen state.
 
@@ -101,10 +105,11 @@ Session state is a **persisted object carrying a position index**, not transient
 
 ## F. On a miss — nutshell after commit, then continue
 
-> **IMPLEMENTED 2026-08-06** — `src/engine/escalation.js` (`resolveAfterAnswer` / `answerAndResolve`).
-> A committed miss opens the **nutshell** overlay (ref flagged `offersLesson: false`); a correct
-> answer opens nothing; the overlay never moves the set position, so closing it continues to the next
-> question. Tests in `test/escalation.test.js`.
+> **IMPLEMENTED 2026-08-06; UI-wired 2026-08-07** — `src/engine/escalation.js` (`resolveAfterAnswer` /
+> `answerAndResolve`). A committed miss opens the **nutshell** overlay (ref flagged `offersLesson: false`);
+> a correct answer opens nothing; the overlay never moves the set position, so closing it continues to
+> the next question. In the app, the overlay shows the **per-concept** nutshell (`lesson.nutshell`),
+> not the topic-page one. Tests in `test/escalation.test.js`, `test/session-runner.test.js`, `wiring:smoke`.
 
 On a wrong answer:
 
@@ -114,12 +119,13 @@ On a wrong answer:
 
 ## G. Escalation override — three same-cause misses force the lesson
 
-> **IMPLEMENTED 2026-08-06** — `src/engine/escalation.js` (`ESCALATION_MISS_THRESHOLD = 3`). The 3rd
-> same-concept, same-cause miss opens the **lesson** overlay with `forced: true` — the learner is
-> routed in, never asked. Different causes or different concepts do not accumulate; an undiagnosed
-> miss (cause null) never escalates; prior-session misses carry via `priorMisses`. Tests in
-> `test/escalation.test.js`. (The cause is diagnosed by §6.5 / `diagnose.js` and passed in — this
-> module decides the overlay only.)
+> **IMPLEMENTED 2026-08-06; UI-wired 2026-08-07** — `src/engine/escalation.js`
+> (`ESCALATION_MISS_THRESHOLD = 3`). The 3rd same-concept, same-cause miss opens the **lesson** overlay
+> with `forced: true` — the learner is routed in, never asked. Different causes or different concepts
+> do not accumulate; an undiagnosed miss (cause null) never escalates; prior-session misses carry via
+> `priorMisses` (the app computes the lifetime tally from the attempt log). In the app the lesson
+> overlay renders the full concept lesson. Tests in `test/escalation.test.js`,
+> `test/session-runner.test.js`. (The cause is diagnosed by §6.5 / `diagnose.js` and passed in.)
 
 If a learner records **3 misses on the same concept with the same diagnosed cause** (§6.5 causes):
 

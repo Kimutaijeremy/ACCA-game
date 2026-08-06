@@ -31,11 +31,13 @@ The Execution Order (`spec/PAPER_TRAIL_EXECUTION_ORDER.md`) is standing.
 - **WP numbering dropped.** Brief §8 no longer uses WP1→WP5; it is an inventory of work bodies.
   A **reordered work plan** is coming from Jeremy in the next session — it sets sequence/priority.
 - **Amendment 01.** Recorded (`spec/BRIEF_AMENDMENT_01.md`): exam-shaped navigation (Section A/B),
-  session state, item freshness, `papertrail:` namespace, etc. **Clauses E, F, G are implemented**
-  at the engine layer — E `src/engine/session.js`; F/G `src/engine/escalation.js` (nutshell-on-miss;
-  3 same-concept same-cause misses force the lesson as an overlay). Clauses A–D, H, I are spec only.
-  **LW (clauses C/D) is deferred and variant-undecided** — do not author LW syllabus, graph, or items;
-  the LW format lines are retained for later.
+  session state, item freshness, `papertrail:` namespace, etc. **Clauses E, F, G are implemented AND
+  UI-wired (2026-08-07):** `app.js`'s set runner is now a persisted session via
+  `src/app/session-runner.js` (E — survives close, Resume→n+1, teaching surfaces are overlays with no
+  route change, "Start over" restart), a committed miss opens the per-concept nutshell overlay (F),
+  and 3 same-concept same-cause misses force the lesson overlay (G). SW bumped to `papertrail-v4.7.0`.
+  Clauses A–D, H, I are spec only. **LW (clauses C/D) is deferred and variant-undecided** — do not
+  author LW syllabus, graph, or items; the LW format lines are retained for later.
 - **Authoring contract.** `spec/AUTHORING_CONTRACT.md` defines "one concept authored" = lesson +
   one-line nutshell + rung floor set (cc3/g3/s3/st1) + exactly 1 sealed item, authored together;
   breadth-before-depth per paper; batch acceptance via `items:check`. **15/191 authored, 176 remain.**
@@ -58,10 +60,12 @@ The Execution Order (`spec/PAPER_TRAIL_EXECUTION_ORDER.md`) is standing.
 
 ## Verify commands
 
-- `npm test` — full suite (**129 green** as of 2026-08-06: session + escalation + authoring tests).
+- `npm test` — full suite (**136 green**: session, escalation, authoring, session-runner wiring).
 - `npm run report` — WP-style foundation report (migration dry-run + the three allocation matrices).
-- `npm run items:check` — the authoring-contract acceptance gate (exit 1 until artifacts authored).
-- `npm run audit:sample` — write `out/audit-sample.md` (external-review export, gitignored).
+- `npm run items:check` — the authoring-contract acceptance gate (15/15 ACCEPTED).
+- `npm run wiring:smoke` — real-UI proof of clause E/F wiring (persist/resume/overlay/labels).
+- `npm run set:smoke` / `npm run preflight` — real-UI set flow + Section 8 publish gate (both green).
+- `npm run audit:sample` / `npm run review:short` — external-review exports (`out/`, gitignored).
 - `npm run ledger` — BUILD_STATUS ledger.
 
 ## Clause E (implemented) — session model contract

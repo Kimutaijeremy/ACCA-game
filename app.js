@@ -7,11 +7,13 @@
 import {
   loadGraph, LearnerStore, deriveAll, readV3FromStore, applyMigration,
   paperStatusesByTopic, paperTopicSummary, assembleSet, rollingAverage, topicHint,
-  defaultAreaWeights, topicIdForConcept, deeperSectionForConcept, instantiate, diagnose, REMEDIATION, makeRng,
+  defaultAreaWeights, topicIdForConcept, instantiate, diagnose, REMEDIATION, makeRng,
 } from './src/engine/index.js';
 import { TOPICS_BY_PAPER, topicById, hasTopic } from './src/content/topics/index.js';
 import { ITEMS_BY_PAPER, itemsForConcept } from './src/content/items/index.js';
 import { EXAMINER_FLAGGED_CONCEPTS } from './src/content/examiner-insights.js';
+import { lessonForConcept } from './src/content/lessons/index.js';
+import * as runner from './src/app/session-runner.js'; // wiring for Amendment 01 clauses E, F, G
 
 // Concepts an examiner report flags get a small within-area selection boost (an emphasis NUDGE — it
 // does not change the constructed area-weight tables in sets.js). Amendment A6, 2026-08-01.
@@ -74,12 +76,14 @@ async function boot() {
       await applyMigration(v3 ?? {}, store, { now: Date.now() });
     }
     await refreshAll();
+    buildItemIndex();
+    runner.assertControlLabelsHonest(); // clause E guard: no set control may read as continuing
     buildNav();
     window.addEventListener('hashchange', route);
     route();
     window.__PT__ = {
       store, graph, refreshAll: async () => { await refreshAll(); route(); },
-      curItem: () => (play ? play.instance : null), stateOf,
+      curItem: () => (ui ? ui.instance : null), curSession: () => session, stateOf,
     };
   } catch (e) {
     app.innerHTML = `<div class="banner">The app failed to load: ${esc(e.message)}</div>`;
@@ -181,7 +185,7 @@ function screenPaper(paper) {
     + `<div class="eyebrow">${esc(paper)}</div><h1>${esc(PAPER_NAMES[paper])}</h1>`
     + `<p class="progress">${sum.complete} of ${sum.total} topics complete${avgLabel(paper) ? ` · ${avgLabel(paper)}` : ''}</p>`
     + (isRepresentative(paper) ? '' : `<p class="muted small">Sets aren’t yet exam-representative — ${builtLabel(paper)}. They’ll shape to the exam as more topics are built.</p>`)
-    + `<button class="btn block" data-act="set" data-paper="${paper}">Practise a set of 10</button>`
+    + setControlsHTML(paper)
     + body;
 }
 
@@ -207,7 +211,7 @@ function screenTopic(topicId) {
     + `<ol>${T.worked.steps.map((s) => `<li>${inline(s)}</li>`).join('')}</ol>`
     + `<div class="answer"><strong>Answer.</strong> ${inline(T.worked.answer)}</div></div>`
     + deeperHTML
-    + `<button class="btn block" data-act="set" data-paper="${T.paper}">Practise a set of 10</button>`;
+    + setControlsHTML(T.paper);
   if (open) {
     const el = document.getElementById(`deeper-${deeperSection}`) || document.getElementById('deeper');
     if (el) el.scrollIntoView({ block: 'start' });
@@ -267,10 +271,30 @@ function screenData() {
   if (inp) inp.addEventListener('change', importFile);
 }
 
-// ---------- set runner (the main event) ----------
-let play = null;
+// ---------- set runner — a persisted session (Amendment 01 clauses E, F, G) ----------
+let itemById = new Map();
+function buildItemIndex() {
+  itemById = new Map();
+  for (const arr of Object.values(ITEMS_BY_PAPER)) for (const it of arr) itemById.set(it.id, it);
+}
 
-function startSet(paper) {
+let session = null; // the persisted set session (session-runner.js) — survives an app close
+let ui = null;      // ephemeral per-question view state (not persisted)
+let setRecorded = false;
+
+function setControlsHTML(paper) {
+  const active = activeSessionFor(paper);
+  if (active) {
+    return `<button class="btn block" data-act="set-resume" data-paper="${paper}">${esc(runner.CONTROL_LABELS.resume)} — question ${active.position + 1} of ${active.itemIds.length}</button>`
+      + `<button class="btn ghost block" data-act="set-new" data-paper="${paper}">Start a new set</button>`;
+  }
+  return `<button class="btn block" data-act="set-new" data-paper="${paper}">Practise a set of 10</button>`;
+}
+function activeSessionFor(paper) {
+  const s = runner.loadSession(store);
+  return s && s.paperId === paper && !runner.isComplete(s) ? s : null;
+}
+function assembleFor(paper) {
   const sum = summaryFor(paper);
   const shortfall = {}; // topicId -> shortfall (higher = more short of completion)
   for (const t of sum.topics) shortfall[t.topicId] = t.complete ? 0 : (11 - t.windowSize);
@@ -279,133 +303,197 @@ function startSet(paper) {
   // concept (real evidence beats reasoned judgement). Within-area only; area targets are unchanged.
   const shortfallOf = (it) => (shortfall[topicIdForConcept(graph, it.conceptIds[0])] ?? 0)
     + (it.conceptIds.some((c) => EXAMINER_FLAGGED.has(c)) ? 2 : 0);
-  const built = assembleSet(ITEMS_BY_PAPER[paper] ?? [], {
+  return assembleSet(ITEMS_BY_PAPER[paper] ?? [], {
     rng: makeRng((Math.floor(Math.random() * 0x7fffffff)) >>> 0),
     size: 10, areaOf, areaWeights: defaultAreaWeights(graph, paper), shortfallOf,
   });
+}
+function goToSet(paper) { if (location.hash === '#/set/' + paper) screenSet(); else location.hash = '#/set/' + paper; }
+function startSetFresh(paper) {
+  const built = assembleFor(paper);
   if (!built.items.length) { toast('No questions for this paper yet'); return; }
-  play = { paper, queue: built.items, i: 0, correctCount: 0, answered: 0, examShaped: built.examShaped };
-  serveCurrent();
-  route();
+  session = runner.startSet(store, { paperId: paper, itemIds: built.items.map((it) => it.id), examShaped: built.examShaped });
+  setRecorded = false; serveCurrent(); goToSet(paper);
+}
+function resumeSet(paper) {
+  const s = activeSessionFor(paper);
+  if (!s) { startSetFresh(paper); return; }
+  session = s; setRecorded = false; serveCurrent(); goToSet(paper);
+}
+function enterSetRoute(paper) {
+  if (session && session.paperId === paper && !runner.isComplete(session)) { if (!ui) serveCurrent(); screenSet(); return; }
+  const s = activeSessionFor(paper);
+  if (s) { session = s; setRecorded = false; serveCurrent(); screenSet(); } else startSetFresh(paper);
 }
 function serveCurrent() {
-  const item = play.queue[play.i];
-  play.instance = instantiate(item, (Math.floor(Math.random() * 0x7fffffff)) >>> 0);
-  play.shownAt = Date.now(); play.chosen = null; play.usedHint = false; play.phase = 'ask'; play.result = null;
+  if (session.overlay) session = runner.closeTeaching(store, session); // fresh question — no stale overlay
+  const item = itemById.get(runner.currentItemId(session));
+  ui = { instance: instantiate(item, runner.seedAt(session)), shownAt: Date.now(), chosen: null, usedHint: false, phase: 'ask', result: null };
 }
 
-function screenSet() {
-  if (!play) { location.hash = '#/'; return; }
-  const inst = play.instance;
-  const head = headerHTML + bannerHTML()
-    + `<a class="back" data-act="paper" data-paper="${play.paper}" href="#/paper/${play.paper}">${esc(PAPER_NAMES[play.paper])}</a>`
-    + `<div class="eyebrow">${esc(play.paper)} · set of 10 · question ${play.i + 1} of ${play.queue.length}</div>`
-    + `<div class="rowbtns"><span class="progress">score ${play.correctCount}/${play.answered}</span>`
-    + `<button class="flagbtn" data-act="flag" data-kind="item" data-id="${inst.itemId}">Flag</button></div>`;
-  const opts = inst.options.map((o, idx) => {
+function optionsHTML(inst, chosen, feedback) {
+  return inst.options.map((o, idx) => {
     const label = String.fromCharCode(65 + idx);
     let cls = 'opt';
-    if (play.phase === 'feedback') {
-      if (o.id === inst.answerId) cls += ' correct';
-      else if (o.id === play.chosen) cls += ' wrong';
-      else cls += ' dim';
-    } else if (o.id === play.chosen) cls += ' chosen';
-    return `<button class="${cls}" data-act="opt" data-opt="${o.id}" ${play.phase === 'feedback' ? 'disabled' : ''}>`
-      + `<span class="ol">${label}</span>${inline(o.text)}</button>`;
+    if (feedback) { if (o.id === inst.answerId) cls += ' correct'; else if (o.id === chosen) cls += ' wrong'; else cls += ' dim'; }
+    else if (o.id === chosen) cls += ' chosen';
+    return `<button class="${cls}" data-act="opt" data-opt="${o.id}" ${feedback ? 'disabled' : ''}><span class="ol">${label}</span>${inline(o.text)}</button>`;
   }).join('');
-  let body = `<div class="qstem">${inline(inst.stem)}</div><div class="opts">${opts}</div>`;
-  if (play.phase === 'ask') {
+}
+function screenSet() {
+  if (!session) { location.hash = '#/'; return; }
+  const paper = session.paperId;
+  const total = session.itemIds.length;
+  const answered = session.responses.length;
+  const scoreN = session.responses.filter((r) => r.correct).length;
+  const qNo = Math.min(ui && ui.phase === 'feedback' ? answered : answered + 1, total);
+  const inst = ui ? ui.instance : null;
+  const head = headerHTML + bannerHTML()
+    + `<a class="back" data-act="paper" data-paper="${paper}" href="#/paper/${paper}">${esc(PAPER_NAMES[paper])}</a>`
+    + `<div class="eyebrow">${esc(paper)} · set of 10 · question ${qNo} of ${total}</div>`
+    + `<div class="rowbtns"><span class="progress">score ${scoreN}/${answered}</span>`
+    + (inst ? `<button class="flagbtn" data-act="flag" data-kind="item" data-id="${inst.itemId}">Flag</button>` : '') + '</div>';
+  let body = '';
+  if (ui.phase === 'ask') {
+    body = `<div class="qstem">${inline(inst.stem)}</div><div class="opts">${optionsHTML(inst, ui.chosen, false)}</div>`;
     if (inst.scaffold && inst.scaffold.length) {
-      body += play.usedHint
+      body += ui.usedHint
         ? `<div class="hint"><div class="eyebrow">Hint</div><ol>${inst.scaffold.map((h) => `<li>${inline(h)}</li>`).join('')}</ol></div>`
         : '<button class="btn ghost small" data-act="hint">Show a hint</button>';
     }
-    body += `<button class="btn block" data-act="check" ${play.chosen ? '' : 'disabled'}>Check my answer</button>`;
+    body += `<button class="btn block" data-act="check" ${ui.chosen ? '' : 'disabled'}>Check my answer</button>`;
+    // Restart control — honest label; a restart never reads as continuing (clause E).
+    body += `<button class="btn ghost small" data-act="restart">${esc(runner.CONTROL_LABELS.restart)}</button>`;
   } else {
-    const r = play.result;
+    const r = ui.result; const fi = r.instance;
+    body = `<div class="qstem">${inline(fi.stem)}</div><div class="opts">${optionsHTML(fi, r.chosen, true)}</div>`;
     body += r.correct ? '<div class="verdict ok">✓ Correct</div>' : '<div class="verdict no">✗ Not quite</div>';
-    body += `<div class="rationale">${inline(inst.rationale || '')}</div>`;
+    body += `<div class="rationale">${inline(fi.rationale || '')}</div>`;
     if (!r.correct && r.diagnosis) {
       const d = r.diagnosis; const rem = REMEDIATION[d.cause] || {};
       body += `<div class="diag"><div class="eyebrow">Likely cause</div><div class="cause">${esc(CAUSE_LABEL[d.cause] || d.cause)}</div>`
         + (d.needsProbe ? '<p class="small muted">Best guess for now — more answers will sharpen it.</p>' : '')
-        + `<div class="eyebrow" style="margin-top:8px">The fix</div><ul>${(rem.actions || []).map((a) => `<li>${esc(a)}</li>`).join('')}</ul>`
-        + (() => {
-          const tid = topicIdForConcept(graph, inst.conceptIds[0]);
-          const sec = deeperSectionForConcept(topicById(tid), inst.conceptIds[0]);
-          return `<button class="btn ghost small" data-act="godeeper" data-topic="${esc(tid)}" data-sec="${sec}">Go deeper on this topic</button>`;
-        })()
-        + '</div>';
+        + `<div class="eyebrow" style="margin-top:8px">The fix</div><ul>${(rem.actions || []).map((a) => `<li>${esc(a)}</li>`).join('')}</ul></div>`;
     }
-    if (r.promoted) body += `<div class="promote">▲ ${esc(inst.conceptIds[0])} is now ${esc(r.newState)}</div>`;
-    const last = play.i >= play.queue.length - 1;
-    body += `<button class="btn block" data-act="next">${last ? 'Finish set' : 'Next question'}</button>`;
+    if (r.promoted) body += `<div class="promote">▲ ${esc(fi.conceptIds[0])} is now ${esc(r.newState)}</div>`;
+    body += `<button class="btn block" data-act="next">${runner.isComplete(session) ? 'Finish set' : 'Next question'}</button>`;
   }
-  app.innerHTML = head + body;
+  app.innerHTML = head + body + overlayHTML();
+}
+// Teaching surfaces are OVERLAYS over the running set (clause E) — never a route change, position and
+// responses untouched (guaranteed by session-runner's open/closeTeaching).
+function overlayHTML() {
+  const ov = session && session.overlay; if (!ov) return '';
+  if (ov.surface === runner.OVERLAY_SURFACES.NUTSHELL) {
+    const L = lessonForConcept(ov.ref.conceptId);
+    return overlaySheet('In a nutshell',
+      (L && L.nutshell ? `<div class="nutshell">${inline(L.nutshell)}</div>` : '<p class="muted">No nutshell yet.</p>')
+      + '<p class="muted small">The formula or statement — nothing longer. Then keep going.</p>',
+      'Continue', 'ov-continue');
+  }
+  if (ov.surface === runner.OVERLAY_SURFACES.LESSON) {
+    return overlaySheet('Let’s revisit this — the full lesson',
+      lessonHTML(lessonForConcept(ov.ref.conceptId))
+      + '<p class="muted small">You’ve slipped the same way three times, so here is the whole lesson before you go on.</p>',
+      'Back to the set', 'ov-continue');
+  }
+  if (ov.surface === runner.OVERLAY_SURFACES.GO_DEEPER) {
+    const T = topicById(ov.ref.topicId);
+    const secs = T ? T.deeper.map((s, i) => `<div class="deepsec" id="deeper-${i}"><div class="kt">${esc(s.heading)}</div>${renderBody(s.body)}</div>`).join('') : '<p class="muted">No depth for this topic.</p>';
+    return overlaySheet('Go deeper', secs, 'Close', 'ov-close');
+  }
+  return '';
+}
+function overlaySheet(title, inner, btnLabel, btnAct) {
+  return `<div class="sheet teach"><div class="inner"><div class="eyebrow" style="margin-bottom:8px">${esc(title)}</div>${inner}`
+    + `<button class="btn block" data-act="${btnAct}">${esc(btnLabel)}</button></div></div>`;
+}
+function lessonHTML(L) {
+  if (!L) return '<p class="muted">Lesson unavailable.</p>';
+  return `<p>${inline(L.story)}</p>`
+    + (L.keypoints || []).map((k) => `<div class="keypoint"><div class="kt">${inline(k.title)}</div>${renderBody(k.body)}</div>`).join('')
+    + `<div class="worked"><div class="eyebrow">Worked example</div><p><strong>${inline(L.worked.prompt)}</strong></p>`
+    + `<ol>${L.worked.steps.map((s) => `<li>${inline(s)}</li>`).join('')}</ol>`
+    + `<div class="answer"><strong>Answer.</strong> ${inline(L.worked.answer)}</div></div>`
+    + `<p class="breath">${inline(L.compression)}</p>`;
 }
 
-function chooseOption(oid) { if (play && play.phase === 'ask') { play.chosen = oid; screenSet(); } }
+function chooseOption(oid) { if (session && ui && ui.phase === 'ask') { ui.chosen = oid; screenSet(); } }
 async function submitAnswer() {
-  if (!play || play.phase !== 'ask' || !play.chosen) return;
-  const inst = play.instance;
-  const timeMs = Date.now() - play.shownAt;
+  if (!session || !ui || ui.phase !== 'ask' || !ui.chosen) return;
+  const inst = ui.instance;
+  const conceptId = inst.conceptIds[0];
+  const chosen = ui.chosen;
+  const timeMs = Date.now() - ui.shownAt;
   const withinBudget = timeMs <= inst.budgetMs;
-  const correct = play.chosen === inst.answerId;
+  const correct = chosen === inst.answerId;
   let diagnosis = null;
   if (!correct) {
-    const prior = logRecords.filter((r) => r.kind === 'item' && r.conceptIds.includes(inst.conceptIds[0]));
+    const prior = logRecords.filter((r) => r.kind === 'item' && r.conceptIds.includes(conceptId));
     diagnosis = diagnose({
-      attempt: { correct: false, rung: inst.rung, distractor: play.chosen, timeMs, withinBudget, timed: false, itemId: inst.itemId, conceptIds: inst.conceptIds },
-      item: { distractors: inst.distractors }, prior, context: { conceptState: stateOf(inst.conceptIds[0]), budgetMs: inst.budgetMs },
+      attempt: { correct: false, rung: inst.rung, distractor: chosen, timeMs, withinBudget, timed: false, itemId: inst.itemId, conceptIds: inst.conceptIds },
+      item: { distractors: inst.distractors }, prior, context: { conceptState: stateOf(conceptId), budgetMs: inst.budgetMs },
     });
   }
-  const prevRank = states.get(inst.conceptIds[0])?.rank ?? 0;
+  const prevRank = states.get(conceptId)?.rank ?? 0;
   await store.appendRecords([{
     id: 'att-' + inst.itemId + '-' + Date.now(), kind: 'item', itemId: inst.itemId, conceptIds: inst.conceptIds,
-    rung: inst.rung, scaffold: play.usedHint === true, timeMs, withinBudget, timed: false, correct,
-    distractor: correct ? null : play.chosen, cause: diagnosis ? diagnosis.cause : null,
+    rung: inst.rung, scaffold: ui.usedHint === true, timeMs, withinBudget, timed: false, correct,
+    distractor: correct ? null : chosen, cause: diagnosis ? diagnosis.cause : null,
     confidence: diagnosis ? diagnosis.confidence : null, sessionId: SESSION, timestamp: Date.now(),
   }]);
   await refreshAll();
-  const newRank = states.get(inst.conceptIds[0])?.rank ?? 0;
-  play.answered += 1; if (correct) play.correctCount += 1;
-  play.result = { correct, diagnosis, promoted: newRank > prevRank, newState: stateOf(inst.conceptIds[0]) };
-  play.phase = 'feedback';
+  const newRank = states.get(conceptId)?.rank ?? 0;
+  const cause = diagnosis ? diagnosis.cause : null;
+  const logMissesForCC = (cid, cz) => logRecords.filter((r) => r.kind === 'item' && r.correct === false && r.conceptIds.includes(cid) && r.cause === cz).length;
+  // clause E/F/G: advance the persisted session and, on a miss, open the per-concept nutshell (F) or —
+  // at the 3rd same-concept same-cause miss — force the lesson overlay (G). Correct opens nothing.
+  const res = runner.commitAnswer(store, session, { conceptId, cause, correct, logMissesForCC });
+  session = res.session;
+  ui = { phase: 'feedback', instance: inst, result: { correct, chosen, diagnosis, promoted: newRank > prevRank, newState: stateOf(conceptId), instance: inst } };
   screenSet();
 }
 function nextQuestion() {
-  if (!play) return;
-  if (play.i >= play.queue.length - 1) { finishSet(); return; }
-  play.i += 1; serveCurrent(); screenSet();
+  if (!session) return;
+  if (session.overlay) session = runner.closeTeaching(store, session);
+  if (runner.isComplete(session)) { recordSetOnce(); renderComplete(); return; }
+  serveCurrent(); screenSet();
 }
-function finishSet() {
-  const paper = play.paper; const score = play.correctCount; const size = play.answered;
-  store.addSetResult({ id: 'set-' + Date.now(), paper, score, size, examShaped: play.examShaped, at: Date.now(), sessionId: SESSION });
+function recordSetOnce() {
+  if (setRecorded || !session) return; setRecorded = true;
+  store.addSetResult({
+    id: 'set-' + Date.now(), paper: session.paperId, score: session.responses.filter((r) => r.correct).length,
+    size: session.responses.length, examShaped: session.examShaped, at: Date.now(), sessionId: SESSION,
+  });
+}
+function renderComplete() {
+  const paper = session.paperId;
+  const scoreN = session.responses.filter((r) => r.correct).length;
+  const size = session.responses.length;
   const avg = rollingAverage(store.setResults(), paper);
   const sum = summaryFor(paper);
-  // topics this set touched, with their current progress
-  const touched = [...new Set(play.queue.map((it) => topicIdForConcept(graph, it.conceptIds[0])))];
+  const touched = [...new Set(session.itemIds.map((id) => topicIdForConcept(graph, (itemById.get(id) || { conceptIds: [''] }).conceptIds[0])))];
   const progressList = touched.map((tid) => {
-    const t = sum.topics.find((x) => x.topicId === tid);
+    const t = sum.topics.find((x) => x.topicId === tid); if (!t) return '';
     return `<div class="hrow"><span>${esc(topicTitle(tid))}</span><b>${t.complete ? (t.stale ? 'needs revision' : 'complete ✓') : `${t.windowCorrect}/${Math.max(t.windowSize, 0)}`}</b></div>`;
   }).join('');
-  const failed = size > 0 && score < 5;
+  const failed = size > 0 && scoreN < 5;
   const weakest = touched.find((tid) => { const t = sum.topics.find((x) => x.topicId === tid); return t && !t.complete; }) || touched[0];
+  ui = null;
   app.innerHTML = headerHTML + bannerHTML()
-    + `<a class="back" data-act="paper" data-paper="${paper}" href="#/paper/${paper}">${esc(PAPER_NAMES[paper])}</a>`
+    + `<a class="back" data-act="leaveset" data-paper="${paper}" href="#/paper/${paper}">${esc(PAPER_NAMES[paper])}</a>`
     + '<div class="eyebrow">Set complete</div>'
-    + `<h1>You scored ${score} / ${size}</h1>`
+    + `<h1>You scored ${scoreN} / ${size}</h1>`
     + `<p class="progress">Rolling average ${avg == null ? '—' : avg.toFixed(1)}/10 across topics built so far`
-    + (isRepresentative(paper)
-      ? ` · this set was ${play.examShaped ? 'exam-shaped' : 'not fully exam-shaped'}`
-      : ` · not yet representative — ${builtLabel(paper)}`)
+    + (isRepresentative(paper) ? ` · this set was ${session.examShaped ? 'exam-shaped' : 'not fully exam-shaped'}` : ` · not yet representative — ${builtLabel(paper)}`)
     + '</p>'
-    + (failed && weakest ? `<button class="btn ghost block" data-act="godeeper" data-topic="${esc(weakest)}" data-sec="0">Go deeper on what you missed</button>` : '')
+    + (failed && weakest ? `<button class="btn ghost block" data-act="set-godeeper" data-topic="${esc(weakest)}">Go deeper on what you missed</button>` : '')
     + '<h2>Topics this set touched</h2><div class="hist">' + progressList + '</div>'
-    + `<button class="btn block" data-act="set" data-paper="${paper}">Another set of 10</button>`
-    + `<button class="btn ghost block" data-act="paper" data-paper="${paper}">Back to ${esc(paper)}</button>`;
-  play = null;
+    + `<button class="btn block" data-act="set-new" data-paper="${paper}">Another set of 10</button>`
+    + `<button class="btn ghost block" data-act="leaveset" data-paper="${paper}">Back to ${esc(paper)}</button>`
+    + overlayHTML();
 }
+function leaveSet(paper) { store.clearSession(); session = null; ui = null; setRecorded = false; location.hash = '#/paper/' + (paper || ''); }
 
 // ---------- actions ----------
 function openFlagSheet(kind, id) {
@@ -451,11 +539,8 @@ function setNav(active) {
 }
 function route() {
   const h = location.hash;
-  if (h.startsWith('#/set/')) {
-    const paper = h.slice(6);
-    if (!play || play.paper !== paper) startSet(paper); else screenSet();
-    setNav('home');
-  } else if (h.startsWith('#/paper/')) { screenPaper(h.slice(8)); setNav('home'); }
+  if (h.startsWith('#/set/')) { enterSetRoute(h.slice(6)); setNav('home'); }
+  else if (h.startsWith('#/paper/')) { screenPaper(h.slice(8)); setNav('home'); }
   else if (h.startsWith('#/topic/')) { screenTopic(decodeURIComponent(h.slice(8))); setNav('home'); }
   else if (h === '#/dashboard') { screenDashboard(); setNav('dashboard'); }
   else if (h === '#/data') { screenData(); setNav('data'); }
@@ -471,15 +556,18 @@ document.addEventListener('click', (e) => {
   else if (act === 'data') { location.hash = '#/data'; }
   else if (act === 'paper') { e.preventDefault(); location.hash = '#/paper/' + t.getAttribute('data-paper'); }
   else if (act === 'topic') { deeperFor = null; location.hash = '#/topic/' + encodeURIComponent(t.getAttribute('data-id')); }
-  else if (act === 'set') {
-    const paper = t.getAttribute('data-paper'); const target = '#/set/' + paper;
-    if (location.hash === target) startSet(paper); else location.hash = target;
-  } else if (act === 'opt') { chooseOption(t.getAttribute('data-opt')); }
-  else if (act === 'hint') { if (play) { play.usedHint = true; screenSet(); } }
+  else if (act === 'set-new') { startSetFresh(t.getAttribute('data-paper')); }
+  else if (act === 'set-resume') { resumeSet(t.getAttribute('data-paper')); }
+  else if (act === 'restart') { if (session) { session = runner.restartSet(store, session); setRecorded = false; serveCurrent(); screenSet(); } }
+  else if (act === 'opt') { chooseOption(t.getAttribute('data-opt')); }
+  else if (act === 'hint') { if (ui) { ui.usedHint = true; screenSet(); } }
   else if (act === 'check') { submitAnswer(); }
   else if (act === 'next') { nextQuestion(); }
+  else if (act === 'ov-continue') { nextQuestion(); } // close the overlay and continue the set
+  else if (act === 'ov-close') { if (session) { session = runner.closeTeaching(store, session); if (runner.isComplete(session)) renderComplete(); else screenSet(); } }
+  else if (act === 'set-godeeper') { if (session) { session = runner.openTeaching(store, session, runner.OVERLAY_SURFACES.GO_DEEPER, { topicId: t.getAttribute('data-topic') }); if (runner.isComplete(session)) renderComplete(); else screenSet(); } }
+  else if (act === 'leaveset') { e.preventDefault(); leaveSet(t.getAttribute('data-paper')); }
   else if (act === 'deeper') { openDeeper(t.getAttribute('data-topic'), 0); }
-  else if (act === 'godeeper') { openDeeper(t.getAttribute('data-topic'), Number(t.getAttribute('data-sec')) || 0); }
   else if (act === 'flag') { openFlagSheet(t.getAttribute('data-kind'), t.getAttribute('data-id')); }
   else if (act === 'export') { exportState(); }
 });

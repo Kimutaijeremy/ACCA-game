@@ -41,7 +41,7 @@ try {
   await page.goto(`${base}/index.html#/paper/FA`);
   await page.waitForSelector('[data-act="topic"]');
   await page.click('[data-act="topic"]');
-  await page.waitForSelector('[data-act="set"]');
+  await page.waitForSelector('[data-act="set-new"]');
   const topicText = await page.textContent('#app');
   check('topic page shows nutshell + exam readiness + worked example',
     /In a nutshell/.test(topicText) && /Exam readiness/.test(topicText) && /Worked example/.test(topicText));
@@ -58,8 +58,9 @@ try {
   const total = await page.evaluate(() => window.__PT__ && document.querySelector('.eyebrow').textContent);
   check('a set of ten is served', /of 10/.test(total), total);
 
-  // Answer all ten: alternate correct / wrong so we exercise scoring + diagnosis
-  let sawDiagnosis = false;
+  // Answer all ten: alternate correct / wrong. A miss now opens a teaching OVERLAY (nutshell/lesson,
+  // clause F/G) whose Continue advances; a correct answer shows Next.
+  let sawDiagnosis = false; let sawNutshell = false; let hashDuringOverlay = '#/set/FA';
   for (let i = 0; i < 10; i += 1) {
     await page.waitForSelector('.opt');
     const ans = await page.evaluate(() => window.__PT__.curItem().answerId);
@@ -68,9 +69,16 @@ try {
     await page.click(sel);
     await page.click('[data-act="check"]');
     await page.waitForSelector('.verdict');
-    if (!wantCorrect && await page.$('.diag .cause')) sawDiagnosis = true;
-    await page.click('[data-act="next"]');
+    if (!wantCorrect) {
+      if (await page.$('.diag .cause')) sawDiagnosis = true;
+      if (await page.$('.sheet.teach .nutshell')) sawNutshell = true;
+      hashDuringOverlay = await page.evaluate(() => location.hash);
+    }
+    if (await page.$('.sheet.teach')) await page.click('[data-act="ov-continue"]');
+    else await page.click('[data-act="next"]');
   }
+  check('a miss opened the per-concept nutshell overlay (clause F)', sawNutshell);
+  check('the miss overlay did not change the route', hashDuringOverlay === '#/set/FA', hashDuringOverlay);
   await page.waitForSelector('text=/Set complete/');
   const done = await page.textContent('#app');
   check('set finishes with a score out of 10', /You scored \d+ \/ 10/.test(done), (done.match(/You scored[^<]*/) || [''])[0]);

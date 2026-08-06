@@ -13,7 +13,9 @@
     "lessons:preview": "node tools/lessons-preview.mjs",
     "items:check": "node tools/items-check.mjs",
     "audit:sample": "node tools/audit-sample.mjs",
+    "review:short": "node tools/review-short.mjs",
     "set:smoke": "node tools/set-smoke.mjs",
+    "wiring:smoke": "node tools/wiring-smoke.mjs",
     "diagnosis:demo": "node tools/diagnosis-demo.mjs",
     "ledger": "node tools/ledger.mjs",
     "graph": "python spec/build_graph.py"

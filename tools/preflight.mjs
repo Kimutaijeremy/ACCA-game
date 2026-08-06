@@ -80,7 +80,7 @@ try {
   await page.click('[data-act="paper"][data-paper="FA"]');
   await page.waitForSelector('[data-act="topic"]');
   await page.click('[data-act="topic"]'); // first FA topic page
-  await page.waitForSelector('[data-act="set"]');
+  await page.waitForSelector('[data-act="set-new"]');
   await page.screenshot({ path: join(ROOT, 'docs/screens/topic.png') });
   const topicOk = /In a nutshell/.test(await page.textContent('#app')) && /Worked example/.test(await page.textContent('#app'));
   check('a topic page renders (nutshell + worked example)', topicOk);
@@ -94,7 +94,7 @@ try {
   check('flag button writes to the review queue', flagged === 1);
 
   // start a set, answer one question → an item attempt is logged
-  await page.click('[data-act="set"]');
+  await page.click('[data-act="set-new"]');
   await page.waitForSelector('.opt');
   await page.screenshot({ path: join(ROOT, 'docs/screens/set.png') });
   const ans = await page.evaluate(() => window.__PT__.curItem().answerId);
@@ -129,7 +129,7 @@ try {
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   check('6. phone viewport — no horizontal overflow', overflow <= 1, `overflow ${overflow}px`);
   await page.screenshot({ path: join(ROOT, 'docs/screens/home.png') });
-  await page.click('[data-act="paper"][data-paper="FA"]'); await page.waitForSelector('[data-act="set"]');
+  await page.click('[data-act="paper"][data-paper="FA"]'); await page.waitForSelector('[data-act="set-new"]');
   await page.screenshot({ path: join(ROOT, 'docs/screens/paper.png') });
   await page.goto(`${base}/index.html#/dashboard`); await page.waitForSelector('.bar');
   await page.screenshot({ path: join(ROOT, 'docs/screens/dashboard.png') });
