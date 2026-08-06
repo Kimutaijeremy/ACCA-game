@@ -114,8 +114,15 @@ export function auditConcept({ conceptId, lesson, items, lessonShape, paperFully
   };
 }
 
-/** Is a concept authored to the A5 FLOOR (lesson + rung floor)? Used to compute per-paper breadth. */
+/**
+ * Is a concept authored to its MINIMUM SET? Per AUTHORING_CONTRACT.md §3 the minimum set is the
+ * rung floor PLUS its one sealed item (with a lesson present). This is the per-paper breadth gate:
+ * a paper unlocks depth only when every live concept meets this. (Nutshell is required for full
+ * acceptance, but §3 scopes the breadth minimum to floor + sealed.)
+ */
 export function meetsFloor({ lesson, items, lessonShape, conceptId }) {
   if (!lesson) return false;
-  return questionSetReport(conceptId, practicePool(items), { shape: lessonShape }).complete;
+  const floorMet = questionSetReport(conceptId, practicePool(items), { shape: lessonShape }).complete;
+  const hasSealed = sealedPool(items).length >= 1;
+  return floorMet && hasSealed;
 }

@@ -106,18 +106,7 @@ export const FA_ITEMS = [
     distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
     rationale: 'Income = benefit up; expenses = benefit down.',
   },
-  {
-    id: 'FA-04-S3', conceptIds: ['FA-04'], rung: 'standard', marks: 1,
-    stem: 'The owner’s capital in the business is which element?',
-    options: [
-      { id: 'a', text: 'Equity — what the business owes its owner' },
-      { id: 'b', text: 'A liability to an outsider' },
-      { id: 'c', text: 'An asset controlled by the owner' },
-    ],
-    answerId: 'a',
-    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
-    rationale: 'Capital is part of equity — what the business owes the owner (a residual claim), distinct from liabilities owed to outsiders.',
-  },
+  // FA-04-S3 deferred → src/content/items/deferred.js (surplus over the s:3 floor; restore when FA reaches breadth).
   {
     id: 'FA-04-ST1', conceptIds: ['FA-04'], rung: 'stretch', marks: 2,
     stem: 'Wanjiku receives KES 5,000 today from a customer for goods she will deliver next month. Using only the five definitions, what has she recognised now?',
@@ -271,18 +260,7 @@ export const FA_ITEMS = [
     distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
     rationale: 'Expense up = Dr, cash down = Cr — the entry is correct and balanced.',
   },
-  {
-    id: 'FA-11-S3', conceptIds: ['FA-11'], rung: 'standard', marks: 1,
-    stem: 'If a bookkeeper debits KES 500 but forgets the matching credit, what has broken?',
-    options: [
-      { id: 'a', text: 'The duality of the transaction — total debits no longer equal total credits, so the trial balance will not agree' },
-      { id: 'b', text: 'Nothing — a single-sided entry is allowed for small amounts' },
-      { id: 'c', text: 'The accounting equation is unaffected because only one account changed' },
-    ],
-    answerId: 'a',
-    distractors: { b: 'knowledge_gap', c: 'conceptual_misunderstanding' },
-    rationale: 'Every transaction needs two equal sides; a missing credit breaks the built-in balance the trial balance relies on.',
-  },
+  // FA-11-S3 deferred → src/content/items/deferred.js (surplus over the s:3 floor; restore when FA reaches breadth).
   {
     id: 'FA-11-ST1', conceptIds: ['FA-11'], rung: 'stretch', marks: 2,
     stem: 'Wanjiku repays KES 6,000 of a bank loan in cash. Using only DEAD CLIC, give the entry and explain each side.',
@@ -1096,6 +1074,93 @@ export const FA_ITEMS = [
     answerId: 'a',
     distractors: { b: 'incorrect_treatment', c: 'conceptual_misunderstanding' },
     rationale: 'Where no standard applies, preparers reason from the Conceptual Framework, which underpins all standards.',
+  },
+
+  // ===== Sealed-pool holdout items (one per authored FA concept) — rung 'sealed'. Readiness only;
+  //       excluded from every practice path (practicePool), never served. AUTHORING_CONTRACT.md §1.4/§2.
+  {
+    id: 'FA-04-SEAL1', conceptIds: ['FA-04'], rung: 'sealed', marks: 1,
+    stem: 'A bank loan the business has taken out is which element?',
+    options: [
+      { id: 'a', text: 'A liability' },
+      { id: 'b', text: 'Equity' },
+      { id: 'c', text: 'An asset' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'A loan is a present obligation owed to an outsider → a liability; equity is owed to the owner and an asset is a controlled resource.',
+  },
+  {
+    id: 'FA-05-SEAL1', conceptIds: ['FA-05'], rung: 'sealed', marks: 1,
+    stem: 'A business has capital of KES 40,000 and liabilities of KES 15,000. What are its total assets?',
+    options: [
+      { id: 'a', text: 'KES 55,000' },
+      { id: 'b', text: 'KES 25,000' },
+      { id: 'c', text: 'KES 40,000' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'careless_slip', c: 'knowledge_gap' },
+    rationale: 'Assets = Capital + Liabilities = 40,000 + 15,000 = 55,000; subtracting instead gives the wrong 25,000.',
+  },
+  {
+    id: 'FA-11-SEAL1', conceptIds: ['FA-11'], rung: 'sealed', marks: 1,
+    stem: 'Wanjiku pays KES 5,000 to a supplier she owed on credit. What is the double entry?',
+    options: [
+      { id: 'a', text: 'Dr Payables 5,000 / Cr Cash 5,000' },
+      { id: 'b', text: 'Dr Cash 5,000 / Cr Payables 5,000' },
+      { id: 'c', text: 'Dr Purchases 5,000 / Cr Cash 5,000' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'incorrect_treatment' },
+    rationale: 'Paying a credit supplier reduces the payable (Dr) and reduces cash (Cr); option c double-counts the purchase, already recorded when the goods arrived.',
+  },
+  {
+    id: 'FA-13-SEAL1', conceptIds: ['FA-13'], rung: 'sealed', marks: 1,
+    stem: 'A credit sale of goods is first recorded in which book of prime entry?',
+    options: [
+      { id: 'a', text: 'The sales day book' },
+      { id: 'b', text: 'The cash book' },
+      { id: 'c', text: 'The sales returns day book' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'A credit sale is listed in the sales day book; the cash book records money received or paid, and the sales returns day book records goods coming back.',
+  },
+  {
+    id: 'FA-22-SEAL1', conceptIds: ['FA-22'], rung: 'sealed', marks: 2,
+    stem: 'A line of inventory cost KES 9,000 but can now be sold for only KES 7,000, after KES 500 of selling costs. At what value is it carried?',
+    options: [
+      { id: 'a', text: 'KES 6,500' },
+      { id: 'b', text: 'KES 9,000' },
+      { id: 'c', text: 'KES 7,000' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'incorrect_treatment', c: 'calculation_error' },
+    rationale: 'NRV = 7,000 − 500 = 6,500, lower than cost 9,000, so carry at 6,500; option c forgets the selling costs, option b keeps cost.',
+  },
+  {
+    id: 'FA-26-SEAL1', conceptIds: ['FA-26'], rung: 'sealed', marks: 2,
+    stem: 'A machine costs KES 50,000, has a residual value of KES 5,000 and a useful life of 5 years. What is the straight-line annual depreciation charge?',
+    options: [
+      { id: 'a', text: 'KES 9,000' },
+      { id: 'b', text: 'KES 10,000' },
+      { id: 'c', text: 'KES 11,000' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'incorrect_treatment', c: 'calculation_error' },
+    rationale: '(50,000 − 5,000) ÷ 5 = 9,000; forgetting to subtract the residual gives 10,000.',
+  },
+  {
+    id: 'FA-63-SEAL1', conceptIds: ['FA-63'], rung: 'sealed', marks: 2,
+    stem: 'Current assets are KES 240,000 (including inventory KES 90,000) and current liabilities KES 120,000. What is the quick (acid-test) ratio?',
+    options: [
+      { id: 'a', text: '1.25' },
+      { id: 'b', text: '2.0' },
+      { id: 'c', text: '0.75' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'requirement_misread', c: 'calculation_error' },
+    rationale: '(240,000 − 90,000) ÷ 120,000 = 1.25; using all current assets (2.0) gives the current ratio, not the quick ratio.',
   },
 ];
 

@@ -105,18 +105,7 @@ export const BT_ITEMS = [
     distractors: { b: 'conceptual_misunderstanding', c: 'requirement_misread' },
     rationale: 'Same output (10,000 patients) at lower input cost is an economy question; effectiveness is about achieving the objective at all.',
   },
-  {
-    id: 'BT-01-S3', conceptIds: ['BT-01'], rung: 'standard', marks: 1,
-    stem: 'Which statement is TRUE of a sole trader but FALSE of a limited liability company?',
-    options: [
-      { id: 'a', text: 'The owner is personally liable for the business’s debts' },
-      { id: 'b', text: 'It exists to make a profit' },
-      { id: 'c', text: 'It can be judged on value for money' },
-    ],
-    answerId: 'a',
-    distractors: { b: 'conceptual_misunderstanding', c: 'knowledge_gap' },
-    rationale: 'Unlimited (personal) liability is the sole trader’s feature; a company’s owners have limited liability.',
-  },
+  // BT-01-S3 deferred → src/content/items/deferred.js (surplus over the s:3 floor; restore when BT reaches breadth).
   {
     id: 'BT-01-ST1', conceptIds: ['BT-01'], rung: 'stretch', marks: 2,
     stem: 'A savings co-operative returns any surplus to its members rather than to outside shareholders, and exists to give members cheap credit. Applying only the lesson’s ideas, how is it best classified and judged?',
@@ -355,18 +344,7 @@ export const BT_ITEMS = [
     distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
     rationale: 'The same names can sit in different quadrants for a different decision — the matrix is read per decision.',
   },
-  {
-    id: 'BT-04-S3', conceptIds: ['BT-04'], rung: 'standard', marks: 1,
-    stem: 'A neighbour who dislikes the queue outside has neither power over the stall nor much interest in it. Managing her with "minimal effort" is an example of:',
-    options: [
-      { id: 'a', text: 'Setting management effort by the quadrant, and prioritising higher-power/higher-interest claims first' },
-      { id: 'b', text: 'Ignoring a key player, which the matrix warns against' },
-      { id: 'c', text: 'Treating interest as more important than power in every case' },
-    ],
-    answerId: 'a',
-    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
-    rationale: 'Low power + low interest → minimal effort; effort is allocated by quadrant.',
-  },
+  // BT-04-S3 deferred → src/content/items/deferred.js (surplus over the s:3 floor; restore when BT reaches breadth).
   {
     id: 'BT-04-ST1', conceptIds: ['BT-04'], rung: 'stretch', marks: 2,
     stem: 'A previously indifferent local politician suddenly campaigns on street trading before an election, gaining the power to change Wanjiku’s licence and taking a keen public interest. Using only Mendelow, what has changed and what should she now do?',
@@ -673,6 +651,57 @@ export const BT_ITEMS = [
     answerId: 'a',
     distractors: { b: 'conceptual_misunderstanding', c: 'transfer_failure' },
     rationale: 'Luxuries with many substitutes are elastic; a price rise loses proportionally more sales, so revenue falls.',
+  },
+
+  // ===== Sealed-pool holdout items (one per authored BT concept) — rung 'sealed'. Readiness only;
+  //       excluded from every practice path (practicePool), never served. AUTHORING_CONTRACT.md §1.4/§2.
+  {
+    id: 'BT-01-SEAL1', conceptIds: ['BT-01'], rung: 'sealed', marks: 1,
+    stem: 'A registered charity runs a free clinic funded by donations. How is its performance best judged?',
+    options: [
+      { id: 'a', text: 'Value for money — economy, efficiency and effectiveness' },
+      { id: 'b', text: 'Profit and the return paid to shareholders' },
+      { id: 'c', text: 'The unlimited liability of its trustees' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'knowledge_gap' },
+    rationale: 'A not-for-profit body is judged on value for money (the three Es), not profit; it has no profit motive or shareholders.',
+  },
+  {
+    id: 'BT-03-SEAL1', conceptIds: ['BT-03'], rung: 'sealed', marks: 1,
+    stem: 'For a small trader, the Kenya Revenue Authority is which type of stakeholder?',
+    options: [
+      { id: 'a', text: 'External' },
+      { id: 'b', text: 'Connected' },
+      { id: 'c', text: 'Internal' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'KRA sits outside the business with no contract or investment tie → external (connected = contractual/investment ties; internal = staff and the owner).',
+  },
+  {
+    id: 'BT-04-SEAL1', conceptIds: ['BT-04'], rung: 'sealed', marks: 1,
+    stem: 'A bank holds a covenant letting it call in Wanjiku’s loan, but takes little day-to-day interest in the stall. Which Mendelow quadrant, and how is it managed?',
+    options: [
+      { id: 'a', text: 'High power, low interest → keep satisfied' },
+      { id: 'b', text: 'High power, high interest → key player' },
+      { id: 'c', text: 'Low power, high interest → keep informed' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'The bank can force her hand (high power) but has low day-to-day interest → keep satisfied.',
+  },
+  {
+    id: 'BT-05-SEAL1', conceptIds: ['BT-05'], rung: 'sealed', marks: 1,
+    stem: 'A new statute forcing clear price labels on all goods is which PESTEL factor?',
+    options: [
+      { id: 'a', text: 'Legal — consumer-protection law' },
+      { id: 'b', text: 'Political — fiscal policy' },
+      { id: 'c', text: 'Economic' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'A binding consumer-protection statute is a legal factor; a tax or subsidy would be political.',
   },
 ];
 

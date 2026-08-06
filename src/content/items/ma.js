@@ -770,6 +770,57 @@ export const MA_ITEMS = [
     distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
     rationale: 'When the interval matches a cycle (7 days = a week), systematic sampling repeatedly hits the same point in the cycle — periodic bias.',
   },
+
+  // ===== Sealed-pool holdout items (one per authored MA concept) — rung 'sealed'. Readiness only;
+  //       excluded from every practice path (practicePool), never served. AUTHORING_CONTRACT.md §1.4/§2.
+  {
+    id: 'MA-01-SEAL1', conceptIds: ['MA-01'], rung: 'sealed', marks: 1,
+    stem: 'Which task belongs to management accounting rather than financial accounting?',
+    options: [
+      { id: 'a', text: 'Deciding the selling price of a new product' },
+      { id: 'b', text: 'Preparing the published year-end financial statements' },
+      { id: 'c', text: 'Filing the statutory tax return' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'Pricing is a forward-looking decision for managers → management accounting; the published accounts and the tax return are external, rule-bound financial accounting.',
+  },
+  {
+    id: 'MA-06-SEAL1', conceptIds: ['MA-06'], rung: 'sealed', marks: 1,
+    stem: 'In a bakery, the production supervisor’s salary is best classified as:',
+    options: [
+      { id: 'a', text: 'Indirect labour — a production overhead' },
+      { id: 'b', text: 'Direct labour — part of prime cost' },
+      { id: 'c', text: 'A selling and distribution cost' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'incorrect_treatment' },
+    rationale: 'A supervisor cannot be traced to one unit → indirect labour (overhead); only the baker’s traceable wage is direct labour and prime cost.',
+  },
+  {
+    id: 'MA-07-SEAL1', conceptIds: ['MA-07'], rung: 'sealed', marks: 1,
+    stem: 'Within the relevant range, as output rises what happens to a FIXED cost per unit?',
+    options: [
+      { id: 'a', text: 'It falls' },
+      { id: 'b', text: 'It rises' },
+      { id: 'c', text: 'It stays constant' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'conceptual_misunderstanding', c: 'conceptual_misunderstanding' },
+    rationale: 'A fixed cost is constant in total, so spread over more units the cost per unit falls; a variable cost is the one that is constant per unit.',
+  },
+  {
+    id: 'MA-11-SEAL1', conceptIds: ['MA-11'], rung: 'sealed', marks: 2,
+    stem: 'At 500 units total cost is KES 18,000; at 900 units it is KES 26,000. Using high-low, what is the variable cost per unit?',
+    options: [
+      { id: 'a', text: 'KES 20' },
+      { id: 'b', text: 'KES 16' },
+      { id: 'c', text: 'KES 29' },
+    ],
+    answerId: 'a',
+    distractors: { b: 'calculation_error', c: 'conceptual_misunderstanding' },
+    rationale: '(26,000 − 18,000) ÷ (900 − 500) = 8,000 ÷ 400 = KES 20. Option b divides by the low activity (500) instead of the range; option c divides a total cost by its units.',
+  },
 ];
 
 export default MA_ITEMS;

@@ -5,6 +5,7 @@ export const FA_LESSONS = [
   {
     "conceptId": "FA-26",
     "title": "Depreciation methods and the annual charge",
+    "nutshell": "Straight-line depreciation = (cost − residual value) ÷ useful life.",
     "syllabusYear": "2026",
     "shape": "double-entry",
     "story": "Wanjiku buys a fridge for KES 40,000. Unlike the sodas inside it, the fridge is not for resale — it will earn sales for years. The accruals concept insists its cost be matched against those years, not dumped into the month she bought it. That spreading is **depreciation**. It is not a valuation and not a cash payment; it is last year’s asset being turned, slice by slice, into this year’s expense. Each slice needs a home in the books, and depreciation has a fixed double entry that never changes, whatever the method.",
@@ -37,6 +38,7 @@ export const FA_LESSONS = [
   {
     "conceptId": "FA-22",
     "title": "Cost and net realisable value",
+    "nutshell": "Inventory is measured at the lower of cost and net realisable value (selling price − costs to complete and sell).",
     "syllabusYear": "2026",
     "shape": "treatment",
     "story": "At year end Wanjiku counts the stock still on her shelves. Most of it is fine. But one crate of sodas got water-damaged in the rains, and a line of sweets has passed the fashion for them — she will have to slash the price to shift them. She paid good money for all of it. The question the accounts force on her is blunt: carry the stock at what it cost, or at what it can now actually fetch? Prudence answers: never carry stock above what it can bring in. That is the lower-of-cost-and-NRV rule — and the trap is that it is applied line by line, not to the pile as a whole.",
@@ -68,6 +70,7 @@ export const FA_LESSONS = [
   {
     "conceptId": "FA-63",
     "title": "Liquidity and efficiency ratios",
+    "nutshell": "Current ratio = current assets ÷ current liabilities (quick ratio strips out inventory).",
     "syllabusYear": "2026",
     "shape": "interpretation",
     "story": "Wanjiku Ltd is profitable — and nearly misses payroll. Profit is opinion; cash is fact, and the two diverge. When she asks the bank for an overdraft, the manager does not care about her profit alone; he wants to know whether she can pay her bills as they fall due. He reaches for liquidity and efficiency ratios — the reader’s toolkit for short-term health. On their own the numbers say nothing; against last year, or against a rival, they start to talk.",
@@ -104,6 +107,7 @@ export const FA_LESSONS = [
   {
     "conceptId": "FA-13",
     "title": "Books of prime entry",
+    "nutshell": "A transaction is first listed in a book of prime entry, then posted in totals to the ledger.",
     "syllabusYear": "2026",
     "shape": "process",
     "story": "Not every part of accounting gets a hero. This one is about filing — and it is exactly the kind of unglamorous plumbing the whole system stands on. By her third month Wanjiku records dozens of transactions a day: credit sales, a crate a customer sends back, sodas bought on account, a batch returned to the distributor, cash taken, the odd correction. If she tried to post each one straight into the ledger as it happened, she would drown, and errors would scatter everywhere. So accounting inserts a calm first step: an intake desk. Every transaction is first written into a **book of prime entry** — sorted by type — and only later posted, in tidy totals, into the ledger. There is no drama here. But get the intake wrong and every number downstream — the trial balance, the statements, the audit — inherits the mess.",
@@ -138,6 +142,7 @@ export const FA_LESSONS = [
   {
     conceptId: 'FA-04',
     title: 'The elements — assets, liabilities, equity, income, expenses',
+    nutshell: 'The five elements are assets, liabilities, equity (= assets − liabilities), income and expenses.',
     syllabusYear: '2026',
     shape: 'theory',
     story:
@@ -190,6 +195,7 @@ export const FA_LESSONS = [
   {
     conceptId: 'FA-05',
     title: 'The accounting equation',
+    nutshell: 'Assets = Capital + Liabilities.',
     syllabusYear: '2026',
     shape: 'double-entry',
     story:
@@ -244,6 +250,7 @@ export const FA_LESSONS = [
   {
     conceptId: 'FA-11',
     title: 'Duality and the double-entry principle',
+    nutshell: 'For every transaction, total debits = total credits (duality) — DEAD increases with debits, CLIC with credits.',
     syllabusYear: '2026',
     shape: 'double-entry',
     story:

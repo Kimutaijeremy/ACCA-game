@@ -35,7 +35,9 @@ from `concepts.json`). Anything short of four is "in progress", never "authored"
    - **Calculation-shaped concepts carry ≥ 1 parameterized generator** (seeded RNG, `rng.js`); each
      generator must produce valid items on ≥ 5 seeds.
    - **Cap exception:** the accounting equation (`FA-05`) is capped at **2 practice items total** and
-     the four-rung floor is waived for it (brief §6.4, `ITEM_CAPS`). It is the only capped concept.
+     the four-rung floor is waived for it (brief §6.4, `ITEM_CAPS`). It is the only capped concept. The
+     cap governs the **practice** bank only; FA-05 still carries its one sealed item (§1.4), which is
+     **additional** to the cap (the sealed holdout is never served, so it cannot "drown" a set).
 
 4. **Exactly one sealed item** — authored **at the same time** as the practice items above, tagged
    rung `sealed`, and placed in the sealed pool.

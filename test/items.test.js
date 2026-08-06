@@ -85,10 +85,15 @@ test('parameterized generators produce a valid MCQ with a distinct correct optio
   }
 });
 
-test('the accounting-equation cap (Brief §6.4) is honoured: FA-05 has at most two items and is still DONE', () => {
+test('the accounting-equation cap (Brief §6.4) is honoured: FA-05 has at most two PRACTICE items, plus its one sealed holdout, and is still DONE', () => {
   assert.equal(ITEM_CAPS['FA-05'], 2);
   const fa05 = itemsForConcept('FA-05');
-  assert.ok(fa05.length <= 2, 'FA-05 exceeds its two-item cap');
+  // The cap governs the PRACTICE bank (what can drown sets); the sealed holdout is a separate pool
+  // and AUTHORING_CONTRACT.md still requires exactly one for every concept, FA-05 included.
+  const practice = fa05.filter((i) => i.rung !== 'sealed');
+  const sealed = fa05.filter((i) => i.rung === 'sealed');
+  assert.ok(practice.length <= 2, 'FA-05 exceeds its two-item PRACTICE cap');
+  assert.equal(sealed.length, 1, 'FA-05 still carries exactly one sealed holdout item');
   const r = conceptQuestionReport('FA-05');
   assert.equal(r.capped, true);
   assert.equal(r.complete, true, 'a capped concept with its set is done');

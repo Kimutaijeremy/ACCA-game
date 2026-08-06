@@ -5,6 +5,7 @@ export const MA_LESSONS = [
   {
     "conceptId": "MA-11",
     "title": "The high-low method",
+    "nutshell": "Variable cost per unit = (cost at highest activity − cost at lowest activity) ÷ (highest units − lowest units).",
     "syllabusYear": "2026",
     "shape": "calculation",
     "story": "Wanjiku opens a small bakery behind the shop — mandazi and bread. The first bill that puzzles her is electricity. In a quiet month it costs less; in a busy month, more — but it never falls to zero, because the fridge and the lights run regardless. This is a **semi-variable cost**: a fixed standing charge plus a variable amount that rises with how much she bakes. To budget, and later to price a single mandazi, she must split that one bill into its fixed and variable halves. With only the monthly totals to go on, the high-low method does it from just two data points — the busiest month and the quietest.",
@@ -35,6 +36,7 @@ export const MA_LESSONS = [
   {
     conceptId: 'MA-06',
     title: 'Cost classification by nature, function and traceability',
+    nutshell: 'Every cost is classified by nature (materials, labour, expenses), by function (production or non-production), and by traceability (direct/indirect, whose direct total is prime cost).',
     syllabusYear: '2026',
     shape: 'process',
     story:
@@ -96,6 +98,7 @@ export const MA_LESSONS = [
   {
     conceptId: 'MA-07',
     title: 'Cost behaviour — fixed, variable, semi-variable, stepped',
+    nutshell: 'Costs behave as fixed (flat in total, falling per unit), variable (flat per unit), stepped fixed, or semi-variable (fixed + variable), within the relevant range.',
     syllabusYear: '2026',
     shape: 'theory',
     story:
@@ -146,6 +149,7 @@ export const MA_LESSONS = [
   {
     conceptId: 'MA-01',
     title: 'Purpose of management accounting information',
+    nutshell: 'Management accounting produces forward-looking, format-free information for managers to plan, control and decide.',
     syllabusYear: '2026',
     shape: 'theory',
     story:

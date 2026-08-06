@@ -116,3 +116,16 @@ test('an over-floor set flags depth-before-breadth while its paper is unfinished
 test('FLOOR_TOTAL is the cc3/g3/s3/st1 sum', () => {
   assert.equal(FLOOR_TOTAL, 10);
 });
+
+test('deferred items are valid, recorded, and never in the served bank', async () => {
+  const { validateItem } = await import('../src/engine/items.js');
+  const { DEFERRED_ITEMS } = await import('../src/content/items/deferred.js');
+  const { ALL_ITEMS } = await import('../src/content/items/index.js');
+  const servedIds = new Set(ALL_ITEMS.map((i) => i.id));
+  assert.ok(DEFERRED_ITEMS.length >= 1);
+  for (const it of DEFERRED_ITEMS) {
+    assert.equal(validateItem(it), true);           // still a valid, restorable item
+    assert.ok(it.deferredReason, `${it.id} records why it was deferred`);
+    assert.equal(servedIds.has(it.id), false, `${it.id} must not be in the served bank`);
+  }
+});

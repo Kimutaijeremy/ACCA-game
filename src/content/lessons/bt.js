@@ -5,6 +5,7 @@ export const BT_LESSONS = [
   {
     "conceptId": "BT-04",
     "title": "Stakeholder power, interest and conflict",
+    "nutshell": "On Mendelow’s matrix, stakeholders are managed by power × interest — key players closely, the powerful kept satisfied, the interested kept informed, the rest minimal effort.",
     "syllabusYear": "2026",
     "shape": "theory",
     "story": "Within a month of opening her kibanda near Gikomba, Wanjiku discovers she is surrounded by people who care what she does. Her customers want the lowest price. The soda distributor wants prompt payment or he stops delivering. The county askari wants the licence fee on time. The Kenya Revenue Authority wants its sales tax — a stakeholder, she is warned, with infinite patience. Her cousin wants her to turn the stall into a partnership. Every one of them affects, or is affected by, the business — and they want different, often conflicting, things. She cannot please them all at once. So the real skill is not keeping everyone happy; it is knowing whose claim to answer first. Mendelow gives her the map.",
@@ -36,6 +37,7 @@ export const BT_LESSONS = [
   {
     conceptId: 'BT-01',
     title: 'Purpose and types of business organisation',
+    nutshell: 'A business is a sole trader, partnership, limited company or not-for-profit body, and its purpose sets the measure of success — profit or value for money.',
     syllabusYear: '2026',
     shape: 'theory',
     story:
@@ -94,6 +96,7 @@ export const BT_LESSONS = [
   {
     conceptId: 'BT-03',
     title: 'Stakeholders and stakeholder classification',
+    nutshell: 'Stakeholders — anyone who affects or is affected by the business — are classified as internal, connected or external.',
     syllabusYear: '2026',
     shape: 'theory',
     story:
@@ -147,6 +150,7 @@ export const BT_LESSONS = [
   {
     conceptId: 'BT-05',
     title: 'Political and legal factors',
+    nutshell: 'Political and legal factors are the state’s actions and the binding laws that constrain the business from outside — the P and the L of PESTEL.',
     syllabusYear: '2026',
     shape: 'theory',
     story:
